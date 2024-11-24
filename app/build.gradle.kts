@@ -36,6 +36,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
 }
 
 dependencies {
@@ -53,6 +54,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+
+
     // data store preference
     implementation(libs.androidx.datastore.preferences)
 
@@ -60,6 +63,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.activity.ktx)
+
 
     // camera X
     implementation(libs.androidx.camera.camera2)
