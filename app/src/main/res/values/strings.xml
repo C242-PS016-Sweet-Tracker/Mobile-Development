@@ -3,4 +3,22 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_home">Home</string>
     <string name="title_profile">Profile</string>
+    <string name="login">Login</string>
+    <string name="welcome_text">Rencanakan Makan, Wujudkan Kesehatan</string>
+    <string name="signup">SignUp</string>
+    <string name="kirim">Kirim</string>
+    <string name="kembali">Kembali</string>
+    <string name="ulangi_password">Ulangi Password</string>
+    <string name="ulangi_password_baru">Ulangi Password baru</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="input_pass">Silahkan masukkan passowrd baru!</string>
+    <string name="password_baru">Password baru</string>
+    <string name="input_new_pass">Masukkan Password baru</string>
+    <string name="email">Email</string>
+    <string name="instruksi_reset">Kami akan mengirimkan instruksi mengganti password. Silahkan masukkan :</string>
+    <string name="authentication">Authentication</string>
+    <string name="instruksi_otp">Kami akan mengirimkan kode ke alamat email.\nSilahkan masukkan kode OTP:</string>
+    <string name="kode_otp">Kode OTP</string>
+    <string name="otp_message">Belum mendapat OTP?</string>
+    <string name="re_send">Kirim ulang</string>
 </resources>
