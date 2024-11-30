@@ -12,7 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
-import android.view.WindowManager
+import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +23,7 @@ import com.capstone.sweettrack.util.CustomEmailEditText
 import com.capstone.sweettrack.util.CustomPasswordEditText
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentLoginBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class LoginFragment : Fragment() {
 
@@ -112,22 +113,31 @@ class LoginFragment : Fragment() {
 
     private fun setupView() {
         val window = requireActivity().window
+        val decorView = window.decorView
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
+            window.insetsController?.let { controller ->
+                controller.hide(WindowInsets.Type.statusBars())
+                controller.systemBarsBehavior =
+                    WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            }
         } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
+            @Suppress("DEPRECATION")
+            decorView.systemUiVisibility = (
+                    View.SYSTEM_UI_FLAG_FULLSCREEN
+                            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    )
         }
         (requireActivity() as? AppCompatActivity)?.supportActionBar?.hide()
     }
+
 
     private fun playAnimation() {
 
         val message =
             ObjectAnimator.ofFloat(binding.loginTV, View.ALPHA, 1f).setDuration(100)
-        val email = ObjectAnimator.ofFloat(binding.emailEditText, View.ALPHA, 1f).setDuration(100)
+        val email = ObjectAnimator.ofFloat(binding.emailTV, View.ALPHA, 1f).setDuration(100)
         val emailEdit =
             ObjectAnimator.ofFloat(binding.emailEditTextLayout, View.ALPHA, 1f).setDuration(100)
         val password =
@@ -136,6 +146,8 @@ class LoginFragment : Fragment() {
             ObjectAnimator.ofFloat(binding.passwordEditTextLayout, View.ALPHA, 1f).setDuration(100)
         val registerText =
             ObjectAnimator.ofFloat(binding.registerPromptTextView, View.ALPHA, 1f).setDuration(100)
+        val resetText =
+            ObjectAnimator.ofFloat(binding.resetPassTextView, View.ALPHA, 1f).setDuration(100)
         val loginBtn = ObjectAnimator.ofFloat(binding.loginButton, View.ALPHA, 1f).setDuration(100)
 
         AnimatorSet().apply {
@@ -146,6 +158,7 @@ class LoginFragment : Fragment() {
                 emailEdit,
                 password,
                 passwordEdit,
+                resetText,
                 loginBtn
             )
             startDelay = 100
@@ -159,6 +172,10 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_fragmentSignUp)
         }
 
+        binding.resetPassTextView.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_fragmentResetPassword)
+        }
+
         binding.loginButton.setOnClickListener {
             val email = binding.emailEditText.text.toString().trim()
             val password = binding.passwordEditText.text.toString().trim()
@@ -169,6 +186,18 @@ class LoginFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigationView?.visibility = View.GONE
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigationView?.visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {

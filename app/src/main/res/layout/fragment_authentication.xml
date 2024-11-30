@@ -76,10 +76,10 @@
             app:startIconDrawable="@drawable/ic_security_24"
             app:errorEnabled="true">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.capstone.sweettrack.util.CustomNumberEditText
                 android:id="@+id/codeEditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="55dp"
                 tools:ignore="SpeakableTextPresentCheck"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>

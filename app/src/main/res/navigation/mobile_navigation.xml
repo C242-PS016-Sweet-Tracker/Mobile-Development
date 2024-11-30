@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/navigation_home">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -15,13 +15,20 @@
         <action
             android:id="@+id/action_loginFragment_to_fragmentSignUp"
             app:destination="@id/fragmentSignUp" />
+        <action
+            android:id="@+id/action_loginFragment_to_fragmentResetPassword"
+            app:destination="@id/fragmentResetPassword" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.capstone.sweettrack.view.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
@@ -38,6 +45,19 @@
             android:id="@+id/action_fragmentSignUp_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/fragmentResetPassword"
+        android:name="com.capstone.sweettrack.view.ui.resetpassword.ResetPasswordFragment"
+        android:label="Reset Password"
+        tools:layout="@layout/fragment_reset_password" >
+        <action
+            android:id="@+id/action_fragmentResetPassword_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_fragmentResetPassword_to_newPasswordFragment"
+            app:destination="@id/newPasswordFragment" />
+    </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
         android:name="com.capstone.sweettrack.view.ui.welcome.WelcomeFragment"
@@ -49,5 +69,16 @@
         <action
             android:id="@+id/action_welcomeFragment_to_fragmentSignUp"
             app:destination="@id/fragmentSignUp" />
+    </fragment>
+    <fragment
+        android:id="@+id/newPasswordFragment"
+        android:name="com.capstone.sweettrack.view.ui.newpassword.NewPasswordFragment"
+        android:label="NewPasswordFragment" >
+        <action
+            android:id="@+id/action_newPasswordFragment_to_fragmentResetPassword"
+            app:destination="@id/fragmentResetPassword" />
+        <action
+            android:id="@+id/action_newPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 </navigation>

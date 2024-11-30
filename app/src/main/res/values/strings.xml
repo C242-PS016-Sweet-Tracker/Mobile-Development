@@ -18,8 +18,8 @@
     <string name="emailHint">Masukkan email Anda</string>
     <string name="ulangi_password">Ulangi Password</string>
     <string name="ulangPassHint">Masukkan ulang password Anda</string>
-    <string name="lupa_password">Lupa Password</string>
-    <string name="daftar">Belum punya akun? <font color="#0000FF">Daftar</font></string>
+    <string name="lupa_password">Lupa Password?</string>
+    <string name="daftar">Belum punya akun?\n<font color="#0000FF">Daftar</font></string>
     <string name="invalid_format_email">Format email tidak valid</string>
     <string name="invalid_format_password">Password minimal 8 karakter</string>
     
@@ -41,6 +41,10 @@
     <string name="re_send">Kirim ulang</string>
     <string name="keterangan_2">Informasi umur, tinggi badan, berat badan dan jenis kelamin membantu sistem untuk menghitung rekomendasi kalori harian anda !!</string>
     <string name="keterangan_1">Masukkan umur, tinggi, berat badan dan jenis kelamin anda...</string>
+
+    <!-- Authentication -->
+    <string name="invalid_format_number">Kode minimal 4 karakter</string>
+
 
     <!-- Gender Types -->
     <string-array name="gender_types">
