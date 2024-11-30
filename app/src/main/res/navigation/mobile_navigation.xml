@@ -38,4 +38,16 @@
             android:id="@+id/action_fragmentSignUp_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.capstone.sweettrack.view.ui.welcome.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_fragmentSignUp"
+            app:destination="@id/fragmentSignUp" />
+    </fragment>
 </navigation>

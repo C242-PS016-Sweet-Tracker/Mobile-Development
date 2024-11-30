@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.SweetTrack" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+         <item name="colorPrimary">@color/greenButton</item>
     </style>
 
     <style name="Theme.SweetTrack" parent="Base.Theme.SweetTrack" />
