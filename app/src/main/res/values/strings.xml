@@ -5,6 +5,8 @@
     <string name="title_profile">Profile</string>
 
     <!--    sign up -->
+    <string name="login">Login</string>
+    <string name="have_account">Sudah punya akun? <font color="#0000FF">Login</font></string>
     <string name="password">Password</string>
     <string name="passwordHint">Masukkan password Anda</string>
     <string name="fill_all_fields">Please fill in all fields</string>
