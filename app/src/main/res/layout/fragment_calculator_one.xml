@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.capstone.sweettrack.view.ui.userinformation.UserInformationFragment">
+    tools:context="com.capstone.sweettrack.view.ui.calculatorcalori.stepone.CalculatorFragmentOne">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,11 +13,9 @@
             android:id="@+id/titleTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
             android:gravity="center"
-            android:text="Informasi Pengguna"
+            android:text="Kalkulator Kalori"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -27,46 +25,46 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/nameLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:text="Nama Lengkap"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleTextView" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nameEditTextLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/messageTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
+            android:text="step 1/3"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nameLabel">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nameEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Masukkan nama lengkap"/>
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
         <TextView
-            android:id="@+id/ageLabel"
+            android:id="@+id/text_keterangan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:width="300dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="@string/keterangan_1"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/messageTextView" />
+
+        <TextView
+        android:id="@+id/ageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:text="Umur"
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nameEditTextLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/text_keterangan" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/ageEditTextLayout"
@@ -77,39 +75,16 @@
             android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ageLabel">
+            app:layout_constraintTop_toBottomOf="@+id/ageTextView">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ageEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:hint="Cth: 19"/>
+                tools:ignore="SpeakableTextPresentCheck"
+                android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/genderLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:text="Jenis Kelamin"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ageEditTextLayout" />
-
-        <Spinner
-            android:id="@+id/genderSpinner"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/genderLabel" />
-
-        <!-- Input tinggi badan -->
         <TextView
             android:id="@+id/heightLabel"
             android:layout_width="wrap_content"
@@ -120,7 +95,7 @@
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/genderSpinner" />
+            app:layout_constraintTop_toBottomOf="@id/ageEditTextLayout" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/heightEditTextLayout"
@@ -154,7 +129,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/heightEditTextLayout" />
 
-        <!-- Input berat badan -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/weightEditTextLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -174,94 +148,54 @@
                 android:hint="Cth: 60"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Dropdown tingkat aktivitas -->
         <TextView
-            android:id="@+id/activityLevelLabel"
+            android:id="@+id/genderLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
-            android:text="Tingkat Aktivitas"
+            android:text="Jenis Kelamin"
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/weightEditTextLayout" />
 
         <Spinner
-            android:id="@+id/activityLevelSpinner"
+            android:id="@+id/genderSpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activityLevelLabel" />
+            app:layout_constraintTop_toBottomOf="@id/genderLabel" />
 
         <TextView
-            android:id="@+id/diabetesTypeLabel"
+            android:id="@+id/text_keterangan2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:text="Tipe Diabetes"
+            android:layout_marginTop="12dp"
+            android:width="330dp"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:text="@string/keterangan_2"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activityLevelSpinner" />
-
-        <Spinner
-            android:id="@+id/diabetesTypeSpinner"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/diabetesTypeLabel" />
-
-        <!-- Input kadar gula darah terakhir -->
-        <TextView
-            android:id="@+id/lastBloodSugarLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:text="Kadar Gula Darah Terakhir (mg/dL)"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/diabetesTypeSpinner" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/lastBloodSugarEditTextLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lastBloodSugarLabel">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/lastBloodSugarEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Cth: 120"
-                android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@+id/genderSpinner" />
 
         <Button
             android:id="@+id/sendButton"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="32dp"
-            android:text="@string/kirim"
+            android:text="Selanjutnya"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lastBloodSugarEditTextLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/text_keterangan2" />
 
         <ProgressBar
             android:id="@+id/progressBar"

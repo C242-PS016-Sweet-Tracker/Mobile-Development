@@ -4,7 +4,7 @@
     <string name="title_home">Home</string>
     <string name="title_profile">Profile</string>
 
-<!--    Login -->
+    <!-- Login Section -->
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="passwordHint">Masukkan password Anda</string>
@@ -20,6 +20,51 @@
     <string name="ulangPassHint">Masukkan ulang password Anda</string>
     <string name="lupa_password">Lupa Password</string>
     <string name="daftar">Belum punya akun? <font color="#0000FF">Daftar</font></string>
+    
+    <!-- Welcome and Password Section -->
+    <string name="welcome_text">Rencanakan Makan, Wujudkan Kesehatan</string>
+    <string name="signup">SignUp</string>
+    <string name="kirim">Kirim</string>
+    <string name="kembali">Kembali</string>
+    <string name="ulangi_password_baru">Ulangi Password baru</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="input_pass">Silahkan masukkan password baru!</string>
+    <string name="password_baru">Password baru</string>
+    <string name="input_new_pass">Masukkan Password baru</string>
+    <string name="instruksi_reset">Kami akan mengirimkan instruksi mengganti password. Silahkan masukkan :</string>
+    <string name="authentication">Authentication</string>
+    <string name="instruksi_otp">Kami akan mengirimkan kode ke alamat email.\nSilahkan masukkan kode OTP:</string>
+    <string name="kode_otp">Kode OTP</string>
+    <string name="otp_message">Belum mendapat OTP?</string>
+    <string name="re_send">Kirim ulang</string>
+    <string name="keterangan_2">Informasi umur, tinggi badan, berat badan dan jenis kelamin membantu sistem untuk menghitung rekomendasi kalori harian anda !!</string>
+    <string name="keterangan_1">Masukkan umur, tinggi, berat badan dan jenis kelamin anda...</string>
 
+    <!-- Gender Types -->
+    <string-array name="gender_types">
+        <item>Laki-laki</item>
+        <item>Perempuan</item>
+        <item>Lainnya</item>
+    </string-array>
 
+    <!-- Activity Levels -->
+    <string-array name="activity_levels">
+        <item>Pasif atau Tidak Aktif</item>
+        <item>Ringan atau Sedikit Aktif</item>
+        <item>Sedang</item>
+        <item>Sangat Aktif</item>
+        <item>Super Aktif atau Extrem</item>
+    </string-array>
+
+    <!-- Diabetes Types -->
+    <string-array name="diabetes_types">
+        <item>Diabetes Tipe 1</item>
+        <item>Diabetes Tipe 2</item>
+        <item>Diabetes Gestasional</item>
+        <item>Prediabetes</item>
+        <item>Lainnya</item>
+    </string-array>
+
+    <!-- Miscellaneous -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
