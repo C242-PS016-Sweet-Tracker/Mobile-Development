@@ -45,7 +45,7 @@ class NewPasswordFragment : Fragment() {
         setupAction()
 
         password = binding.passwordEditText
-        rePassword = binding.passwordEditText
+        rePassword = binding.rePasswordEditText
 
         password.addTextChangedListener { checkFormValidity(password, rePassword) }
         rePassword.addTextChangedListener { checkFormValidity(password, rePassword) }
@@ -57,8 +57,21 @@ class NewPasswordFragment : Fragment() {
     ) {
         val isPasswordValid = password.error == null && password.text?.isNotEmpty() == true
         val isRePasswordValid = rePassword.error == null && rePassword.text?.isNotEmpty() == true
-        binding.sendButton.isEnabled = isPasswordValid && isRePasswordValid
+
+        // Tambahkan pengecekan apakah password dan rePassword sama
+        val isPasswordsMatch = password.text.toString() == rePassword.text.toString()
+
+//        // Jika tidak sama, set error pada rePassword
+        if (!isPasswordsMatch) {
+            rePassword.error = "Password tidak cocok"
+        } else {
+            rePassword.error = null // Hilangkan error jika cocok
+        }
+
+        // Tombol hanya aktif jika semua valid
+        binding.sendButton.isEnabled = isPasswordValid && isRePasswordValid && isPasswordsMatch
     }
+
 
 
     private fun changePass(password: String, rePassword: String) {
