@@ -15,6 +15,15 @@
         android:id="@+id/navigation_profile"
         android:name="com.capstone.sweettrack.view.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.capstone.sweettrack.view.ui.profile.EditProfileFragment"
+        android:label="@string/title_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
 </navigation>
