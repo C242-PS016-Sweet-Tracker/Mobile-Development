@@ -1,5 +1,6 @@
 package com.capstone.sweettrack.view.ui.home
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.capstone.sweettrack.view.ViewModelFactory
+import com.capstone.sweettrack.view.ui.login.LoginViewModel
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentHomeBinding
 
@@ -17,6 +23,10 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel by viewModels<HomeViewModel> {
+        ViewModelFactory.getInstance(requireActivity())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,12 +41,28 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupView()
+        setupObservers()
 
         binding.btnCamera.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_home_to_scanFoodFragment)
         }
         binding.btnFavorite.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_home_to_loginFragment)
+        }
+    }
+
+    private fun setupObservers() {
+        viewModel.getSession().observe(requireActivity()) { user ->
+            if (!user.isLogin) {
+//                val action = HomeFragmentDirections.actionNavigationHomeToLoginFragment()
+//                findNavController().navigate(action)
+            }
+        }
+
+        viewModel.errorMessage.observe(requireActivity()) { message ->
+            message?.let {
+                Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

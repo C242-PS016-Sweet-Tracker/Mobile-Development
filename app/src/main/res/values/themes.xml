@@ -5,5 +5,11 @@
          <item name="colorPrimary">@color/greenButton</item>
     </style>
 
+    <style name="BottomNavStyle">
+        <item name="android:background">@color/greenLight</item>
+        <item name="itemIconTint">@color/greenButton</item>
+        <item name="itemTextColor">@color/black</item>
+    </style>
+
     <style name="Theme.SweetTrack" parent="Base.Theme.SweetTrack" />
 </resources>

@@ -1,0 +1,13 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="200dp"
+    android:viewportWidth="360"
+    android:viewportHeight="200">
+
+    <!-- Gelombang -->
+    <path
+        android:fillColor="#A3D89E"
+        android:pathData="M0,100
+            C90,180 390,90 360,150
+            L360,200 L0,200 Z" />
+</vector>
