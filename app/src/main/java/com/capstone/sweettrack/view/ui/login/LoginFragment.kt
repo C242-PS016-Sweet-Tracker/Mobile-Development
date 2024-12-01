@@ -116,11 +116,9 @@ class LoginFragment : Fragment() {
         val decorView = window.decorView
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.let { controller ->
-                controller.hide(WindowInsets.Type.statusBars())
-                controller.systemBarsBehavior =
-                    WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            }
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+            window.insetsController?.systemBarsBehavior =
+                WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         } else {
             @Suppress("DEPRECATION")
             decorView.systemUiVisibility = (
@@ -131,6 +129,7 @@ class LoginFragment : Fragment() {
         }
         (requireActivity() as? AppCompatActivity)?.supportActionBar?.hide()
     }
+
 
 
     private fun playAnimation() {
@@ -180,7 +179,10 @@ class LoginFragment : Fragment() {
             val email = binding.emailEditText.text.toString().trim()
             val password = binding.passwordEditText.text.toString().trim()
 
-            loginAction(email, password)
+//            loginAction(email, password)
+
+            findNavController().navigate(R.id.action_loginFragment_to_userInformationFragment)
+
         }
     }
 

@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_loginFragment_to_fragmentResetPassword"
             app:destination="@id/fragmentResetPassword" />
+        <action
+            android:id="@+id/action_loginFragment_to_userInformationFragment"
+            app:destination="@id/userInformationFragment" />
     </fragment>
 
     <fragment
@@ -28,6 +31,9 @@
         <action
             android:id="@+id/action_navigation_home_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_scanFoodFragment"
+            app:destination="@id/scanFoodFragment" />
     </fragment>
 
     <fragment
@@ -81,4 +87,14 @@
             android:id="@+id/action_newPasswordFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/scanFoodFragment"
+        android:name="com.capstone.sweettrack.view.ui.scanfood.ScanFoodFragment"
+        android:label="fragment_scan_food"
+        tools:layout="@layout/fragment_scan_food" />
+    <fragment
+        android:id="@+id/userInformationFragment"
+        android:name="com.capstone.sweettrack.view.ui.userinformation.UserInformationFragment"
+        android:label="fragment_user_information"
+        tools:layout="@layout/fragment_user_information" />
 </navigation>

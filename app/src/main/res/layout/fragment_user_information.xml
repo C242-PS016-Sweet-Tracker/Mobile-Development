@@ -53,7 +53,7 @@
                 android:id="@+id/nameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Masukkan nama lengkap"/>
+                android:hint="Masukkan nama lengkap" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -83,8 +83,8 @@
                 android:id="@+id/ageEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:hint="Cth: 19"/>
+                android:hint="Masukkan umur cth: 19"
+                android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -138,7 +138,7 @@
                 android:id="@+id/heightEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Cth: 175"
+                android:hint="Masukkan tinggi badan cth: 175"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -170,8 +170,8 @@
                 android:id="@+id/weightEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:hint="Cth: 60"/>
+                android:hint="Masukkan berat badan cth: 60"
+                android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Dropdown tingkat aktivitas -->
@@ -247,7 +247,7 @@
                 android:id="@+id/lastBloodSugarEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Cth: 120"
+                android:hint="Masukkan gula darah cth: 120"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 

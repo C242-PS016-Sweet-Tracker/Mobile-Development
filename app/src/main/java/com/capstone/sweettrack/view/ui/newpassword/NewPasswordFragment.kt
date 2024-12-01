@@ -10,11 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
-import android.view.WindowManager
+import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
-import com.capstone.sweettrack.util.CustomEmailEditText
 import com.capstone.sweettrack.util.CustomPasswordEditText
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentNewPasswordBinding
@@ -71,13 +70,21 @@ class NewPasswordFragment : Fragment() {
 
     private fun setupView() {
         val window = requireActivity().window
+        val decorView = window.decorView
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
+            window.insetsController?.let { controller ->
+                controller.hide(WindowInsets.Type.statusBars())
+                controller.systemBarsBehavior =
+                    WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            }
         } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
+            @Suppress("DEPRECATION")
+            decorView.systemUiVisibility = (
+                    View.SYSTEM_UI_FLAG_FULLSCREEN
+                            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    )
         }
         (requireActivity() as? AppCompatActivity)?.supportActionBar?.hide()
     }
@@ -94,9 +101,11 @@ class NewPasswordFragment : Fragment() {
             ObjectAnimator.ofFloat(binding.passwordTextView, View.ALPHA, 1f).setDuration(100)
         val passwordEdit =
             ObjectAnimator.ofFloat(binding.passwordEditTextLayout, View.ALPHA, 1f).setDuration(100)
-        val rePassword = ObjectAnimator.ofFloat(binding.rePasswordTextView, View.ALPHA, 1f).setDuration(100)
+        val rePassword =
+            ObjectAnimator.ofFloat(binding.rePasswordTextView, View.ALPHA, 1f).setDuration(100)
         val rePasswordEdit =
-            ObjectAnimator.ofFloat(binding.rePasswordEditTextLayout, View.ALPHA, 1f).setDuration(100)
+            ObjectAnimator.ofFloat(binding.rePasswordEditTextLayout, View.ALPHA, 1f)
+                .setDuration(100)
         val prevBtn =
             ObjectAnimator.ofFloat(binding.prevButton, View.ALPHA, 1f).setDuration(100)
         val sendBtn = ObjectAnimator.ofFloat(binding.sendButton, View.ALPHA, 1f).setDuration(100)

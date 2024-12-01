@@ -1,5 +1,6 @@
 package com.capstone.sweettrack.data.remote.api
 
+import com.coding.sweettrack.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -7,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiConfig {
     companion object {
-        private const val BASE_URL = "https://example.com/" // Ganti dengan URL API Anda
+        private const val BASE_URL = BuildConfig.BASE_URL // Ganti dengan URL API Anda
 
         fun getApiService(): ApiService {
             val loggingInterceptor =
