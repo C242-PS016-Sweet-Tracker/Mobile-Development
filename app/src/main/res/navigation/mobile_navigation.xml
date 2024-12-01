@@ -23,6 +23,7 @@
             app:destination="@id/userInformationFragment" />
     </fragment>
 
+    <!-- Home Fragment -->
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.capstone.sweettrack.view.ui.home.HomeFragment"
@@ -36,12 +37,13 @@
             app:destination="@id/scanFoodFragment" />
     </fragment>
 
+    <!-- Profile Fragment -->
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.capstone.sweettrack.view.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
-
+  
     <fragment
         android:id="@+id/fragmentSignUp"
         android:name="com.capstone.sweettrack.view.ui.signup.SignUpFragment"

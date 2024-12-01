@@ -3,7 +3,8 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_home">Home</string>
     <string name="title_profile">Profile</string>
-
+  
+  
     <!-- Login Section -->
     <string name="login">Login</string>
     <string name="password">Password</string>
@@ -11,6 +12,8 @@
     <string name="fill_all_fields">Please fill in all fields</string>
     <string name="login_successful">Login Successful!</string>
     <string name="login_failed">Login Failed! Please check your credentials.</string>
+
+ 
     <string name="sign_up">Sign-Up</string>
     <string name="username">Username</string>
     <string name="usernameHint">Masukkan username Anda</string>
@@ -18,6 +21,7 @@
     <string name="emailHint">Masukkan email Anda</string>
     <string name="ulangi_password">Ulangi Password</string>
     <string name="ulangPassHint">Masukkan ulang password Anda</string>
+
     <string name="lupa_password">Lupa Password?</string>
     <string name="daftar">Belum punya akun?\n<font color="#0000FF">Daftar</font></string>
     <string name="invalid_format_email">Format email tidak valid</string>
