@@ -3,4 +3,12 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_home">Home</string>
     <string name="title_profile">Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="back">back</string>
+    <string name="fotoprofile">fotoProfile</string>
+    <string name="nama_lengkap">Nama Lengkap</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="tanggal_lahir">Tanggal Lahir</string>
+    <string name="save_changes">Save Changes</string>
 </resources>
