@@ -14,7 +14,7 @@
         android:alpha="0"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.15"
-        tools:alpha="100"/>
+        tools:alpha="100" />
 
     <!-- Vertikal guideline untuk memastikan elemen berada di tengah -->
     <androidx.constraintlayout.widget.Guideline
@@ -23,11 +23,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.08" />
-
-
-    <!-- Judul Login -->
-
-    <!-- Label Username -->
 
     <ImageView
         android:layout_width="match_parent"
@@ -42,19 +37,19 @@
         android:id="@+id/loginTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:alpha="0"
         android:text="@string/login"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:alpha="0"
         app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontalTop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guidelineHorizontalTop"
         app:layout_constraintVertical_bias="1.0"
-        tools:alpha="100"/>
+        tools:alpha="100" />
 
     <!-- Input Username -->
 
@@ -88,14 +83,14 @@
         app:layout_constraintTop_toBottomOf="@+id/emailTV"
         tools:alpha="100">
 
-    <com.capstone.sweettrack.util.CustomEmailEditText
-        android:id="@+id/emailEditText"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:hint="@string/emailHint"
-        android:paddingStart="10dp"
-        android:ems="10"
-        android:inputType="textEmailAddress" />
+        <com.capstone.sweettrack.util.CustomEmailEditText
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:ems="10"
+            android:hint="@string/emailHint"
+            android:inputType="textEmailAddress"
+            android:paddingStart="10dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,14 +101,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="27dp"
-        android:text="@string/password"
         android:alpha="0"
+        android:text="@string/password"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout"
-        tools:alpha="100"/>
+        tools:alpha="100" />
 
     <!--  Input Password  -->
 
@@ -147,7 +142,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <!-- Label "Belum punya akun? Daftar" dan "Lupa password" dalam satu baris -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -161,8 +155,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:text="@string/daftar"
             android:alpha="0"
+            android:text="@string/daftar"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -193,13 +187,13 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="100dp"
-        android:text="@string/login"
         android:alpha="0"
+        android:text="@string/login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:alpha="100"/>
+        tools:alpha="100" />
 
     <ProgressBar
         android:id="@+id/progressBar"

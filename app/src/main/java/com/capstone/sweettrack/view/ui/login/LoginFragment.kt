@@ -185,10 +185,6 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_authenticationFragment)
 
         }
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            requireActivity().finish()
-        }
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -204,7 +200,7 @@ class LoginFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
-        bottomNavigationView?.visibility = View.VISIBLE
+        bottomNavigationView?.visibility = View.GONE
     }
 
     override fun onDestroyView() {

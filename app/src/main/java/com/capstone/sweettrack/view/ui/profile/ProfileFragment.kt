@@ -64,7 +64,7 @@ class ProfileFragment : Fragment() {
         }
 
         binding.ivLogOut.setOnClickListener {
-            val action = ProfileFragmentDirections.actionNavigationProfileToLoginFragment()
+            val action = ProfileFragmentDirections.actionNavigationProfileToWelcomeFragment()
             findNavController().navigate(action)
         }
 
