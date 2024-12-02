@@ -14,7 +14,6 @@
     <string name="email_example_com">email@example.com</string>
     <string name="jenis_kelamin">Jenis Kelamin</string>
     <string name="laki_laki_perempuan">Laki-Laki/Perempuan</string>
-    <string name="username">Username</string>
     <string name="tingkat_diabet">Tingkat Diabet</string>
     <string name="edit_profile_image">Edit Profile Image</string>
     <string name="settings">Settings</string>
