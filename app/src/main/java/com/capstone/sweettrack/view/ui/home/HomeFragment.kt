@@ -47,7 +47,7 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_home_to_scanFoodFragment)
         }
         binding.btnFavorite.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_home_to_loginFragment)
+            findNavController().navigate(R.id.action_navigation_home_to_favoriteFragment)
         }
     }
 
