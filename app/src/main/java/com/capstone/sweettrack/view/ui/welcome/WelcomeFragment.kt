@@ -71,7 +71,7 @@ class WelcomeFragment : Fragment() {
         ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_X, -30f, 30f).apply {
             duration = 6000
             repeatCount = ObjectAnimator.INFINITE
-            repeatMode = ObjectAnimator.RESTART
+            repeatMode = ObjectAnimator.REVERSE
         }.start()
 
         val login = ObjectAnimator.ofFloat(binding.loginButton, View.ALPHA, 1f).setDuration(100)
@@ -112,7 +112,9 @@ class WelcomeFragment : Fragment() {
                 }
 
                 WelcomeViewModel.NavigateTo.SIGNUP -> {
-                    navController.navigate(R.id.action_loginFragment_to_fragmentSignUp)
+                    navController.navigate(
+                        R.id.action_welcomeFragment_to_fragmentSignUp
+                    )
                     viewModel.navigationDone()
                 }
 

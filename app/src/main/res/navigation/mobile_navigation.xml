@@ -138,4 +138,13 @@
         android:id="@+id/detailFragment"
         android:name="com.capstone.sweettrack.view.ui.detail.DetailFragment"
         android:label="DetailFragment" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.capstone.sweettrack.view.ui.splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 </navigation>
