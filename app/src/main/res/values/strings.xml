@@ -4,6 +4,13 @@
     <string name="title_home">Home</string>
     <string name="title_profile">Profile</string>
 
+  
+    <string name="favorite">Favorite</string>
+    <string name="favorite_subtitle">Temukan menu favoritmu di sini!</string>
+    <string name="food_image">Gambar Makanan</string>
+    <string name="detail">Detail</string>
+
+
     <string name="back">back</string>
     <string name="fotoprofile">fotoProfile</string>
 
