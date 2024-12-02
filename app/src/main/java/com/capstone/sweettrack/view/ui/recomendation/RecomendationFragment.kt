@@ -12,25 +12,32 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.capstone.sweettrack.data.response.ListEventsItem
-import com.capstone.sweettrack.databinding.FragmentRecommendationBinding
-import com.capstone.sweettrack.ui.adapter.EventAdapter
-import com.capstone.sweettrack.ui.detail.DetailActivity
-import com.capstone.sweettrack.ui.detail.DetailActivity.Companion.EXTRA_ID
+import com.coding.sweettrack.databinding.FragmentLoginBinding
 import com.coding.sweettrack.databinding.FragmentRecomendationBinding
 
 class RecomendationFragment : Fragment() {
 
+
     private var _binding: FragmentRecomendationBinding? = null
     private val binding get() = _binding!!
     private lateinit var recommendationViewModel: RecomendationViewModel
-    private lateinit var adapter: EventAdapter
+//    private lateinit var adapter: EventAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        _binding = FragmentRecomendationBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+        /*
         recommendationViewModel = ViewModelProvider(this).get(RecomendationViewModel::class.java)
 
         _binding = FragmentRecomendationBinding.inflate(inflater, container, false)
@@ -69,6 +76,8 @@ class RecomendationFragment : Fragment() {
             Log.e("RecommendationFragmentClickTest", "Event ID is null")
         }
     }
+
+         */
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -3,20 +3,17 @@ package com.capstone.sweettrack.view.ui.recomendation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.capstone.sweettrack.data.response.ListEventsItem
 
 class RecomendationViewModel : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private val _listEventsItem = MutableLiveData<List<ListEventsItem>>()
-    val listEventsItem: LiveData<List<ListEventsItem>> get() = _listEventsItem
-
     init {
-        fetchRecommendations()
+//        fetchRecommendations()
     }
 
+    /*
     private fun fetchRecommendations() {
         // Simulate loading data
         _isLoading.value = true
@@ -36,4 +33,6 @@ class RecomendationViewModel : ViewModel() {
             _isLoading.postValue(false)
         }.start()
     }
+
+     */
 }
