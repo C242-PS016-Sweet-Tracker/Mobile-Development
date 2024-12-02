@@ -41,6 +41,9 @@
         <action
             android:id="@+id/action_navigation_home_to_favoriteFragment"
             app:destination="@id/favoriteFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
 
     <!-- Profile Fragment -->
@@ -131,4 +134,8 @@
         android:name="com.capstone.sweettrack.view.ui.favorite.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.capstone.sweettrack.view.ui.detail.DetailFragment"
+        android:label="DetailFragment" />
 </navigation>
