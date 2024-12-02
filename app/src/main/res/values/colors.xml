@@ -3,4 +3,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#88C273</color>
+    <color name="greenButton">#5F6F65</color>
+    <color name="greenLight">#88C273</color>
+    <color name="blue">#1F509A</color>
+    <color name="lightBlue">#1FABED</color>
+    <color name="greenActive">#4CAF50</color>
+    <color name="greenInactive">#8BC34A</color>
 </resources>
