@@ -182,7 +182,7 @@ class LoginFragment : Fragment() {
 
 //            loginAction(email, password)
 
-            findNavController().navigate(R.id.action_loginFragment_to_userInformationFragment)
+            findNavController().navigate(R.id.action_loginFragment_to_authenticationFragment)
 
         }
 

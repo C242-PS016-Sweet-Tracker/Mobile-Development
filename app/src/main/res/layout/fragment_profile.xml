@@ -53,17 +53,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
-    <ImageView
-        android:id="@+id/ivCamera"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/baseline_camera_alt_24"
-        android:contentDescription="@string/edit_profile_image"
-        app:layout_constraintBottom_toBottomOf="@id/ivProfileImage"
-        app:layout_constraintEnd_toEndOf="@id/ivProfileImage"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"/>
-
     <!-- Username -->
     <TextView
         android:id="@+id/tvUsername"
