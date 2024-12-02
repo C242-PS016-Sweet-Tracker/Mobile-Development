@@ -3,4 +3,10 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_home">Home</string>
     <string name="title_profile">Profile</string>
+    <string name="back">back</string>
+    <string name="settings">Settings</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="edit_informasi_pengguna">Edit Informasi Pengguna</string>
+    <string name="pengingat_makan">Pengingat Makan</string>
+    <string name="pengingat_cek_kesehatan">Pengingat Cek Kesehatan</string>
 </resources>
