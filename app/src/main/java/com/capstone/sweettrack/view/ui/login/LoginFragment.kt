@@ -14,7 +14,6 @@ import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.widget.Toast
-import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -22,6 +21,8 @@ import androidx.navigation.fragment.findNavController
 import com.capstone.sweettrack.data.pref.UserModel
 import com.capstone.sweettrack.util.CustomEmailEditText
 import com.capstone.sweettrack.util.CustomPasswordEditText
+import com.capstone.sweettrack.view.ViewModelFactory
+import com.capstone.sweettrack.view.ui.home.HomeFragmentDirections
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentLoginBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -31,7 +32,9 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val loginViewModel: LoginViewModel by viewModels()
+    private val loginViewModel by viewModels<LoginViewModel> {
+        ViewModelFactory.getInstance(requireActivity())
+    }
 
     private lateinit var email: CustomEmailEditText
     private lateinit var password: CustomPasswordEditText
@@ -54,6 +57,13 @@ class LoginFragment : Fragment() {
         email = binding.emailEditText
         password = binding.passwordEditText
 
+        binding.loginButton.setOnClickListener {
+            val emailText = email.text.toString()
+            val passText = password.text.toString()
+
+            loginAction(emailText, passText)
+        }
+
         email.addTextChangedListener { checkFormValidity(email, password) }
         password.addTextChangedListener { checkFormValidity(email, password) }
     }
@@ -73,9 +83,12 @@ class LoginFragment : Fragment() {
             showLoading(isLoading)
         }
 
+        println("username $email")
+        println("pass $password")
         loginViewModel.login(email, password)
 
         loginViewModel.loginResult.observe(requireActivity()) { result ->
+            println("result $result")
             if (result != null) {
                 if (result.error != true) {
                     val user = result.loginResult
@@ -92,7 +105,8 @@ class LoginFragment : Fragment() {
 
                         Handler(Looper.getMainLooper()).postDelayed({
                             alertDialog.dismiss()
-                            findNavController().navigate(R.id.action_loginFragment_to_navigation_home)
+                            val action = LoginFragmentDirections.actionLoginFragmentToNavigationHome()
+                            findNavController().navigate(action)
                         }, 2000)
                     }
                 } else {
@@ -176,15 +190,7 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_fragmentResetPassword)
         }
 
-        binding.loginButton.setOnClickListener {
-            val email = binding.emailEditText.text.toString().trim()
-            val password = binding.passwordEditText.text.toString().trim()
 
-//            loginAction(email, password)
-
-            findNavController().navigate(R.id.action_loginFragment_to_authenticationFragment)
-
-        }
     }
 
     private fun showLoading(isLoading: Boolean) {

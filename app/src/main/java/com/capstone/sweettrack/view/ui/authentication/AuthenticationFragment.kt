@@ -8,11 +8,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.capstone.sweettrack.util.CustomEmailEditText
 import com.capstone.sweettrack.util.CustomNumberEditText
 import com.capstone.sweettrack.util.CustomPasswordEditText
+import com.capstone.sweettrack.view.ViewModelFactory
+import com.capstone.sweettrack.view.ui.home.HomeViewModel
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentAuthenticationBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -21,8 +25,13 @@ class AuthenticationFragment : Fragment() {
 
     private var _binding: FragmentAuthenticationBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: AuthenticationViewModel by viewModels()
 
+    private val viewModel by viewModels<AuthenticationViewModel> {
+        ViewModelFactory.getInstance(requireActivity())
+    }
+
+    private lateinit var email: String
+    private lateinit var password: String
     private lateinit var kode: CustomNumberEditText
 
     override fun onCreateView(
@@ -36,6 +45,10 @@ class AuthenticationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val args: AuthenticationFragmentArgs by navArgs()
+        email = args.email
+        password = args.password
 
         kode = binding.codeEditText
 
@@ -93,11 +106,38 @@ class AuthenticationFragment : Fragment() {
         }
 
         binding.sendButton.setOnClickListener {
-
-            findNavController().navigate(R.id.action_authenticationFragment_to_userInformationFragment)
-
+            verifyOTP()
         }
 
+    }
+
+    private fun verifyOTP() {
+        val emailText = email
+        val otpText = kode.text.toString()
+        val passwordText = password
+
+        viewModel.verifyOTP(emailText, otpText, passwordText)
+
+        viewModel.verifyResult.observe(viewLifecycleOwner) { result ->
+            if (result != null) {
+                if (result.statusCode == 201) {
+                    // Jika berhasil
+                    Toast.makeText(requireContext(), result.describe, Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_authenticationFragment_to_loginFragment)
+                } else {
+                    // Jika gagal
+                    Toast.makeText(requireContext(), result.describe, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            showLoading(isLoading)
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onResume() {

@@ -44,10 +44,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.getSession().observe(requireActivity()) { user ->
-            if (!user.isLogin) {
-//                val action = HomeFragmentDirections.actionNavigationHomeToLoginFragment()
-//                findNavController().navigate(action)
+        viewModel.getSession().observe(viewLifecycleOwner) { user ->
+            if (!user.isLogin && findNavController().currentDestination?.id != R.id.welcomeFragment) {
+                val action = HomeFragmentDirections.actionNavigationHomeToWelcomeFragment()
+                findNavController().navigate(action)
             }
         }
 

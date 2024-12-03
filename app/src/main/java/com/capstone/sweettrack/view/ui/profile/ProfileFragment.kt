@@ -11,8 +11,10 @@ import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.capstone.sweettrack.view.ViewModelFactory
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentProfileBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -21,6 +23,11 @@ class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel by viewModels<ProfileViewModel> {
+        ViewModelFactory.getInstance(requireActivity())
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,6 +78,7 @@ class ProfileFragment : Fragment() {
         binding.ivLogOut.setOnClickListener {
             val action = ProfileFragmentDirections.actionNavigationProfileToWelcomeFragment()
             findNavController().navigate(action)
+            viewModel.logOut()
         }
 
     }

@@ -4,18 +4,25 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.capstone.sweettrack.util.CustomEmailEditText
 import com.capstone.sweettrack.util.CustomPasswordEditText
+import com.capstone.sweettrack.view.ViewModelFactory
+import com.capstone.sweettrack.view.ui.login.LoginFragmentDirections
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentSignUpBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -25,7 +32,10 @@ class SignUpFragment : Fragment() {
 
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: SignUpViewModel by activityViewModels()
+
+    private val viewModel: SignUpViewModel by viewModels {
+        ViewModelFactory.getInstance(requireActivity())
+    }
 
     private lateinit var username: TextInputEditText
     private lateinit var email: CustomEmailEditText
@@ -82,26 +92,40 @@ class SignUpFragment : Fragment() {
     }
 
     private fun register() {
+
+        showLoading(true)
+
         val usernameText = username.text.toString()
-        val emailText = password.text.toString()
+        val emailText = email.text.toString()
         val passText = password.text.toString()
-        val rePassword = rePassword.text.toString().trim()
 
-//        showLoading(true)
+        viewModel.requestOTP(usernameText, emailText, passText)
 
-        findNavController().navigate(R.id.action_fragmentSignUp_to_loginFragment)
+        viewModel.registerResult.observe(requireActivity()){ result ->
+            if (result != null) {
+                println("Result $result")
+                if (result.error!= true) {
+                    showLoading(false)
+                    val alertDialog = AlertDialog.Builder(requireActivity()).apply {
+                        setTitle("Verifikasi Akun!")
+                        setMessage("Cek email!! dan masukkan kode OTP")
+                        setCancelable(false)
+                        create()
+                    }.show()
 
-
-//        if (viewModel.validateInputs(username, email, password, confirmPassword)) {
-//            // Simulate Sign Up Success
-//            Toast.makeText(requireContext(), "Sign Up Successful!", Toast.LENGTH_SHORT).show()
-//
-//            // Navigate to LoginFragment
-//            findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
-//        } else {
-//            Toast.makeText(requireContext(), "Please check your inputs.", Toast.LENGTH_SHORT).show()
-//        }
-
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        alertDialog.dismiss()
+                        val action = SignUpFragmentDirections.actionFragmentSignUpToAuthenticationFragment(
+                            email = emailText,
+                            password = passText
+                        )
+                        findNavController().navigate(action)
+                    }, 3000)
+                } else {
+                    showLoading(false)
+                }
+            }
+        }
 
     }
 

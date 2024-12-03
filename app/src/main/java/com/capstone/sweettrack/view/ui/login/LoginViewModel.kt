@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capstone.sweettrack.data.Repository
 import com.capstone.sweettrack.data.pref.UserModel
+import com.capstone.sweettrack.data.remote.response.LoginRequest
 import com.capstone.sweettrack.data.remote.response.LoginResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -25,14 +26,15 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val response = repository.login(email, password)
+                val loginRequest = LoginRequest(email, password)
+                val response = repository.login(loginRequest)
                 _loginResult.postValue(response)
             } catch (e: HttpException) {
                 val errorBody = e.response()?.errorBody()?.string()
                 val parsedError = Gson().fromJson(errorBody, LoginResponse::class.java)
                 val errorResponse = LoginResponse(
                     error = true,
-                    message = parsedError?.message
+                    message = parsedError?.message ?: "Login gagal"
                 )
                 _loginResult.postValue(errorResponse)
             } catch (e: Exception) {
@@ -42,6 +44,7 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
             }
         }
     }
+
 
     fun saveSession(user: UserModel) {
         viewModelScope.launch {
