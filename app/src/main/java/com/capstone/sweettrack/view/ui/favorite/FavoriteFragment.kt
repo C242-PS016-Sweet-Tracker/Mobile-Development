@@ -7,25 +7,45 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.coding.sweettrack.R
+import com.coding.sweettrack.databinding.FragmentDetailBinding
+import com.coding.sweettrack.databinding.FragmentFavoriteBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class FavoriteFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = FavoriteFragment()
-    }
+    private var _binding: FragmentFavoriteBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel: FavoriteViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_favorite, container, false)
+        _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigationView?.visibility = View.GONE
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigationView?.visibility = View.VISIBLE
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }
