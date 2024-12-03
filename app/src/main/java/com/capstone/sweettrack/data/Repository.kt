@@ -3,8 +3,12 @@ package com.capstone.sweettrack.data
 import com.capstone.sweettrack.data.pref.UserModel
 import com.capstone.sweettrack.data.pref.UserPreference
 import com.capstone.sweettrack.data.remote.api.ApiService
+import com.capstone.sweettrack.data.remote.response.LoginRequest
 import com.capstone.sweettrack.data.remote.response.LoginResponse
-import com.capstone.sweettrack.data.remote.response.RegisterResponse
+import com.capstone.sweettrack.data.remote.response.OTPRequest
+import com.capstone.sweettrack.data.remote.response.OTPResponse
+import com.capstone.sweettrack.data.remote.response.VerifyOtpRequest
+import com.capstone.sweettrack.data.remote.response.VerifyOtpResponse
 import kotlinx.coroutines.flow.Flow
 
 class Repository private constructor(
@@ -21,9 +25,8 @@ class Repository private constructor(
     }
 
 
-    suspend fun login(email: String, password: String): LoginResponse {
-        val response = apiService.login(email, password)
-
+    suspend fun login(loginRequest: LoginRequest): LoginResponse {
+        val response = apiService.login(loginRequest)
         val loginResult = response.loginResult ?: throw IllegalStateException("Login result is null")
         val userModel = UserModel(
             userId = loginResult.userId ?: "",
@@ -37,8 +40,14 @@ class Repository private constructor(
     }
 
 
-    suspend fun register(name: String, email: String, password: String): RegisterResponse {
-        return apiService.register(name, email, password)
+    suspend fun requestOtp(otpRequest: OTPRequest): OTPResponse {
+        val response = apiService.requestOTP(otpRequest)
+        return response
+    }
+
+    suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): VerifyOtpResponse {
+        val response = apiService.verifyOtp(verifyOtpRequest)
+        return response
     }
 
 

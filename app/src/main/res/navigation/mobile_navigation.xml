@@ -18,12 +18,6 @@
         <action
             android:id="@+id/action_loginFragment_to_fragmentResetPassword"
             app:destination="@id/fragmentResetPassword" />
-        <action
-            android:id="@+id/action_loginFragment_to_userInformationFragment"
-            app:destination="@id/userInformationFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_authenticationFragment"
-            app:destination="@id/authenticationFragment" />
     </fragment>
 
     <!-- Home Fragment -->
@@ -32,9 +26,7 @@
         android:name="com.capstone.sweettrack.view.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_navigation_home_to_loginFragment"
-            app:destination="@id/loginFragment" />
+
         <action
             android:id="@+id/action_navigation_home_to_scanFoodFragment"
             app:destination="@id/scanFoodFragment" />
@@ -47,6 +39,9 @@
         <action
             android:id="@+id/action_navigation_home_to_calculatorFragmentOne"
             app:destination="@id/calculatorFragmentOne" />
+        <action
+            android:id="@+id/action_navigation_home_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
     </fragment>
 
     <!-- Profile Fragment -->
@@ -74,6 +69,9 @@
         <action
             android:id="@+id/action_fragmentSignUp_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_fragmentSignUp_to_authenticationFragment"
+            app:destination="@id/authenticationFragment" />
     </fragment>
 
     <fragment
@@ -131,9 +129,18 @@
         android:name="com.capstone.sweettrack.view.ui.authentication.AuthenticationFragment"
         android:label="Authentication"
         tools:layout="@layout/fragment_authentication" >
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <argument
+            android:name="password"
+            app:argType="string" />
         <action
             android:id="@+id/action_authenticationFragment_to_userInformationFragment"
             app:destination="@id/userInformationFragment" />
+        <action
+            android:id="@+id/action_authenticationFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"

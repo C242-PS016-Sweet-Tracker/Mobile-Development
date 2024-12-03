@@ -24,7 +24,7 @@ class CustomNumberEditText @JvmOverloads constructor(
     }
 
     private fun validateNumber(number: String) {
-        error = if (number.length < 4) {
+        error = if (number.length < 6) {
             context.getString(R.string.invalid_format_number)
         } else {
             null
