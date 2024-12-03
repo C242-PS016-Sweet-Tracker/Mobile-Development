@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentProfileBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ProfileFragment : Fragment() {
 
@@ -63,12 +64,29 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_profile_to_editProfileFragment)
         }
 
+        binding.ivSetting.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_profile_to_settingFragment)
+        }
+
         binding.ivLogOut.setOnClickListener {
             val action = ProfileFragmentDirections.actionNavigationProfileToWelcomeFragment()
             findNavController().navigate(action)
         }
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigationView?.visibility = View.VISIBLE
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigationView?.visibility = View.VISIBLE
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

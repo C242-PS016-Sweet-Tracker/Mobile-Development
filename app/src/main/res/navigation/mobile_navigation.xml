@@ -61,6 +61,9 @@
         <action
             android:id="@+id/action_navigation_profile_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_settingFragment"
+            app:destination="@id/settingFragment" />
     </fragment>
   
     <fragment
@@ -100,7 +103,7 @@
     <fragment
         android:id="@+id/newPasswordFragment"
         android:name="com.capstone.sweettrack.view.ui.newpassword.NewPasswordFragment"
-        android:label="NewPasswordFragment" >
+        android:label="New Password" >
         <action
             android:id="@+id/action_newPasswordFragment_to_fragmentResetPassword"
             app:destination="@id/fragmentResetPassword" />
@@ -111,22 +114,22 @@
     <fragment
         android:id="@+id/scanFoodFragment"
         android:name="com.capstone.sweettrack.view.ui.scanfood.ScanFoodFragment"
-        android:label="fragment_scan_food"
+        android:label="Scan Food"
         tools:layout="@layout/fragment_scan_food" />
     <fragment
         android:id="@+id/userInformationFragment"
         android:name="com.capstone.sweettrack.view.ui.userinformation.UserInformationFragment"
-        android:label="fragment_user_information"
+        android:label="Informasi User"
         tools:layout="@layout/fragment_user_information" />
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.capstone.sweettrack.view.ui.editprofile.EditProfileFragment"
-        android:label="fragment_edit_profile"
+        android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile" />
     <fragment
         android:id="@+id/authenticationFragment"
         android:name="com.capstone.sweettrack.view.ui.authentication.AuthenticationFragment"
-        android:label="fragment_authentication"
+        android:label="Authentication"
         tools:layout="@layout/fragment_authentication" >
         <action
             android:id="@+id/action_authenticationFragment_to_userInformationFragment"
@@ -135,12 +138,12 @@
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.capstone.sweettrack.view.ui.favorite.FavoriteFragment"
-        android:label="fragment_favorite"
+        android:label="Favorite"
         tools:layout="@layout/fragment_favorite" />
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.capstone.sweettrack.view.ui.detail.DetailFragment"
-        android:label="DetailFragment" />
+        android:label="Detail" />
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.capstone.sweettrack.view.ui.splash.SplashFragment"
@@ -153,7 +156,7 @@
     <fragment
         android:id="@+id/calculatorFragmentOne"
         android:name="com.capstone.sweettrack.view.ui.calculatorcalori.stepone.CalculatorFragmentOne"
-        android:label="fragment_calculator_one"
+        android:label="Kalkulator Kalori"
         tools:layout="@layout/fragment_calculator_one" >
         <action
             android:id="@+id/action_calculatorFragmentOne_to_calculatorFragmentTwo"
@@ -162,7 +165,7 @@
     <fragment
         android:id="@+id/calculatorFragmentTwo"
         android:name="com.capstone.sweettrack.view.ui.calculatorcalori.steptwo.CalculatorFragmentTwo"
-        android:label="fragment_calculator_two"
+        android:label="Kalkulator Kalori"
         tools:layout="@layout/fragment_calculator_two" >
         <action
             android:id="@+id/action_calculatorFragmentTwo_to_calculatorFragmentResult"
@@ -171,6 +174,15 @@
     <fragment
         android:id="@+id/calculatorFragmentResult"
         android:name="com.capstone.sweettrack.view.ui.calculatorcalori.result.CalculatorFragmentResult"
-        android:label="fragment_calculator_result"
+        android:label="Kalkulator Kalori"
         tools:layout="@layout/fragment_calculator_result" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.capstone.sweettrack.view.ui.setting.SettingFragment"
+        android:label="Setting"
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingFragment_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
 </navigation>

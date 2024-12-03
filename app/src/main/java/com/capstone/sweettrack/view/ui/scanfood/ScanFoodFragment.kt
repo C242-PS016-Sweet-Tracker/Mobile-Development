@@ -3,24 +3,24 @@ package com.capstone.sweettrack.view.ui.scanfood
 import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowInsets
-import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuProvider
+import androidx.navigation.fragment.findNavController
 import com.capstone.sweettrack.util.getImageUri
-import com.capstone.sweettrack.view.ui.login.LoginViewModel
 import com.coding.sweettrack.R
-import com.coding.sweettrack.databinding.FragmentLoginBinding
 import com.coding.sweettrack.databinding.FragmentScanFoodBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -54,6 +54,7 @@ class ScanFoodFragment : Fragment() {
         if (!allPermissionsGranted()) {
             requestPermissionLauncher.launch(REQUIRED_PERMISSION)
         }
+
         setupObservers()
         setupView()
 
@@ -64,22 +65,27 @@ class ScanFoodFragment : Fragment() {
     }
 
     private fun setupView() {
-        val window = requireActivity().window
-        val decorView = window.decorView
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-            window.insetsController?.systemBarsBehavior =
-                WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        } else {
-            @Suppress("DEPRECATION")
-            decorView.systemUiVisibility = (
-                    View.SYSTEM_UI_FLAG_FULLSCREEN
-                            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    )
+        (activity as AppCompatActivity).supportActionBar?.apply {
+            setDisplayShowHomeEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+            setHomeButtonEnabled(true)
+            show()
         }
-        (requireActivity() as? AppCompatActivity)?.supportActionBar?.show()
+
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    android.R.id.home -> {
+                        findNavController().navigateUp()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner)
     }
 
     private fun setupObservers() {
