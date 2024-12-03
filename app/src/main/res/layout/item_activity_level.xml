@@ -16,7 +16,7 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/titleTextView"
+            android:id="@+id/titleActTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Judul Tingkat Aktivitas"
