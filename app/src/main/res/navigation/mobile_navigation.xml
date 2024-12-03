@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_navigation_home_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_calculatorFragmentOne"
+            app:destination="@id/calculatorFragmentOne" />
     </fragment>
 
     <!-- Profile Fragment -->
@@ -147,4 +150,27 @@
             android:id="@+id/action_splashFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
     </fragment>
+    <fragment
+        android:id="@+id/calculatorFragmentOne"
+        android:name="com.capstone.sweettrack.view.ui.calculatorcalori.stepone.CalculatorFragmentOne"
+        android:label="fragment_calculator_one"
+        tools:layout="@layout/fragment_calculator_one" >
+        <action
+            android:id="@+id/action_calculatorFragmentOne_to_calculatorFragmentTwo"
+            app:destination="@id/calculatorFragmentTwo" />
+    </fragment>
+    <fragment
+        android:id="@+id/calculatorFragmentTwo"
+        android:name="com.capstone.sweettrack.view.ui.calculatorcalori.steptwo.CalculatorFragmentTwo"
+        android:label="fragment_calculator_two"
+        tools:layout="@layout/fragment_calculator_two" >
+        <action
+            android:id="@+id/action_calculatorFragmentTwo_to_calculatorFragmentResult"
+            app:destination="@id/calculatorFragmentResult" />
+    </fragment>
+    <fragment
+        android:id="@+id/calculatorFragmentResult"
+        android:name="com.capstone.sweettrack.view.ui.calculatorcalori.result.CalculatorFragmentResult"
+        android:label="fragment_calculator_result"
+        tools:layout="@layout/fragment_calculator_result" />
 </navigation>

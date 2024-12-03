@@ -40,13 +40,7 @@ class HomeFragment : Fragment() {
 
         setupView()
         setupObservers()
-
-        binding.btnCamera.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_home_to_scanFoodFragment)
-        }
-        binding.btnFavorite.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_home_to_favoriteFragment)
-        }
+        setupAction()
     }
 
     private fun setupObservers() {
@@ -83,6 +77,18 @@ class HomeFragment : Fragment() {
                     )
         }
         (requireActivity() as? AppCompatActivity)?.supportActionBar?.hide()
+    }
+
+    private fun setupAction() {
+        binding.btnCamera.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_scanFoodFragment)
+        }
+        binding.btnCalculate.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_calculatorFragmentOne)
+        }
+        binding.btnFavorite.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_favoriteFragment)
+        }
     }
 
     override fun onResume() {
