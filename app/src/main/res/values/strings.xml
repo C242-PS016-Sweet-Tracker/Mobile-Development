@@ -4,6 +4,12 @@
     <string name="title_home">Home</string>
     <string name="title_profile">Profile</string>
 
+  
+    <string name="edit_informasi_pengguna">Edit Informasi Pengguna</string>
+    <string name="pengingat_makan">Pengingat Makan</string>
+    <string name="pengingat_cek_kesehatan">Pengingat Cek Kesehatan</string>
+
+
     <!-- Detail -->
     <string name="detail_makanan">Detail Makanan</string>
     <string name="nama_makanan">Nama Makanan</string>
