@@ -118,7 +118,11 @@
         android:id="@+id/userInformationFragment"
         android:name="com.capstone.sweettrack.view.ui.userinformation.UserInformationFragment"
         android:label="Informasi User"
-        tools:layout="@layout/fragment_user_information" />
+        tools:layout="@layout/fragment_user_information" >
+        <action
+            android:id="@+id/action_userInformationFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.capstone.sweettrack.view.ui.editprofile.EditProfileFragment"

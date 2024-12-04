@@ -12,6 +12,7 @@ import android.view.WindowInsetsController
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentUserInformationBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -108,6 +109,8 @@ class UserInformationFragment : Fragment() {
         viewModel.isSuccess.observe(viewLifecycleOwner) { isSuccess ->
             if (isSuccess) {
                 Toast.makeText(requireContext(), "Data berhasil dikirim", Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_userInformationFragment_to_navigation_home)
+
             }
         }
 

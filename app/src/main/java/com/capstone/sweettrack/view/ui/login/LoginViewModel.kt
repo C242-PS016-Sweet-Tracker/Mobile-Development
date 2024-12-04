@@ -16,7 +16,7 @@ import retrofit2.HttpException
 
 class LoginViewModel(private val repository: Repository) : ViewModel() {
 
-    private val _loginResult = MutableLiveData<LoginResponse>() //Any karena belum ada response
+    private val _loginResult = MutableLiveData<LoginResponse>()
     val loginResult: LiveData<LoginResponse> get() = _loginResult
 
     private val _isLoading = MutableLiveData<Boolean>()

@@ -25,3 +25,7 @@ data class VerifyOtpResponse(
     val message: String,
     val describe: String
 )
+
+data class ResendingOTPRequest(
+    val email: String,
+)

@@ -79,16 +79,13 @@ class LoginFragment : Fragment() {
 
     private fun loginAction(email: String, password: String) {
 
-        loginViewModel.isLoading.observe(requireActivity()) { isLoading ->
+        loginViewModel.login(email, password)
+
+        loginViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             showLoading(isLoading)
         }
 
-        println("username $email")
-        println("pass $password")
-        loginViewModel.login(email, password)
-
-        loginViewModel.loginResult.observe(requireActivity()) { result ->
-            println("result $result")
+        loginViewModel.loginResult.observe(viewLifecycleOwner) { result ->
             if (result != null) {
                 if (result.error != true) {
                     val user = result.loginResult
@@ -96,8 +93,8 @@ class LoginFragment : Fragment() {
                         loginViewModel.saveSession(
                             UserModel(user.userId ?: "", user.name ?: "", user.token ?: "", true)
                         )
-                        val alertDialog = AlertDialog.Builder(requireActivity()).apply {
-                            setTitle("Yess!")
+                        val alertDialog = AlertDialog.Builder(requireContext()).apply {
+                            setTitle("Informasi")
                             setMessage(getString(R.string.login_successful))
                             setCancelable(false)
                             create()
@@ -105,25 +102,28 @@ class LoginFragment : Fragment() {
 
                         Handler(Looper.getMainLooper()).postDelayed({
                             alertDialog.dismiss()
-                            val action = LoginFragmentDirections.actionLoginFragmentToNavigationHome()
-                            findNavController().navigate(action)
+                            if (findNavController().currentDestination?.id == R.id.loginFragment) {
+                                val action = LoginFragmentDirections.actionLoginFragmentToNavigationHome()
+                                findNavController().navigate(action)
+                            }
                         }, 2000)
                     }
                 } else {
                     Toast.makeText(
-                        requireActivity(),
+                        requireContext(),
                         "Login gagal ${result.message}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             } else {
                 Toast.makeText(
-                    requireActivity(),
+                    requireContext(),
                     getString(R.string.login_failed),
                     Toast.LENGTH_SHORT
                 ).show()
             }
         }
+
     }
 
     private fun setupView() {

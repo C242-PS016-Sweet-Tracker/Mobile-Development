@@ -4,6 +4,7 @@ import com.capstone.sweettrack.data.remote.response.LoginRequest
 import com.capstone.sweettrack.data.remote.response.LoginResponse
 import com.capstone.sweettrack.data.remote.response.OTPRequest
 import com.capstone.sweettrack.data.remote.response.OTPResponse
+import com.capstone.sweettrack.data.remote.response.ResendingOTPRequest
 import com.capstone.sweettrack.data.remote.response.VerifyOtpRequest
 import com.capstone.sweettrack.data.remote.response.VerifyOtpResponse
 import retrofit2.Call
@@ -36,6 +37,11 @@ interface ApiService {
     @POST("verifyOTP")
     suspend fun verifyOtp(
         @Body request: VerifyOtpRequest
+    ): VerifyOtpResponse
+
+    @POST("resendingOTP")
+    suspend fun resendingOTP(
+        @Body request: ResendingOTPRequest
     ): VerifyOtpResponse
 
 }

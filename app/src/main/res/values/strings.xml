@@ -63,6 +63,8 @@
 
 
     <string name="sign_up">Sign-Up</string>
+    <string name="sign_up_succesfull">Sign-Up Berhasil</string>
+    <string name="sign_up_succesfull_message">Silahkan Lengkapi Data diri anda!</string>
     <string name="username">Username</string>
     <string name="usernameHint">Masukkan username Anda</string>
     <string name="email">Email</string>
@@ -95,7 +97,7 @@
     <string name="keterangan_1">Masukkan umur, tinggi, berat badan dan jenis kelamin anda...</string>
 
     <!-- Authentication -->
-    <string name="invalid_format_number">Kode minimal 4 karakter</string>
+    <string name="invalid_format_number">Kode OTP harus 6 karakter</string>
 
 
     <!-- Gender Types -->
@@ -125,4 +127,5 @@
 
     <!-- Miscellaneous -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="otp_kadaluwarsa">OTP kadaluwarsa</string>
 </resources>

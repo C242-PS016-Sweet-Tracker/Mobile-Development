@@ -119,18 +119,31 @@
             app:layout_constraintTop_toBottomOf="@+id/codeEditTextLayout"
             tools:alpha="100" />
 
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="4dp"
+            android:alpha="0"
+            android:text="waktu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_keterangan"
+            tools:alpha="100" />
+
         <Button
             android:id="@+id/sendButton"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:alpha="0"
             android:text="@string/kirim"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_keterangan"
+            app:layout_constraintTop_toBottomOf="@+id/tv_time"
             tools:alpha="100" />
 
         <androidx.constraintlayout.widget.Guideline

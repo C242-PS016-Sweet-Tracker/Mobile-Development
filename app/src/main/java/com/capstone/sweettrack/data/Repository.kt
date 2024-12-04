@@ -7,6 +7,7 @@ import com.capstone.sweettrack.data.remote.response.LoginRequest
 import com.capstone.sweettrack.data.remote.response.LoginResponse
 import com.capstone.sweettrack.data.remote.response.OTPRequest
 import com.capstone.sweettrack.data.remote.response.OTPResponse
+import com.capstone.sweettrack.data.remote.response.ResendingOTPRequest
 import com.capstone.sweettrack.data.remote.response.VerifyOtpRequest
 import com.capstone.sweettrack.data.remote.response.VerifyOtpResponse
 import kotlinx.coroutines.flow.Flow
@@ -47,6 +48,11 @@ class Repository private constructor(
 
     suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): VerifyOtpResponse {
         val response = apiService.verifyOtp(verifyOtpRequest)
+        return response
+    }
+
+    suspend fun resendingOtp(resendingOTPRequest: ResendingOTPRequest): VerifyOtpResponse {
+        val response = apiService.resendingOTP(resendingOTPRequest)
         return response
     }
 
