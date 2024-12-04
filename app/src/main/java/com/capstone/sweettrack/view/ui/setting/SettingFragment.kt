@@ -54,6 +54,10 @@ class SettingFragment : Fragment() {
             viewModel.setReminderHealth(isChecked)
         }
 
+        binding.tvEditUserInfo.setOnClickListener {
+            findNavController().navigate(R.id.action_settingFragment_to_userInformationFragment)
+
+        }
 
     }
 

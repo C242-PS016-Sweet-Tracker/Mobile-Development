@@ -29,3 +29,14 @@ data class VerifyOtpResponse(
 data class ResendingOTPRequest(
     val email: String,
 )
+
+data class OTPResetPassRequest(
+    val email: String,
+)
+
+data class VerifyOtpResetPassword(
+    val otp: String,
+    val password: String
+)
+
+

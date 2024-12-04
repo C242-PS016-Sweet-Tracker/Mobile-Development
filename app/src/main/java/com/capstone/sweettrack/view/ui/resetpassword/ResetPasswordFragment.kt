@@ -5,6 +5,8 @@ import android.animation.ObjectAnimator
 import android.os.Build
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,11 +14,16 @@ import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
+import com.capstone.sweettrack.data.Repository
 import com.capstone.sweettrack.util.CustomEmailEditText
 import com.capstone.sweettrack.util.CustomPasswordEditText
+import com.capstone.sweettrack.view.ViewModelFactory
+import com.capstone.sweettrack.view.ui.signup.SignUpFragmentDirections
+import com.capstone.sweettrack.view.ui.signup.SignUpViewModel
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentResetPasswordBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -25,7 +32,10 @@ class ResetPasswordFragment : Fragment() {
 
     private var _binding: FragmentResetPasswordBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: ResetPasswordViewModel by viewModels()
+
+    private val viewModel: ResetPasswordViewModel by viewModels {
+        ViewModelFactory.getInstance(requireActivity())
+    }
 
     private lateinit var email: CustomEmailEditText
 
@@ -50,8 +60,35 @@ class ResetPasswordFragment : Fragment() {
 
     }
 
-    private fun sendToEmail(email: String) {
+    private fun sendToEmail() {
 
+        showLoading(true)
+
+        val emailText = email.text.toString()
+
+        viewModel.requestOTP(emailText)
+
+        viewModel.requestResult.observe(viewLifecycleOwner) { result ->
+
+            if (result != null){
+                if (result.error != true) {
+                    showLoading(false)
+                    val alertDialog = AlertDialog.Builder(requireActivity()).apply {
+                        setTitle("Informasi!")
+                        setMessage("Cek email!! dan masukkan kode OTP")
+                        setCancelable(false)
+                        create()
+                    }.show()
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        alertDialog.dismiss()
+                        val action = ResetPasswordFragmentDirections.actionFragmentResetPasswordToNewPasswordFragment()
+                        findNavController().navigate(action)
+                    }, 4000)
+                }
+            }
+
+        }
     }
 
     private fun checkFormValidity(
@@ -111,11 +148,12 @@ class ResetPasswordFragment : Fragment() {
         }
 
         binding.sendButton.setOnClickListener {
-            val email = binding.emailEditText.text.toString().trim()
-            sendToEmail(email)
-            findNavController().navigate(R.id.action_fragmentResetPassword_to_newPasswordFragment)
-
+            sendToEmail()
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onResume() {

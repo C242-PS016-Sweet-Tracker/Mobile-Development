@@ -5,16 +5,21 @@ import android.animation.ObjectAnimator
 import android.os.Build
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
+import com.capstone.sweettrack.util.CustomNumberEditText
 import com.capstone.sweettrack.util.CustomPasswordEditText
+import com.capstone.sweettrack.view.ViewModelFactory
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentNewPasswordBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -23,8 +28,12 @@ class NewPasswordFragment : Fragment() {
 
     private var _binding: FragmentNewPasswordBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: NewPasswordViewModel by viewModels()
 
+    private val viewModel by viewModels<NewPasswordViewModel> {
+        ViewModelFactory.getInstance(requireActivity())
+    }
+
+    private lateinit var otp: CustomNumberEditText
     private lateinit var password: CustomPasswordEditText
     private lateinit var rePassword: CustomPasswordEditText
 
@@ -44,41 +53,68 @@ class NewPasswordFragment : Fragment() {
         playAnimation()
         setupAction()
 
+        otp = binding.otpEditText
         password = binding.passwordEditText
         rePassword = binding.rePasswordEditText
 
-        password.addTextChangedListener { checkFormValidity(password, rePassword) }
-        rePassword.addTextChangedListener { checkFormValidity(password, rePassword) }
+        password.addTextChangedListener { checkFormValidity(otp, password, rePassword) }
+        rePassword.addTextChangedListener { checkFormValidity(otp, password, rePassword) }
     }
 
     private fun checkFormValidity(
+        otp: CustomNumberEditText,
         password: CustomPasswordEditText,
-        rePassword: CustomPasswordEditText,
+        rePassword: CustomPasswordEditText
     ) {
+        val isOtpValid = otp.error == null && otp.text?.isNotEmpty() == true
         val isPasswordValid = password.error == null && password.text?.isNotEmpty() == true
         val isRePasswordValid = rePassword.error == null && rePassword.text?.isNotEmpty() == true
 
-        // Tambahkan pengecekan apakah password dan rePassword sama
         val isPasswordsMatch = password.text.toString() == rePassword.text.toString()
 
-//        // Jika tidak sama, set error pada rePassword
         if (!isPasswordsMatch) {
             rePassword.error = "Password tidak cocok"
         } else {
-            rePassword.error = null // Hilangkan error jika cocok
+            rePassword.error = null
         }
 
-        // Tombol hanya aktif jika semua valid
-        binding.sendButton.isEnabled = isPasswordValid && isRePasswordValid && isPasswordsMatch
+        binding.sendButton.isEnabled =
+            isOtpValid && isPasswordValid && isRePasswordValid && isPasswordsMatch
     }
 
 
+    private fun changePass() {
+        showLoading(true)
 
-    private fun changePass(password: String, rePassword: String) {
+        val otpText = otp.text.toString()
+        val passwordText = password.text.toString()
 
-        // proses
+        viewModel.verifyOTP(otpText, passwordText)
 
-        findNavController().navigate(R.id.action_newPasswordFragment_to_loginFragment)
+        viewModel.verifyResult.observe(viewLifecycleOwner) { result ->
+
+            if (result != null) {
+                if (result.error != true) {
+                    showLoading(false)
+                    val alertDialog = AlertDialog.Builder(requireActivity()).apply {
+                        setTitle(result.message)
+                        setMessage(result.describe)
+                        setCancelable(false)
+                        create()
+                    }.show()
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        alertDialog.dismiss()
+                        if (findNavController().currentDestination?.id == R.id.newPasswordFragment) {
+                            val action =
+                                NewPasswordFragmentDirections.actionNewPasswordFragmentToLoginFragment()
+                            findNavController().navigate(action)
+                        }
+                    }, 4000)
+                }
+            }
+
+        }
     }
 
     private fun setupView() {
@@ -110,6 +146,10 @@ class NewPasswordFragment : Fragment() {
             ObjectAnimator.ofFloat(binding.titleTextView, View.ALPHA, 1f).setDuration(100)
         val message =
             ObjectAnimator.ofFloat(binding.messageTextView, View.ALPHA, 1f).setDuration(100)
+        val otp =
+            ObjectAnimator.ofFloat(binding.otpTextView, View.ALPHA, 1f).setDuration(100)
+        val otpEdit =
+            ObjectAnimator.ofFloat(binding.otpEditTextLayout, View.ALPHA, 1f).setDuration(100)
         val password =
             ObjectAnimator.ofFloat(binding.passwordTextView, View.ALPHA, 1f).setDuration(100)
         val passwordEdit =
@@ -128,6 +168,8 @@ class NewPasswordFragment : Fragment() {
                 image,
                 title,
                 message,
+                otp,
+                otpEdit,
                 password,
                 passwordEdit,
                 rePassword,
@@ -147,11 +189,12 @@ class NewPasswordFragment : Fragment() {
         }
 
         binding.sendButton.setOnClickListener {
-            val password = binding.passwordEditText.text.toString().trim()
-            val rePassword = binding.rePasswordEditText.text.toString().trim()
-
-            changePass(password, rePassword)
+            changePass()
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onResume() {

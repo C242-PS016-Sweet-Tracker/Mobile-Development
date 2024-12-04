@@ -19,10 +19,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import com.capstone.sweettrack.data.pref.UserModel
-import com.capstone.sweettrack.util.CustomEmailEditText
 import com.capstone.sweettrack.util.CustomPasswordEditText
+import com.capstone.sweettrack.util.CustomUsernameEditText
 import com.capstone.sweettrack.view.ViewModelFactory
-import com.capstone.sweettrack.view.ui.home.HomeFragmentDirections
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentLoginBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -36,7 +35,7 @@ class LoginFragment : Fragment() {
         ViewModelFactory.getInstance(requireActivity())
     }
 
-    private lateinit var email: CustomEmailEditText
+    private lateinit var email: CustomUsernameEditText
     private lateinit var password: CustomPasswordEditText
 
     override fun onCreateView(
@@ -69,7 +68,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun checkFormValidity(
-        email: CustomEmailEditText,
+        email: CustomUsernameEditText,
         password: CustomPasswordEditText,
     ) {
         val isEmailValid = email.error == null && email.text?.isNotEmpty() == true

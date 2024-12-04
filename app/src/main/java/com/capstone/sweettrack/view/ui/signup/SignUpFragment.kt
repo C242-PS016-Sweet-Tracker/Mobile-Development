@@ -117,7 +117,7 @@ class SignUpFragment : Fragment() {
                             password = passText
                         )
                         findNavController().navigate(action)
-                    }, 3000)
+                    }, 4000)
                 } else {
                     showLoading(false)
                 }
