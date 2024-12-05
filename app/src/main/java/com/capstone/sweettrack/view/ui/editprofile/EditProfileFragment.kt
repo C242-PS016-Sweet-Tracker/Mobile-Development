@@ -1,7 +1,9 @@
 package com.capstone.sweettrack.view.ui.editprofile
 
+import android.net.Uri
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -9,9 +11,14 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.capstone.sweettrack.view.ViewModelFactory
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentEditProfileBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -21,7 +28,9 @@ class EditProfileFragment : Fragment() {
 
     private var _binding: FragmentEditProfileBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: EditProfileViewModel by viewModels()
+    private val viewModel: EditProfileViewModel by viewModels {
+        ViewModelFactory.getInstance(requireActivity())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,25 +44,52 @@ class EditProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupView()
+        setupGenderSpinner()
 
         viewModel.profileData.observe(viewLifecycleOwner) { profile ->
             binding.etFullName.setText(profile.fullName)
             binding.etUsername.setText(profile.username)
-            binding.etEmail.setText(profile.email)
+
             binding.etDateOfBirth.setText(profile.dateOfBirth)
         }
 
 
         binding.btnSaveChanges.setOnClickListener {
-            val updatedProfile = Profile(
-                fullName = binding.etFullName.text.toString(),
-                username = binding.etUsername.text.toString(),
-                email = binding.etEmail.text.toString(),
-                dateOfBirth = binding.etDateOfBirth.text.toString()
-            )
-            viewModel.updateProfile(updatedProfile)
+//            val updatedProfile = Profile(
+//                fullName = binding.etFullName.text.toString(),
+//                username = binding.etUsername.text.toString(),
+//                email = binding.etEmail.text.toString(),
+//                dateOfBirth = binding.etDateOfBirth.text.toString()
+//            )
+//            viewModel.updateProfile(updatedProfile)
+        }
+
+        binding.profileImage.setOnClickListener {
+            startGallery()
         }
     }
+
+    private fun startGallery() {
+        launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    private val launcherGallery = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri: Uri? ->
+        uri?.let {
+            showImage(it)
+        }
+    }
+
+    private fun showImage(uri: Uri) {
+        Glide.with(this)
+            .load(uri)
+            .circleCrop()
+            .placeholder(R.drawable.baseline_person_24)
+            .error(R.drawable.ic_place_holder)
+            .into(binding.profileImage)
+    }
+
 
     private fun setupView() {
         (activity as AppCompatActivity).supportActionBar?.apply {
@@ -73,12 +109,22 @@ class EditProfileFragment : Fragment() {
                         findNavController().navigateUp()
                         true
                     }
+
                     else -> false
                 }
             }
         }, viewLifecycleOwner)
     }
 
+    private fun setupGenderSpinner() {
+        val genderAdapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.gender_types,
+            android.R.layout.simple_spinner_item
+        )
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.genderSpinner.adapter = genderAdapter
+    }
 
     override fun onResume() {
         super.onResume()

@@ -96,7 +96,11 @@ class UserInformationFragment : Fragment() {
                     lastBloodSugar!!
                 )
             } else {
-                Toast.makeText(requireContext(), "Harap isi semua data dengan benar", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Harap isi semua data dengan benar",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -109,7 +113,7 @@ class UserInformationFragment : Fragment() {
         viewModel.isSuccess.observe(viewLifecycleOwner) { isSuccess ->
             if (isSuccess) {
                 Toast.makeText(requireContext(), "Data berhasil dikirim", Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.action_userInformationFragment_to_navigation_home)
+                findNavController().navigate(R.id.action_userInformationFragment_to_navigation_home)
 
             }
         }

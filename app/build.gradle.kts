@@ -80,4 +80,8 @@ dependencies {
 
     // glide
     implementation(libs.glide)
+
+    // uCrop
+    implementation(libs.ucrop)
+
 }

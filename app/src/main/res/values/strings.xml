@@ -66,6 +66,7 @@
     <string name="sign_up_succesfull">Sign-Up Berhasil</string>
     <string name="sign_up_succesfull_message">Silahkan Lengkapi Data diri anda!</string>
     <string name="username">Username/Email</string>
+    <string name="username_text">Username</string>
     <string name="usernameHint">Masukkan username Anda</string>
     <string name="email">Email</string>
     <string name="emailHint">Masukkan email atau username anda</string>

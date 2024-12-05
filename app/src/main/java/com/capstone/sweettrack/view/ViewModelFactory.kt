@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.capstone.sweettrack.data.Repository
 import com.capstone.sweettrack.di.Injection
 import com.capstone.sweettrack.view.ui.authentication.AuthenticationViewModel
+import com.capstone.sweettrack.view.ui.editprofile.EditProfileViewModel
 import com.capstone.sweettrack.view.ui.home.HomeViewModel
 import com.capstone.sweettrack.view.ui.login.LoginViewModel
 import com.capstone.sweettrack.view.ui.newpassword.NewPasswordViewModel
@@ -40,6 +41,9 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(NewPasswordViewModel::class.java) -> {
                 NewPasswordViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> {
+                EditProfileViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
