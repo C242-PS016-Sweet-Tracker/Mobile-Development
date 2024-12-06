@@ -22,7 +22,6 @@ import com.capstone.sweettrack.data.pref.UserModel
 import com.capstone.sweettrack.util.CustomEmailEditText
 import com.capstone.sweettrack.util.CustomPasswordEditText
 import com.capstone.sweettrack.view.ViewModelFactory
-import com.capstone.sweettrack.view.ui.home.HomeFragmentDirections
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentLoginBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView

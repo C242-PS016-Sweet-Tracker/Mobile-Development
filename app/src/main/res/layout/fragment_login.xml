@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.08" />
+        app:layout_constraintGuide_percent="0.14" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -74,7 +74,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="61dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="30dp"
         android:layout_marginEnd="32dp"
         android:alpha="0"
         app:errorEnabled="true"
@@ -90,7 +90,8 @@
             android:ems="10"
             android:hint="@string/emailHint"
             android:inputType="textEmailAddress"
-            android:paddingStart="10dp" />
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,6 +123,8 @@
         android:layout_marginEnd="32dp"
         android:alpha="0"
         app:endIconMode="password_toggle"
+        app:errorEnabled="true"
+        app:errorTextAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -132,14 +135,14 @@
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:ems="10"
-            android:fontFamily="sans-serif"
             android:hint="@string/passwordHint"
             android:inputType="textPassword"
+            android:paddingEnd="50dp"
             android:paddingStart="10dp"
             android:textSize="17sp"
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
+
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
