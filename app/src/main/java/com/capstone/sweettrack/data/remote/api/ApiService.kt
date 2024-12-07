@@ -2,7 +2,10 @@ package com.capstone.sweettrack.data.remote.api
 
 import com.capstone.sweettrack.data.remote.response.AddDetailUserRequest
 import com.capstone.sweettrack.data.remote.response.ApiResponse
+import com.capstone.sweettrack.data.remote.response.CaloriesResponse
 import com.capstone.sweettrack.data.remote.response.DetailUserResponse
+import com.capstone.sweettrack.data.remote.response.EditCalorieRequest
+import com.capstone.sweettrack.data.remote.response.EditCalorieResponse
 import com.capstone.sweettrack.data.remote.response.EditDetailUserRequest
 import com.capstone.sweettrack.data.remote.response.EditProfileRequest
 import com.capstone.sweettrack.data.remote.response.LoginRequest
@@ -80,4 +83,14 @@ interface ApiService {
         @Body request: EditDetailUserRequest
     ): ApiResponse
 
+    @GET("kalori/getKalori/{user_id}")
+    suspend fun getCalorie(
+        @Path("user_id") userId: Int
+    ): CaloriesResponse
+
+    @PUT("kalori/updateKalori/{user_id}")
+    suspend fun setCalorie(
+        @Path("user_id") userId: Int,
+        @Body request: EditCalorieRequest
+    ): EditCalorieResponse
 }
