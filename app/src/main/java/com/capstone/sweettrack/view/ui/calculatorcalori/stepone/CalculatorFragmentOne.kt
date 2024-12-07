@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.capstone.sweettrack.view.ViewModelFactory
 import com.capstone.sweettrack.view.ui.calculatorcalori.CalculatorViewModel
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentCalculatorOneBinding
@@ -20,8 +21,10 @@ class CalculatorFragmentOne : Fragment() {
 
     private var _binding: FragmentCalculatorOneBinding? = null
     private val binding get() = _binding!!
+    private val viewModel by activityViewModels<CalculatorViewModel> {
+        ViewModelFactory.getInstance(requireActivity())
+    }
 
-    private val viewModel: CalculatorViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

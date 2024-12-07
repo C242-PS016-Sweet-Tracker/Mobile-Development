@@ -5,7 +5,10 @@ import com.capstone.sweettrack.data.pref.UserPreference
 import com.capstone.sweettrack.data.remote.api.ApiService
 import com.capstone.sweettrack.data.remote.response.AddDetailUserRequest
 import com.capstone.sweettrack.data.remote.response.ApiResponse
+import com.capstone.sweettrack.data.remote.response.CaloriesResponse
 import com.capstone.sweettrack.data.remote.response.DetailUserResponse
+import com.capstone.sweettrack.data.remote.response.EditCalorieRequest
+import com.capstone.sweettrack.data.remote.response.EditCalorieResponse
 import com.capstone.sweettrack.data.remote.response.EditDetailUserRequest
 import com.capstone.sweettrack.data.remote.response.EditProfileRequest
 import com.capstone.sweettrack.data.remote.response.LoginRequest
@@ -127,12 +130,27 @@ class Repository private constructor(
         val session = userPreference.getSession().first()
         val userId = session.userId.toInt()
         val detailUser = AddDetailUserRequest(name, gender, age, height, weight, activityLevel, diabetesType, lastBloodSugar, userId)
-        println("Kirim data ke API: name=$name, gender=$gender, age=$age, height=$height, weight=$weight, activityLevel=$activityLevel, diabetesType=$diabetesType, lastBloodSugar=$lastBloodSugar")
         val response = apiService.addDetailUser(detailUser)
 
         return response
     }
 
+    suspend fun getUserCalorie(): CaloriesResponse {
+        val session = userPreference.getSession().first()
+        val userId = session.userId.toInt()
+        val response = apiService.getCalorie(userId)
+
+        return response
+    }
+
+    suspend fun setUserCalorie(calorie: Double?): EditCalorieResponse {
+        val session = userPreference.getSession().first()
+        val userId = session.userId.toInt()
+        val request = EditCalorieRequest(calorie)
+        val response = apiService.setCalorie(userId, request)
+
+        return response
+    }
 
     suspend fun logout() {
         userPreference.logout()
