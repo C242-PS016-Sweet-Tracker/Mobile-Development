@@ -44,18 +44,6 @@ data class DetailUser(
     val user_id: Int
 )
 
-data class DetailUsers(
-    val nama_lengkap_user: String? = null,
-    val jenis_kelamin: String? = null,
-    val user_umur: Int? = null,
-    val tinggi_badan: Double? = null,
-    val berat_badan: Double? = null,
-    val tingkat_aktivitas: String? = null,
-    val tipe_diabetes: String? = null,
-    val kadar_gula: Double? = null,
-    val kalori: Double? = null,
-)
-
 data class DetailUserResponse(
     val statusCode: Int,
     val error: Boolean,

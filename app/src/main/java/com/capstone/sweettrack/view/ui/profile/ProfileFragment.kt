@@ -10,7 +10,6 @@ import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.capstone.sweettrack.view.ViewModelFactory
@@ -57,7 +56,7 @@ class ProfileFragment : Fragment() {
                     binding.tvUsername.text = dataUser.username
                     binding.tvFullNameValue.text = dataUser.nama_lengkap_user
                     binding.tvEmailValue.text = dataUser.user_email
-                    binding.tvAge.text = "${dataUser.user_umur} tahun"
+                    binding.tvAge.text = getString(R.string.umur_user, dataUser.user_umur.toString())
                     binding.tvDiabetesLevel.text = dataUser.tipe_diabetes
                     binding.tvGenderValue.text = dataUser.jenis_kelamin
                 } else {

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.capstone.sweettrack.data.Repository
 import com.capstone.sweettrack.di.Injection
 import com.capstone.sweettrack.view.ui.authentication.AuthenticationViewModel
+import com.capstone.sweettrack.view.ui.calculatorcalori.CalculatorViewModel
 import com.capstone.sweettrack.view.ui.editprofile.EditProfileViewModel
 import com.capstone.sweettrack.view.ui.home.HomeViewModel
 import com.capstone.sweettrack.view.ui.login.LoginViewModel
@@ -48,6 +49,9 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(UserInformationViewModel::class.java) -> {
                 UserInformationViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(CalculatorViewModel::class.java) -> {
+                CalculatorViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

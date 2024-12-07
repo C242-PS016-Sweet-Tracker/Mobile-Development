@@ -41,6 +41,7 @@ class HomeFragment : Fragment() {
         setupView()
         setupObservers()
         setupAction()
+        observerData()
     }
 
     private fun setupObservers() {
@@ -54,6 +55,34 @@ class HomeFragment : Fragment() {
         viewModel.errorMessage.observe(requireActivity()) { message ->
             message?.let {
                 Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun observerData() {
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
+        viewModel.dataResult.observe(viewLifecycleOwner) { result ->
+            if (result.error != true) {
+                val dataUser = result.data
+                if (dataUser != null) {
+                    binding.textHome.text = getString(R.string.hello, dataUser.username)
+                    binding.tvCalorie.text = getString(R.string.hasil_kalori, dataUser.kalori.toString())
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        result.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    result.message,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -91,8 +120,13 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
     override fun onResume() {
         super.onResume()
+        viewModel.refreshData()
         val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
         bottomNavigationView?.visibility = View.VISIBLE
     }

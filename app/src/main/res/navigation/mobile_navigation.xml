@@ -186,7 +186,11 @@
         android:id="@+id/calculatorFragmentResult"
         android:name="com.capstone.sweettrack.view.ui.calculatorcalori.result.CalculatorFragmentResult"
         android:label="Kalkulator Kalori"
-        tools:layout="@layout/fragment_calculator_result" />
+        tools:layout="@layout/fragment_calculator_result" >
+        <action
+            android:id="@+id/action_calculatorFragmentResult_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.capstone.sweettrack.view.ui.setting.SettingFragment"

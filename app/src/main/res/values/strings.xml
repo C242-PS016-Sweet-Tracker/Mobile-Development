@@ -132,4 +132,7 @@
     <string name="simpan">Simpan</string>
     <string name="btn_edit">Edit Data</string>
     <string name="btn_add_data">Add Data</string>
+    <string name="hello">Hello\n%1$s</string>
+    <string name="hasil_kalori">%1$s kkal / hari</string>
+    <string name="umur_user">%1$s tahun</string>
 </resources>
