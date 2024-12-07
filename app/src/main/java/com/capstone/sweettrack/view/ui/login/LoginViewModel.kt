@@ -9,9 +9,7 @@ import com.capstone.sweettrack.data.pref.UserModel
 import com.capstone.sweettrack.data.remote.response.LoginRequest
 import com.capstone.sweettrack.data.remote.response.LoginResponse
 import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
 class LoginViewModel(private val repository: Repository) : ViewModel() {
