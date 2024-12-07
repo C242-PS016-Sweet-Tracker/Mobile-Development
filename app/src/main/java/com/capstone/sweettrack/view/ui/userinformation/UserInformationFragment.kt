@@ -107,7 +107,6 @@ class UserInformationFragment : Fragment() {
                     observeAddProfileResult()
 
                 } else {
-                    println("Edit nih")
                     viewModel.editUserDetail(
                         name,
                         gender,
@@ -142,15 +141,14 @@ class UserInformationFragment : Fragment() {
                 binding.heightEditText.setText(data.tinggi_badan.toString())
                 binding.weightEditText.setText(data.berat_badan.toString())
 
-                // Set spinner value
                 setSpinnerValue(binding.genderSpinner, data.jenis_kelamin)
                 setSpinnerValue(binding.activityLevelSpinner, data.tingkat_aktivitas)
                 setSpinnerValue(binding.diabetesTypeSpinner, data.tipe_diabetes)
                 binding.lastBloodSugarEditText.setText(data.kadar_gula.toString())
 
-                binding.sendButton.text = "Edit Data"
+                binding.sendButton.text = getString(R.string.btn_edit)
             } else {
-                binding.sendButton.text = "Add Data"
+                binding.sendButton.text = getString(R.string.btn_add_data)
             }
         }
     }
@@ -170,8 +168,18 @@ class UserInformationFragment : Fragment() {
         viewModel.editDetailUserResult.observe(viewLifecycleOwner) { result ->
             println(result)
             if (!result.error) {
-                Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
 
+                val alertDialog = AlertDialog.Builder(requireActivity()).apply {
+                    setTitle("Informasi")
+                    setMessage(result.describe)
+                    setCancelable(false)
+                    create()
+                }.show()
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    alertDialog.dismiss()
+                    findNavController().popBackStack()
+                }, 1000)
             } else {
                 Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
             }
@@ -187,6 +195,9 @@ class UserInformationFragment : Fragment() {
             println(result)
             if (!result.error) {
                 Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
+
+                val action = UserInformationFragmentDirections.actionUserInformationFragmentToNavigationHome()
+                findNavController().navigate(action)
 
             } else {
                 Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()

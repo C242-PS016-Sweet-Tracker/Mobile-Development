@@ -121,7 +121,7 @@ class SignUpFragment : Fragment() {
                     }, 3000)
                 } else {
                     showLoading(false)
-                    val errorMessage = result.describe ?: "Registrasi gagal. Silakan coba lagi."
+                    val errorMessage = result.describe
                     Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
                 }
             }

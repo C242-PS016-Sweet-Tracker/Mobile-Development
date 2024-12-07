@@ -122,7 +122,7 @@ class AuthenticationFragment : Fragment() {
     }
 
     private fun setupTime() {
-        val countdownTimeInMillis = 5 * 60 * 100L
+        val countdownTimeInMillis = 5 * 60 * 1000L
         val intervalInMillis = 1000L
 
         binding.tvKeterangan2.visibility = View.GONE
