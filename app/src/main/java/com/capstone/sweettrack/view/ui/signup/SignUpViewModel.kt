@@ -35,13 +35,13 @@ class SignUpViewModel(private val repository: Repository) : ViewModel() {
             } catch (e: HttpException) {
                 val errorBody = e.response()?.errorBody()?.string()
                 val errorResponse = Gson().fromJson(errorBody, OTPResponse::class.java)
-                _registerResult.value =
-                    OTPResponse(
-                    500,
-                    true,
-                    "Gagal Mengirim OTP",
-                    "Error"
-                )
+                _registerResult.value = errorResponse
+//                    OTPResponse(
+//                    500,
+//                    true,
+//                    "Gagal Mengirim OTP",
+//                    "Error"
+//                )
             } catch (e: Exception) {
                 _registerResult.value = OTPResponse(
                     500,

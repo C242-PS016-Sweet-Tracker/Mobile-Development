@@ -3,7 +3,8 @@ package com.capstone.sweettrack.view.ui.editprofile
 import android.net.Uri
 import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -12,12 +13,15 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.capstone.sweettrack.data.remote.response.EditProfileRequest
 import com.capstone.sweettrack.view.ViewModelFactory
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentEditProfileBinding
@@ -45,23 +49,111 @@ class EditProfileFragment : Fragment() {
 
         setupView()
         setupGenderSpinner()
+        observeData()
+        startAction()
+    }
 
-        viewModel.profileData.observe(viewLifecycleOwner) { profile ->
-            binding.etFullName.setText(profile.fullName)
-            binding.etUsername.setText(profile.username)
-
-            binding.etDateOfBirth.setText(profile.dateOfBirth)
+    private fun observeData() {
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
         }
 
+        viewModel.dataResult.observe(viewLifecycleOwner) { result ->
+            if (!result.error) {
+                val dataUser = result.data
+                if (dataUser != null) {
+                    binding.etFullName.setText(dataUser.nama_lengkap_user)
+                    binding.etUsername.setText(dataUser.username)
 
+                    val genderAdapter = binding.genderSpinner.adapter
+                    val position = (0 until genderAdapter.count).firstOrNull {
+                        genderAdapter.getItem(it).toString() == dataUser.jenis_kelamin
+                    } ?: 0
+                    binding.genderSpinner.setSelection(position)
+
+                    binding.etAge.setText(dataUser.user_umur.toString())
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        result.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    result.message,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    private fun observeEditProfileResult() {
+        viewModel.updateResult.observe(viewLifecycleOwner) { result ->
+            println(result)
+            if (!result.error) {
+                val alertDialog = AlertDialog.Builder(requireActivity()).apply {
+                    setTitle("Informasi")
+                    setMessage(result.message)
+                    setCancelable(false)
+                    create()
+                }.show()
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    alertDialog.dismiss()
+                    findNavController().popBackStack()
+                }, 1000)
+            } else {
+                val alertDialog = AlertDialog.Builder(requireActivity()).apply {
+                    setTitle(result.message)
+                    setMessage(result.describe)
+                    setCancelable(false)
+                    create()
+                }.show()
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    alertDialog.dismiss()
+                }, 2000)
+            }
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+    }
+
+
+    private fun saveChanges() {
+        val fullName = binding.etFullName.text.toString()
+        val username = binding.etUsername.text.toString()
+        val age = binding.etAge.text.toString().toIntOrNull() ?: 0
+        val gender = binding.genderSpinner.selectedItem.toString()
+
+        if (fullName.isEmpty() || username.isEmpty() || age == 0) {
+            Toast.makeText(
+                requireContext(),
+                "Lengkapi semua data terlebih dahulu.",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        val request = EditProfileRequest(
+            namaLengkap = fullName,
+            username = username,
+            jenisKelamin = gender,
+            umur = age
+        )
+
+        viewModel.editProfileUser(request)
+        observeEditProfileResult()
+    }
+
+
+    private fun startAction() {
         binding.btnSaveChanges.setOnClickListener {
-//            val updatedProfile = Profile(
-//                fullName = binding.etFullName.text.toString(),
-//                username = binding.etUsername.text.toString(),
-//                email = binding.etEmail.text.toString(),
-//                dateOfBirth = binding.etDateOfBirth.text.toString()
-//            )
-//            viewModel.updateProfile(updatedProfile)
+            saveChanges()
         }
 
         binding.profileImage.setOnClickListener {
@@ -126,6 +218,10 @@ class EditProfileFragment : Fragment() {
         binding.genderSpinner.adapter = genderAdapter
     }
 
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
     override fun onResume() {
         super.onResume()
         val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
@@ -135,7 +231,7 @@ class EditProfileFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
-        bottomNavigationView?.visibility = View.VISIBLE
+        bottomNavigationView?.visibility = View.GONE
     }
 
     override fun onDestroyView() {

@@ -13,6 +13,7 @@ import com.capstone.sweettrack.view.ui.newpassword.NewPasswordViewModel
 import com.capstone.sweettrack.view.ui.profile.ProfileViewModel
 import com.capstone.sweettrack.view.ui.resetpassword.ResetPasswordViewModel
 import com.capstone.sweettrack.view.ui.signup.SignUpViewModel
+import com.capstone.sweettrack.view.ui.userinformation.UserInformationViewModel
 
 class ViewModelFactory(
     private val repository: Repository,
@@ -44,6 +45,9 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> {
                 EditProfileViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(UserInformationViewModel::class.java) -> {
+                UserInformationViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

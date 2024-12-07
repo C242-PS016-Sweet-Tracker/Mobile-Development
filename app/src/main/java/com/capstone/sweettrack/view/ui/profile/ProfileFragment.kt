@@ -7,12 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowInsetsController
-import android.widget.TextView
-import androidx.activity.addCallback
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.capstone.sweettrack.view.ViewModelFactory
 import com.coding.sweettrack.R
@@ -43,6 +42,39 @@ class ProfileFragment : Fragment() {
 
         setupView()
         setupAction()
+        observeData()
+    }
+
+    private fun observeData() {
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
+        viewModel.dataResult.observe(viewLifecycleOwner) { result ->
+            if (!result.error) {
+                val dataUser = result.data
+                if (dataUser != null) {
+                    binding.tvUsername.text = dataUser.username
+                    binding.tvFullNameValue.text = dataUser.nama_lengkap_user
+                    binding.tvEmailValue.text = dataUser.user_email
+                    binding.tvAge.text = "${dataUser.user_umur} tahun"
+                    binding.tvDiabetesLevel.text = dataUser.tipe_diabetes
+                    binding.tvGenderValue.text = dataUser.jenis_kelamin
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        result.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    result.message,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
 
@@ -83,8 +115,13 @@ class ProfileFragment : Fragment() {
 
     }
 
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
     override fun onResume() {
         super.onResume()
+        viewModel.refreshData()
         val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
         bottomNavigationView?.visibility = View.VISIBLE
     }

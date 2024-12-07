@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -98,10 +99,10 @@ class SignUpFragment : Fragment() {
 
         viewModel.requestOTP(usernameText, emailText, passText)
 
-        viewModel.registerResult.observe(requireActivity()){ result ->
+        viewModel.registerResult.observe(requireActivity()) { result ->
             if (result != null) {
                 println("Result $result")
-                if (result.error!= true) {
+                if (result.error != true) {
                     showLoading(false)
                     val alertDialog = AlertDialog.Builder(requireActivity()).apply {
                         setTitle("Verifikasi Akun!")
@@ -117,12 +118,15 @@ class SignUpFragment : Fragment() {
                             password = passText
                         )
                         findNavController().navigate(action)
-                    }, 4000)
+                    }, 3000)
                 } else {
                     showLoading(false)
+                    val errorMessage = result.describe ?: "Registrasi gagal. Silakan coba lagi."
+                    Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
                 }
             }
         }
+
 
     }
 

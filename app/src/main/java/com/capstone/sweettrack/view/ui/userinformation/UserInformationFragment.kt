@@ -3,6 +3,8 @@ package com.capstone.sweettrack.view.ui.userinformation
 import android.os.Build
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +12,12 @@ import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
+import com.capstone.sweettrack.view.ViewModelFactory
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentUserInformationBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -21,7 +26,9 @@ class UserInformationFragment : Fragment() {
 
     private var _binding: FragmentUserInformationBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: UserInformationViewModel by viewModels()
+    private val viewModel by viewModels<UserInformationViewModel> {
+        ViewModelFactory.getInstance(requireActivity())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,8 +46,8 @@ class UserInformationFragment : Fragment() {
         setupActivityLevelSpinner()
         setupDiabetesTypeSpinner()
         setupSendButton()
-        observeViewModel()
         setupView()
+        observeUserData()
     }
 
     private fun setupGenderSpinner() {
@@ -84,17 +91,37 @@ class UserInformationFragment : Fragment() {
             val diabetesType = binding.diabetesTypeSpinner.selectedItem.toString()
             val lastBloodSugar = binding.lastBloodSugarEditText.text.toString().toDoubleOrNull()
 
-            if (validateInputs(name, age, height, weight, lastBloodSugar)) {
-                viewModel.submitUserData(
-                    name,
-                    age!!,
-                    gender,
-                    height!!,
-                    weight!!,
-                    activityLevel,
-                    diabetesType,
-                    lastBloodSugar!!
-                )
+            if (validateInputs(name, age, height, weight)) {
+                if (binding.sendButton.text == "Add Data") {
+                    viewModel.addUserDetailInformation(
+                        name,
+                        gender,
+                        age?:0,
+                        height?: 0.0,
+                        weight,
+                        activityLevel,
+                        diabetesType,
+                        lastBloodSugar?: 0.0
+                    )
+
+                    observeAddProfileResult()
+
+                } else {
+                    println("Edit nih")
+                    viewModel.editUserDetail(
+                        name,
+                        gender,
+                        age,
+                        height,
+                        weight,
+                        activityLevel,
+                        diabetesType,
+                        lastBloodSugar
+                    )
+
+                    observeEditProfileResult()
+
+                }
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -105,23 +132,69 @@ class UserInformationFragment : Fragment() {
         }
     }
 
-    private fun observeViewModel() {
+
+    private fun observeUserData() {
+        viewModel.getDataResult.observe(viewLifecycleOwner) { result ->
+            if (!result.error && result.data != null) {
+                val data = result.data
+                binding.nameEditText.setText(data.nama_lengkap_user)
+                binding.ageEditText.setText(data.user_umur.toString())
+                binding.heightEditText.setText(data.tinggi_badan.toString())
+                binding.weightEditText.setText(data.berat_badan.toString())
+
+                // Set spinner value
+                setSpinnerValue(binding.genderSpinner, data.jenis_kelamin)
+                setSpinnerValue(binding.activityLevelSpinner, data.tingkat_aktivitas)
+                setSpinnerValue(binding.diabetesTypeSpinner, data.tipe_diabetes)
+                binding.lastBloodSugarEditText.setText(data.kadar_gula.toString())
+
+                binding.sendButton.text = "Edit Data"
+            } else {
+                binding.sendButton.text = "Add Data"
+            }
+        }
+    }
+
+    private fun setSpinnerValue(spinner: Spinner, value: String?) {
+        val adapter = spinner.adapter
+        for (i in 0 until adapter.count) {
+            if (adapter.getItem(i).toString() == value) {
+                spinner.setSelection(i)
+                break
+            }
+        }
+    }
+
+
+    private fun observeEditProfileResult() {
+        viewModel.editDetailUserResult.observe(viewLifecycleOwner) { result ->
+            println(result)
+            if (!result.error) {
+                Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
+
+            } else {
+                Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
+    }
 
-        viewModel.isSuccess.observe(viewLifecycleOwner) { isSuccess ->
-            if (isSuccess) {
-                Toast.makeText(requireContext(), "Data berhasil dikirim", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_userInformationFragment_to_navigation_home)
+    private fun observeAddProfileResult() {
+        viewModel.addDetailUserResult.observe(viewLifecycleOwner) { result ->
+            println(result)
+            if (!result.error) {
+                Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
 
+            } else {
+                Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
             }
         }
 
-        viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
-            errorMessage?.let {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-            }
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
     }
 
@@ -151,9 +224,8 @@ class UserInformationFragment : Fragment() {
         age: Int?,
         height: Double?,
         weight: Double?,
-        lastBloodSugar: Double?
     ): Boolean {
-        return name.isNotBlank() && age != null && height != null && weight != null && lastBloodSugar != null
+        return name.isNotBlank() && age != null && height != null && weight != null
     }
 
     override fun onResume() {
