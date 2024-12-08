@@ -1,12 +1,13 @@
 package com.capstone.sweettrack.view.ui.editprofile
 
+import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capstone.sweettrack.data.Repository
 import com.capstone.sweettrack.data.remote.response.ApiResponse
-import com.capstone.sweettrack.data.remote.response.EditProfileRequest
 import com.capstone.sweettrack.data.remote.response.UserProfileResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
@@ -45,7 +46,11 @@ class EditProfileViewModel(private val repository: Repository) : ViewModel() {
                 _dataResult.postValue(errorResponse)
             } catch (e: Exception) {
                 _dataResult.postValue(
-                    UserProfileResponse(statusCode = 500, error = true, message = "Kesalahan jaringan")
+                    UserProfileResponse(
+                        statusCode = 500,
+                        error = true,
+                        message = "Kesalahan jaringan"
+                    )
                 )
             } finally {
                 _isLoading.postValue(false)
@@ -53,40 +58,33 @@ class EditProfileViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun editProfileUser(request: EditProfileRequest) {
+    fun editProfileUsers(
+        namaLengkap: String,
+        username: String,
+        jenisKelamin: String,
+        umur: Int,
+        fotoUri: Uri?,
+        context: Context
+    ) {
+        println("view model foto : $fotoUri")
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val response = repository.editProfileUser(request)
-                if (!response.error) {
-                    _updateResult.postValue(
-                        ApiResponse(
-                            statusCode = response.statusCode,
-                            error = response.error,
-                            message = "Profil berhasil diperbarui."
-                        )
-                    )
-
-                    getProfileUser()
-                } else {
-                    _updateResult.postValue(response)
-                }
-            } catch (e: HttpException) {
-                val errorBody = e.response()?.errorBody()?.string()
-                val parsedError = Gson().fromJson(errorBody, ApiResponse::class.java)
-                _updateResult.postValue(
-                    ApiResponse(
-                        statusCode = 500,
-                        error = true,
-                        message = parsedError?.message ?: "Gagal Mengubah Profil"
-                    )
+                val response = repository.editProfileUsers(
+                    namaLengkap = namaLengkap,
+                    username = username,
+                    jenisKelamin = jenisKelamin,
+                    umur = umur,
+                    fotoUri = fotoUri,
+                    context = context
                 )
+                _updateResult.postValue(response)
             } catch (e: Exception) {
                 _updateResult.postValue(
                     ApiResponse(
                         statusCode = 500,
                         error = true,
-                        message = "Kesalahan jaringan"
+                        message = "Kesalahan jaringan atau server."
                     )
                 )
             } finally {

@@ -1,5 +1,7 @@
 package com.capstone.sweettrack.data
 
+import android.content.Context
+import android.net.Uri
 import com.capstone.sweettrack.data.pref.UserModel
 import com.capstone.sweettrack.data.pref.UserPreference
 import com.capstone.sweettrack.data.remote.api.ApiService
@@ -10,7 +12,6 @@ import com.capstone.sweettrack.data.remote.response.DetailUserResponse
 import com.capstone.sweettrack.data.remote.response.EditCalorieRequest
 import com.capstone.sweettrack.data.remote.response.EditCalorieResponse
 import com.capstone.sweettrack.data.remote.response.EditDetailUserRequest
-import com.capstone.sweettrack.data.remote.response.EditProfileRequest
 import com.capstone.sweettrack.data.remote.response.LoginRequest
 import com.capstone.sweettrack.data.remote.response.LoginResponse
 import com.capstone.sweettrack.data.remote.response.OTPRequest
@@ -21,8 +22,15 @@ import com.capstone.sweettrack.data.remote.response.UserProfileResponse
 import com.capstone.sweettrack.data.remote.response.VerifyOtpRequest
 import com.capstone.sweettrack.data.remote.response.VerifyOtpResetPassword
 import com.capstone.sweettrack.data.remote.response.VerifyOtpResponse
+import com.capstone.sweettrack.util.reduceFileImage
+import com.capstone.sweettrack.util.uriToFile
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 
 class Repository private constructor(
     private val apiService: ApiService,
@@ -85,12 +93,44 @@ class Repository private constructor(
         return apiService.getProfileUsers(userId)
     }
 
-
-    suspend fun editProfileUser(request: EditProfileRequest): ApiResponse {
+    suspend fun editProfileUsers(
+        namaLengkap: String,
+        username: String,
+        jenisKelamin: String,
+        umur: Int,
+        fotoUri: Uri?,
+        context: Context
+    ): ApiResponse {
         val session = userPreference.getSession().first()
         val userId = session.userId.toInt()
-        return apiService.editProfileUsers(userId, request)
+        val namaLengkapPart = createPartFromString(namaLengkap)
+        val usernamePart = createPartFromString(username)
+        val jenisKelaminPart = createPartFromString(jenisKelamin)
+        val umurPart = createPartFromString(umur.toString())
+        val fotoPart = fotoUri?.let { prepareFilePart(it, context) }
+
+        return apiService.editProfileUsers(
+            userId,
+            image = fotoPart,
+            namaLengkap = namaLengkapPart,
+            username = usernamePart,
+            jenisKelamin = jenisKelaminPart,
+            umur = umurPart
+        )
     }
+
+    private fun createPartFromString(value: String): RequestBody {
+        return value.toRequestBody("text/plain".toMediaTypeOrNull())
+    }
+
+    private fun prepareFilePart(uri: Uri, context: Context): MultipartBody.Part {
+        val file = uriToFile(uri, context).reduceFileImage()
+
+        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+
+        return MultipartBody.Part.createFormData("image", file.name, requestFile)
+    }
+
 
     suspend fun getDetailUserInformation(): DetailUserResponse {
         val session = userPreference.getSession().first()
@@ -112,7 +152,17 @@ class Repository private constructor(
     ): ApiResponse {
         val session = userPreference.getSession().first()
         val userId = session.userId.toInt()
-        val detailUser = EditDetailUserRequest(name, gender, age, height, weight, activityLevel, diabetesType, lastBloodSugar, 0.0)
+        val detailUser = EditDetailUserRequest(
+            name,
+            gender,
+            age,
+            height,
+            weight,
+            activityLevel,
+            diabetesType,
+            lastBloodSugar,
+            0.0
+        )
         val response = apiService.editDetailUser(userId, detailUser)
         return response
     }
@@ -129,7 +179,17 @@ class Repository private constructor(
     ): ApiResponse {
         val session = userPreference.getSession().first()
         val userId = session.userId.toInt()
-        val detailUser = AddDetailUserRequest(name, gender, age, height, weight, activityLevel, diabetesType, lastBloodSugar, userId)
+        val detailUser = AddDetailUserRequest(
+            name,
+            gender,
+            age,
+            height,
+            weight,
+            activityLevel,
+            diabetesType,
+            lastBloodSugar,
+            userId
+        )
         val response = apiService.addDetailUser(detailUser)
 
         return response

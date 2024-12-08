@@ -14,14 +14,8 @@ data class UserProfile(
     val user_umur: Int,
     val nama_lengkap_user: String,
     val user_email: String,
-    val jenis_kelamin: String
-)
-
-data class EditProfileRequest(
-    val namaLengkap: String,
-    val username: String,
-    val jenisKelamin: String,
-    val umur: Int
+    val jenis_kelamin: String,
+    val foto: String
 )
 
 data class ApiResponse(
