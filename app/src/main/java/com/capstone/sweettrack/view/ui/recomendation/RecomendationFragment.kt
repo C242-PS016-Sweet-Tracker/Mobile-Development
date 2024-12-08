@@ -7,26 +7,33 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.capstone.sweettrack.data.Repository
+import com.capstone.sweettrack.view.ViewModelFactory
+import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentLoginBinding
 import com.coding.sweettrack.databinding.FragmentRecomendationBinding
 
 class RecomendationFragment : Fragment() {
-
-
     private var _binding: FragmentRecomendationBinding? = null
     private val binding get() = _binding!!
-    private lateinit var recommendationViewModel: RecomendationViewModel
-//    private lateinit var adapter: EventAdapter
 
+    private val viewModel: RecomendationViewModel by viewModels {
+        ViewModelFactory.getInstance(requireContext())
+    }
+
+    private lateinit var adapter: RecomendationAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRecomendationBinding.inflate(inflater, container, false)
@@ -35,49 +42,36 @@ class RecomendationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        adapter = RecomendationAdapter { item ->
+            Toast.makeText(context, "Clicked: ${item.name}", Toast.LENGTH_SHORT).show()
+            // Navigate to the detail page if needed
+        }
+
+        setupRecyclerView()
+        observeViewModel()
+
+        viewModel.fetchRecommendations()
     }
 
-        /*
-        recommendationViewModel = ViewModelProvider(this).get(RecomendationViewModel::class.java)
+    private fun setupRecyclerView() {
+        binding.rvRecommendation.layoutManager = LinearLayoutManager(context)
+        binding.rvRecommendation.adapter = adapter
+    }
 
-        _binding = FragmentRecomendationBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+    private fun observeViewModel() {
+        viewModel.recommendations.observe(viewLifecycleOwner) { recommendations ->
+            adapter.setRecommendations(recommendations)
+        }
 
-        val recyclerView: RecyclerView = binding.rvRecommendation
-        val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
-        recyclerView.layoutManager = staggeredGridLayoutManager
-
-        adapter = EventAdapter { event -> onEventClick(event) }
-        recyclerView.adapter = adapter
-
-        // observe loading
-        recommendationViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBarRecommendation.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
-        // observe listEventsItem
-        recommendationViewModel.listEventsItem.observe(viewLifecycleOwner) { events ->
-            adapter.submitList(events ?: emptyList())
-            Log.d("RecommendationFragment", "RecyclerView loaded with ${events?.size ?: 0} items")
-        }
-
-        return root
-    }
-
-    private fun onEventClick(event: ListEventsItem) {
-        Log.d("RecommendationFragmentClickTest", "Event clicked: ${event.id}")
-        event.id?.let { id ->
-            Log.d("RecommendationFragmentClickTest", "Navigating to DetailActivity with Event ID: $id")
-            val intentToDetail = Intent(requireActivity(), DetailActivity::class.java).apply {
-                putExtra(EXTRA_ID, id.toString())
-            }
-            startActivity(intentToDetail)
-        } ?: run {
-            Log.e("RecommendationFragmentClickTest", "Event ID is null")
+        viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
         }
     }
-
-         */
 
     override fun onDestroyView() {
         super.onDestroyView()

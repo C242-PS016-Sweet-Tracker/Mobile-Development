@@ -10,11 +10,13 @@ import com.capstone.sweettrack.data.remote.response.LoginResponse
 import com.capstone.sweettrack.data.remote.response.OTPRequest
 import com.capstone.sweettrack.data.remote.response.OTPResetPassRequest
 import com.capstone.sweettrack.data.remote.response.OTPResponse
+import com.capstone.sweettrack.data.remote.response.RecommendationResponse
 import com.capstone.sweettrack.data.remote.response.ResendingOTPRequest
 import com.capstone.sweettrack.data.remote.response.UserProfileResponse
 import com.capstone.sweettrack.data.remote.response.VerifyOtpRequest
 import com.capstone.sweettrack.data.remote.response.VerifyOtpResetPassword
 import com.capstone.sweettrack.data.remote.response.VerifyOtpResponse
+import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -79,5 +81,8 @@ interface ApiService {
         @Path("user_id") userId: Int,
         @Body request: EditDetailUserRequest
     ): ApiResponse
+
+    @GET("events?active=0")
+    suspend fun getRecommendation(): RecommendationResponse
 
 }

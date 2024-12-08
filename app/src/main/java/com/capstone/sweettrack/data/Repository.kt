@@ -13,6 +13,7 @@ import com.capstone.sweettrack.data.remote.response.LoginResponse
 import com.capstone.sweettrack.data.remote.response.OTPRequest
 import com.capstone.sweettrack.data.remote.response.OTPResetPassRequest
 import com.capstone.sweettrack.data.remote.response.OTPResponse
+import com.capstone.sweettrack.data.remote.response.RecommendationResponse
 import com.capstone.sweettrack.data.remote.response.ResendingOTPRequest
 import com.capstone.sweettrack.data.remote.response.UserProfileResponse
 import com.capstone.sweettrack.data.remote.response.VerifyOtpRequest
@@ -148,5 +149,9 @@ class Repository private constructor(
             instance ?: synchronized(this) {
                 instance ?: Repository(apiService, userPreference)
             }.also { instance = it }
+    }
+
+    suspend fun getRecommendation(): RecommendationResponse {
+        return apiService.getRecommendation()
     }
 }
