@@ -70,6 +70,18 @@ class HomeFragment : Fragment() {
                 if (dataUser != null) {
                     binding.textHome.text = getString(R.string.hello, dataUser.username)
                     binding.tvCalorie.text = getString(R.string.hasil_kalori, dataUser.kalori.toString())
+                    binding.tvCalorieNow.text = getString(R.string.kalori_now, dataUser.kalori_harian.toString())
+
+                    val totalKalori = dataUser.kalori  // Total kalori ideal/hari
+                    val kaloriHarian = dataUser.kalori_harian  // Kalori yang sudah tercapai
+
+                    val progress = if (totalKalori > 0) {
+                        ((kaloriHarian.toFloat() / totalKalori) * 100).toInt()
+                    } else {
+                        0
+                    }
+                    binding.progressBarDeterminate.progress = progress
+
                 } else {
                     Toast.makeText(
                         requireContext(),
@@ -117,6 +129,9 @@ class HomeFragment : Fragment() {
         }
         binding.btnFavorite.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_home_to_favoriteFragment)
+        }
+        binding.btnGemini.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_chatFragment)
         }
     }
 
