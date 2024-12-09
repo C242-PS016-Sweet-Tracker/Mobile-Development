@@ -42,6 +42,9 @@
         <action
             android:id="@+id/action_navigation_home_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
 
     <!-- Profile Fragment -->
@@ -203,4 +206,9 @@
             android:id="@+id/action_settingFragment_to_userInformationFragment"
             app:destination="@id/userInformationFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.capstone.sweettrack.view.ui.chatbot.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
 </navigation>
