@@ -8,8 +8,9 @@ data class CaloriesResponse (
 )
 
 data class DataCalories(
-    val username: String? = null,
-    val kalori: Double? = null
+    val username: String,
+    val kalori: Double,
+    val kalori_harian: Double
 )
 
 data class EditCalorieRequest(

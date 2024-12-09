@@ -84,4 +84,6 @@ dependencies {
     // uCrop
     implementation(libs.ucrop)
 
+    implementation(libs.generativeai)
+
 }

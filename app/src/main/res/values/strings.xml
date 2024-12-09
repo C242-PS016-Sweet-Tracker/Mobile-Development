@@ -134,5 +134,9 @@
     <string name="btn_add_data">Add Data</string>
     <string name="hello">Hello\n%1$s</string>
     <string name="hasil_kalori">%1$s kkal / hari</string>
+    <string name="kalori_now">%1$s kkal</string>
     <string name="umur_user">%1$s tahun</string>
+
+    <string name="input_text_hint">Type a message</string>
+    <string name="send_message_text">Send</string>
 </resources>
