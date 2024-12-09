@@ -81,21 +81,21 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginStart="22dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginEnd="22dp"
-    android:layout_marginBottom="4dp"
-    card_view:cardCornerRadius="5dp"
-    app:layout_constraintWidth_percent="0.9">
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="8dp"
+    card_view:cardCornerRadius="8dp"
+    app:layout_constraintWidth_percent="0.85">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="330dp"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/img_item_photo"
             android:layout_width="0dp"
-            android:layout_height="164dp"
+            android:layout_height="150dp"
             android:layout_marginTop="0dp"
             android:contentDescription="food image"
             app:layout_constraintEnd_toEndOf="parent"
@@ -107,10 +107,10 @@
             android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="16sp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/tv_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -122,10 +122,11 @@
             android:id="@+id/tv_description"
             android:layout_width="184dp"
             android:layout_height="17dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:gravity="center"
             app:layout_constraintBottom_toTopOf="@id/btn_detail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -136,13 +137,14 @@
             android:id="@+id/btn_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="5dp"
             android:text="Detail"
             android:textSize="11sp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_item_photo" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_description" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
