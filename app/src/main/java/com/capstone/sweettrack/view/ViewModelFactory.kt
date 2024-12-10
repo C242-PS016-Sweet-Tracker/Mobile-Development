@@ -14,6 +14,7 @@ import com.capstone.sweettrack.view.ui.newpassword.NewPasswordViewModel
 import com.capstone.sweettrack.view.ui.profile.ProfileViewModel
 import com.capstone.sweettrack.view.ui.resetpassword.ResetPasswordViewModel
 import com.capstone.sweettrack.view.ui.signup.SignUpViewModel
+import com.capstone.sweettrack.view.ui.splash.SplashViewModel
 import com.capstone.sweettrack.view.ui.userinformation.UserInformationViewModel
 
 class ViewModelFactory(
@@ -52,6 +53,9 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(CalculatorViewModel::class.java) -> {
                 CalculatorViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(SplashViewModel::class.java) -> {
+                SplashViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

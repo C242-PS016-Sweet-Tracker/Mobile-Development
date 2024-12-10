@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -133,6 +134,15 @@ class HomeFragment : Fragment() {
         binding.btnGemini.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_home_to_chatFragment)
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    requireActivity().moveTaskToBack(true)
+                }
+            }
+        )
     }
 
     private fun showLoading(isLoading: Boolean) {

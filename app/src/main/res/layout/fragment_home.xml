@@ -7,14 +7,26 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
+<!--        android:padding="16dp">-->
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="167dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/yellow_rectangle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="177dp"
             android:layout_marginBottom="396dp"
             android:scaleType="fitXY"
+            android:paddingStart="10dp"
+            android:paddingEnd="13dp"
             android:src="@drawable/green_rectangle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -27,6 +39,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/hello"
+            android:paddingStart="15dp"
+            android:paddingEnd="10dp"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -87,7 +101,7 @@
                     android:id="@+id/tv_camera"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kamera"
+                    android:text="Scan Food"
                     android:textAlignment="center"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -146,7 +160,9 @@
             android:id="@+id/tv_pointer_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="38dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:text="Cek Kalori Harian Anda!"
             android:textSize="22sp"
             android:textStyle="bold"
@@ -232,6 +248,8 @@
             android:text="Rekomendasi"
             android:textSize="22sp"
             android:textStyle="bold"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
