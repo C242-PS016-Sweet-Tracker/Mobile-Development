@@ -43,6 +43,9 @@
             android:id="@+id/action_navigation_home_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
         <action
+            android:id="@+id/action_navigation_home_to_recomendationFragment"
+            app:destination="@id/recomendationFragment" />
+        <action
             android:id="@+id/action_navigation_home_to_chatFragment"
             app:destination="@id/chatFragment" />
     </fragment>
@@ -167,6 +170,9 @@
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
+            android:id="@+id/action_splashFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+        <action
             android:id="@+id/action_splashFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
         <action
@@ -212,6 +218,11 @@
             android:id="@+id/action_settingFragment_to_userInformationFragment"
             app:destination="@id/userInformationFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/recomendationFragment"
+        android:name="com.capstone.sweettrack.view.ui.recomendation.RecomendationFragment"
+        android:label="fragment_recomendation"
+        tools:layout="@layout/fragment_recomendation" />
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.capstone.sweettrack.view.ui.chatbot.ChatFragment"
