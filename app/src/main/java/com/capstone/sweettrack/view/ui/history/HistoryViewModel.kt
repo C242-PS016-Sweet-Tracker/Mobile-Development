@@ -1,27 +1,26 @@
-package com.capstone.sweettrack.view.ui.favorite
+package com.capstone.sweettrack.view.ui.history
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.capstone.sweettrack.data.local.entity.FavoriteFood
+import com.capstone.sweettrack.data.local.entity.HistoryScan
 import com.capstone.sweettrack.data.local.room.SweetTrackDatabase
 import kotlinx.coroutines.launch
 
-class FavoriteViewModel(application: Application) : AndroidViewModel(application) {
+class HistoryViewModel(application: Application) : AndroidViewModel(application) {
 
     private val database = SweetTrackDatabase.getInstance(application, viewModelScope)
     private val dao = database.eventDao()
 
-    private val _favoriteList = MutableLiveData<List<FavoriteFood>>()
-    val favoriteList: LiveData<List<FavoriteFood>> get() = _favoriteList
-
+    private val _historyList = MutableLiveData<List<HistoryScan>>()
+    val historyList: LiveData<List<HistoryScan>> get() = _historyList
 
     init {
         viewModelScope.launch {
-            _favoriteList.value = dao.getAllFavorites(101)
+            _historyList.value = dao.getAllHistories(102)
+            println(_historyList.value)
         }
     }
 }

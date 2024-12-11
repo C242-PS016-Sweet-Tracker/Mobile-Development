@@ -81,6 +81,7 @@
                 android:id="@+id/ageEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="Cth: 19"
                 tools:ignore="SpeakableTextPresentCheck"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>

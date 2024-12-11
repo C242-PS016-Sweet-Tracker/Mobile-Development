@@ -217,4 +217,9 @@
         android:name="com.capstone.sweettrack.view.ui.chatbot.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/navigation_history"
+        android:name="com.capstone.sweettrack.view.ui.history.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
 </navigation>

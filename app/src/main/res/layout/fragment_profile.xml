@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="413dp"
-        android:layout_height="330dp"
+        android:layout_height="360dp"
         android:scaleType="fitXY"
         android:src="@drawable/green_rectangle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,8 +40,8 @@
 
     <ImageView
         android:id="@+id/ivProfileImage"
-        android:layout_width="142dp"
-        android:layout_height="145dp"
+        android:layout_width="172dp"
+        android:layout_height="174dp"
         android:layout_gravity="center"
         android:layout_marginTop="54dp"
         android:background="@drawable/circle"

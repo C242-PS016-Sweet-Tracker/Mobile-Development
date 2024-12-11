@@ -116,7 +116,7 @@ class SettingFragment : Fragment() {
     }
 
     private fun scheduleEatReminder() {
-        val workRequest = PeriodicWorkRequestBuilder<ReminderWorker>(6, TimeUnit.HOURS)
+        val workRequest = PeriodicWorkRequestBuilder<ReminderWorker>(8, TimeUnit.HOURS)
             .addTag("eat_reminder")
             .build()
 

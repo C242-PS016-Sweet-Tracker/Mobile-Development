@@ -19,7 +19,7 @@ class ChatViewModel : ViewModel() {
     // Inisialisasi model GenerativeAI
     private val generativeModel = GenerativeModel(
         modelName = "gemini-1.5-pro-latest",
-        apiKey = "API KEY"
+        apiKey = "api_key"
     )
 
     // Fungsi untuk mengirimkan pesan ke Gemini AI dan mendapatkan respons
