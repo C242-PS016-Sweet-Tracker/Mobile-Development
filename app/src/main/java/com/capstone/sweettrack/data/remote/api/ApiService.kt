@@ -12,11 +12,14 @@ import com.capstone.sweettrack.data.remote.response.LoginResponse
 import com.capstone.sweettrack.data.remote.response.OTPRequest
 import com.capstone.sweettrack.data.remote.response.OTPResetPassRequest
 import com.capstone.sweettrack.data.remote.response.OTPResponse
+import com.capstone.sweettrack.data.remote.response.RecommendationResponse
 import com.capstone.sweettrack.data.remote.response.ResendingOTPRequest
 import com.capstone.sweettrack.data.remote.response.UserProfileResponse
 import com.capstone.sweettrack.data.remote.response.VerifyOtpRequest
 import com.capstone.sweettrack.data.remote.response.VerifyOtpResetPassword
 import com.capstone.sweettrack.data.remote.response.VerifyOtpResponse
+
+import retrofit2.Call
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -92,6 +95,9 @@ interface ApiService {
         @Body request: EditDetailUserRequest
     ): ApiResponse
 
+    @GET("events?active=0")
+    suspend fun getRecommendation(): RecommendationResponse
+
     @GET("kalori/getKalori/{user_id}")
     suspend fun getCalorie(
         @Path("user_id") userId: Int
@@ -102,4 +108,5 @@ interface ApiService {
         @Path("user_id") userId: Int,
         @Body request: EditCalorieRequest
     ): EditCalorieResponse
+
 }

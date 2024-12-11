@@ -131,6 +131,11 @@ class HomeFragment : Fragment() {
         binding.btnFavorite.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_home_to_favoriteFragment)
         }
+
+        binding.tvPointerText2.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_recomendationFragment)
+        }
+
         binding.btnGemini.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_home_to_chatFragment)
         }

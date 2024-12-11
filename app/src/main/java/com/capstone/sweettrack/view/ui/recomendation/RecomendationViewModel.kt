@@ -1,38 +1,42 @@
 package com.capstone.sweettrack.view.ui.recomendation
 
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.capstone.sweettrack.data.Repository
+import com.capstone.sweettrack.data.remote.response.ListEventsItem
+import kotlinx.coroutines.launch
 
-class RecomendationViewModel : ViewModel() {
+class RecomendationViewModel(private val repository: Repository) : ViewModel() {
+    private val _recommendations = MutableLiveData<List<ListEventsItem>>()
+    val recommendations: LiveData<List<ListEventsItem>> get() = _recommendations
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    init {
-//        fetchRecommendations()
-    }
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> get() = _errorMessage
 
-    /*
-    private fun fetchRecommendations() {
-        // Simulate loading data
+    fun fetchRecommendations() {
         _isLoading.value = true
-
-        // Fetch data from a repository or service
-        // For demonstration, we will use a mock data
-        val mockData = listOf<ListEventsItem>(
-            ListEventsItem(id = 1, name = "Event 1"),
-            ListEventsItem(id = 2, name = "Event 2"),
-            // Add more mock events as needed
-        )
-
-        // Simulate a delay
-        Thread {
-            Thread.sleep(2000) // Simulate network delay
-            _listEventsItem.postValue(mockData)
-            _isLoading.postValue(false)
-        }.start()
+        viewModelScope.launch {
+            try {
+                val response = repository.getRecommendation()
+                if (!response.error) {
+                    // Only pass the necessary data to the view
+                    _recommendations.value = response.listEvents.map {
+                        ListEventsItem(name = it.name, mediaCover = it.mediaCover, category = it.category)
+                    }
+                } else {
+                    _errorMessage.value = response.message
+                }
+            } catch (e: Exception) {
+                _errorMessage.value = e.message ?: "An error occurred"
+            } finally {
+                _isLoading.value = false
+            }
+        }
     }
-
-     */
 }
