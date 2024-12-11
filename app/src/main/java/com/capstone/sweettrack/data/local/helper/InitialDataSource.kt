@@ -81,4 +81,12 @@ object InitialDataSource {
             )
         )
     }
+
+    fun getDummyRecommendations(): List<FavoriteFood> {
+        return listOf(
+            FavoriteFood(1, 1, "Ayam Goreng", 300.0, 10.0, 20.0, 30.0),
+            FavoriteFood(2, 1, "Nasi Goreng", 500.0, 20.0, 15.0, 10.0),
+            FavoriteFood(3, 1, "Sate Ayam", 400.0, 15.0, 25.0, 20.0)
+        )
+    }
 }

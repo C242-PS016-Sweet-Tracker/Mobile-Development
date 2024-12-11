@@ -1,36 +1,34 @@
 package com.capstone.sweettrack.view.ui.recomendation
 
-import android.content.Intent
-import android.nfc.NfcAdapter.EXTRA_ID
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.capstone.sweettrack.data.Repository
+import com.capstone.sweettrack.adapter.RecommendationAdapter
 import com.capstone.sweettrack.view.ViewModelFactory
 import com.coding.sweettrack.R
-import com.coding.sweettrack.databinding.FragmentLoginBinding
 import com.coding.sweettrack.databinding.FragmentRecomendationBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class RecomendationFragment : Fragment() {
+class RecommendationFragment : Fragment() {
     private var _binding: FragmentRecomendationBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: RecomendationViewModel by viewModels {
+    private val viewModel: RecommendationViewModel by viewModels {
         ViewModelFactory.getInstance(requireContext())
     }
 
-    private lateinit var adapter: RecomendationAdapter
+    private lateinit var adapter: RecommendationAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,11 +41,12 @@ class RecomendationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = RecomendationAdapter { item ->
-            Toast.makeText(context, "Clicked: ${item.name}", Toast.LENGTH_SHORT).show()
-            // Navigate to the detail page if needed
+        adapter = RecommendationAdapter { item ->
+            val bundle = Bundle().apply { putParcelable("foodDetail", item) }
+            findNavController().navigate(R.id.action_recomendationFragment_to_detailFragment, bundle)
         }
 
+        setupView()
         setupRecyclerView()
         observeViewModel()
 
@@ -71,6 +70,40 @@ class RecomendationFragment : Fragment() {
         viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
             Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun setupView() {
+        (activity as AppCompatActivity).supportActionBar?.apply {
+            setDisplayShowHomeEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+            setHomeButtonEnabled(true)
+            show()
+        }
+
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {}
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    android.R.id.home -> {
+                        findNavController().navigateUp()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigationView?.visibility = View.GONE
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigationView?.visibility = View.GONE
     }
 
     override fun onDestroyView() {

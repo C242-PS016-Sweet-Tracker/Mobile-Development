@@ -1,11 +1,11 @@
-package com.capstone.sweettrack.view.ui.chatbot
+package com.capstone.sweettrack.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.capstone.sweettrack.view.ui.chatbot.Message
 import com.coding.sweettrack.R
 
 class ChatHistoryAdapter : RecyclerView.Adapter<ChatHistoryAdapter.MessageViewHolder>() {

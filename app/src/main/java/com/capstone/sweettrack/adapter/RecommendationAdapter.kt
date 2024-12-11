@@ -1,4 +1,4 @@
-package com.capstone.sweettrack.view.ui.recomendation
+package com.capstone.sweettrack.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,15 +8,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.capstone.sweettrack.data.remote.response.ListEventsItem
+import com.capstone.sweettrack.data.local.entity.FavoriteFood
 import com.coding.sweettrack.R
 
-class RecomendationAdapter(private val onItemClicked: (ListEventsItem) -> Unit) :
-    RecyclerView.Adapter<RecomendationAdapter.RecommendationViewHolder>() {
+class RecommendationAdapter(private val onItemClicked: (FavoriteFood) -> Unit) :
+    RecyclerView.Adapter<RecommendationAdapter.RecommendationViewHolder>() {
 
-    private val recommendationList = mutableListOf<ListEventsItem>()
+    private val recommendationList = mutableListOf<FavoriteFood>()
 
-    fun setRecommendations(recommendations: List<ListEventsItem>) {
+    fun setRecommendations(recommendations: List<FavoriteFood>) {
         recommendationList.clear()
         recommendationList.addAll(recommendations)
         notifyDataSetChanged()
@@ -40,16 +40,15 @@ class RecomendationAdapter(private val onItemClicked: (ListEventsItem) -> Unit) 
         private val tvDescription: TextView = itemView.findViewById(R.id.tv_description)
         private val btnDetail: Button = itemView.findViewById(R.id.btn_detail)
 
-        fun bind(recommendation: ListEventsItem) {
-            // Set the title and description using name and category
+        fun bind(recommendation: FavoriteFood) {
             tvTitle.text = recommendation.name
-            tvDescription.text = recommendation.category
+            tvDescription.text = recommendation.kalori.toString()
 
-            // Load media cover image using Glide
-            Glide.with(itemView.context)
-                .load(recommendation.mediaCover)
-                .placeholder(R.drawable.ic_place_holder)
-                .into(imgPhoto)
+//            // Load media cover image using Glide
+//            Glide.with(itemView.context)
+//                .load(recommendation)
+//                .placeholder(R.drawable.ic_place_holder)
+//                .into(imgPhoto)
 
             // Handle the button click
             btnDetail.setOnClickListener {

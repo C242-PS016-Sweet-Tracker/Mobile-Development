@@ -23,10 +23,10 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="177dp"
-            android:layout_marginBottom="396dp"
-            android:scaleType="fitXY"
+            android:layout_marginBottom="524dp"
             android:paddingStart="10dp"
             android:paddingEnd="13dp"
+            android:scaleType="fitXY"
             android:src="@drawable/green_rectangle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -256,13 +256,13 @@
             app:layout_constraintTop_toBottomOf="@+id/progressBarDeterminate" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/activityLevelRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:id="@+id/recommendRecyclerView"
+            android:layout_width="388dp"
+            android:layout_height="326dp"
             android:layout_marginTop="16dp"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_pointer_text2"
             tools:listitem="@layout/item_food_view" />

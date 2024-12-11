@@ -12,9 +12,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Back Button and Title -->
-
-        <!-- Food Name and Favorite Icon -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,7 +23,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/bahan"
+                android:text="@string/detail"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -61,27 +58,39 @@
                 android:paddingStart="16dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvName"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:text="@string/jumlahKalori"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:text="Name"
+                    android:textAppearance="?attr/textAppearanceHeadline6" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvKalori"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:text="@string/jumlahProtein"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:text="Kalori: 0"
+                    android:textAppearance="?attr/textAppearanceBody1" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvGula"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/jumlahGula"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:text="Gula: 0"
+                    android:textAppearance="?attr/textAppearanceBody1" />
+
+                <TextView
+                    android:id="@+id/tvLemak"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lemak: 0"
+                    android:textAppearance="?attr/textAppearanceBody1" />
+
+                <TextView
+                    android:id="@+id/tvProtein"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Protein: 0"
+                    android:textAppearance="?attr/textAppearanceBody1" />
             </LinearLayout>
         </LinearLayout>
 

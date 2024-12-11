@@ -84,6 +84,7 @@ class ScanFoodFragment : Fragment() {
                         findNavController().navigateUp()
                         true
                     }
+
                     else -> false
                 }
             }
@@ -131,20 +132,21 @@ class ScanFoodFragment : Fragment() {
         cropImageLauncher.launch(cropIntent)
     }
 
-    private val cropImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == AppCompatActivity.RESULT_OK) {
-            result.data?.let { data ->
-                viewModel.handleCropResult(data)
-                showImage()
+    private val cropImageLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == AppCompatActivity.RESULT_OK) {
+                result.data?.let { data ->
+                    viewModel.handleCropResult(data)
+                    showImage()
+                }
+            } else if (result.resultCode == AppCompatActivity.RESULT_CANCELED) {
+                viewModel.resetToLastSuccessfulImageUri()
+                showToast("Crop Gambar dibatalkan")
+            } else if (result.resultCode == UCrop.RESULT_ERROR) {
+                val cropError = UCrop.getError(result.data!!)
+                Log.e("UCrop Error", cropError?.message.toString())
             }
-        } else if (result.resultCode == AppCompatActivity.RESULT_CANCELED) {
-            viewModel.resetToLastSuccessfulImageUri()
-            showToast("Crop Gambar dibatalkan")
-        } else if (result.resultCode == UCrop.RESULT_ERROR) {
-            val cropError = UCrop.getError(result.data!!)
-            Log.e("UCrop Error", cropError?.message.toString())
         }
-    }
 
     private val launcherIntentCamera = registerForActivityResult(
         ActivityResultContracts.TakePicture()
@@ -189,7 +191,8 @@ class ScanFoodFragment : Fragment() {
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
-                Toast.makeText(requireActivity(), "Permission request granted", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), "Permission request granted", Toast.LENGTH_LONG)
+                    .show()
             } else {
                 showPermissionDeniedDialog()
             }

@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.capstone.sweettrack.data.Repository
+import com.capstone.sweettrack.data.local.entity.FavoriteFood
+import com.capstone.sweettrack.data.local.helper.InitialDataSource
 import com.capstone.sweettrack.data.pref.UserModel
 import com.capstone.sweettrack.data.remote.response.CaloriesResponse
 import com.google.gson.Gson
@@ -18,6 +20,9 @@ class HomeViewModel(
 
     private val _dataResult = MutableLiveData<CaloriesResponse>()
     val dataResult: LiveData<CaloriesResponse> get() = _dataResult
+
+    private val _recommendations = MutableLiveData<List<FavoriteFood>>()
+    val recommendations: LiveData<List<FavoriteFood>> get() = _recommendations
 
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
@@ -51,6 +56,20 @@ class HomeViewModel(
                 )
             } finally {
                 _isLoading.postValue(false)
+            }
+        }
+    }
+
+    fun fetchRecommendations() {
+        _isLoading.value = true
+        viewModelScope.launch {
+            try {
+                val recommendations = InitialDataSource.getDummyFavoriteFoods()
+                _recommendations.value = recommendations
+            } catch (e: Exception) {
+                _errorMessage.value = "Error fetching recommendations: ${e.message}"
+            } finally {
+                _isLoading.value = false
             }
         }
     }

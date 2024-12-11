@@ -95,9 +95,6 @@ interface ApiService {
         @Body request: EditDetailUserRequest
     ): ApiResponse
 
-    @GET("events?active=0")
-    suspend fun getRecommendation(): RecommendationResponse
-
     @GET("kalori/getKalori/{user_id}")
     suspend fun getCalorie(
         @Path("user_id") userId: Int

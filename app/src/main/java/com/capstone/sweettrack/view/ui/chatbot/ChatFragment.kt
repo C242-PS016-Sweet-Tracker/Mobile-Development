@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.capstone.sweettrack.adapter.ChatHistoryAdapter
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentChatBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView

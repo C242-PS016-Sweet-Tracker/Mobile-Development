@@ -13,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.capstone.sweettrack.adapter.FavoriteAdapter
+import com.capstone.sweettrack.adapter.RecommendationAdapter
 import com.capstone.sweettrack.view.ViewModelFactory
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentHomeBinding
@@ -27,6 +30,9 @@ class HomeFragment : Fragment() {
         ViewModelFactory.getInstance(requireActivity())
     }
 
+    private lateinit var adapter: RecommendationAdapter
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,10 +45,20 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        adapter = RecommendationAdapter { item ->
+            val bundle = Bundle().apply { putParcelable("foodDetail", item) }
+            findNavController().navigate(R.id.action_navigation_home_to_detailFragment, bundle)
+        }
+
+        viewModel.fetchRecommendations()
+
         setupView()
         setupObservers()
         setupAction()
         observerData()
+
+        observeViewModel()
+        setupRecyclerView()
     }
 
     private fun setupObservers() {
@@ -152,6 +168,25 @@ class HomeFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun setupRecyclerView() {
+        binding.recommendRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.recommendRecyclerView.adapter = adapter
+    }
+
+    private fun observeViewModel() {
+        viewModel.recommendations.observe(viewLifecycleOwner) { recommendations ->
+            adapter.setRecommendations(recommendations)
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onResume() {

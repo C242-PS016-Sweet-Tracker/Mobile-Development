@@ -17,7 +17,7 @@
     <string name="jumlahKalori">240 Calories</string>
     <string name="jumlahProtein">15gr Protein</string>
     <string name="jumlahGula">10gr Gula</string>
-    <string name="bahan">BAHAN</string>
+    <string name="bahan">Bahan</string>
     <string name="detailBahan">1. 350 g kentang\n
         2. 350 g tahu putih\n
         3. 350 g tempe\n
@@ -123,8 +123,7 @@
         <item>Diabetes Tipe 1</item>
         <item>Diabetes Tipe 2</item>
         <item>Diabetes Gestasional</item>
-        <item>Prediabetes</item>
-        <item>Lainnya</item>
+        <item>Normal</item>
     </string-array>
 
     <!-- Miscellaneous -->

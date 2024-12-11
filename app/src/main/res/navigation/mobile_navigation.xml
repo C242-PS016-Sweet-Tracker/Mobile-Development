@@ -34,9 +34,6 @@
             android:id="@+id/action_navigation_home_to_favoriteFragment"
             app:destination="@id/favoriteFragment" />
         <action
-            android:id="@+id/action_navigation_home_to_detailFragment"
-            app:destination="@id/detailFragment" />
-        <action
             android:id="@+id/action_navigation_home_to_calculatorFragmentOne"
             app:destination="@id/calculatorFragmentOne" />
         <action
@@ -48,6 +45,9 @@
         <action
             android:id="@+id/action_navigation_home_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
 
     <!-- Profile Fragment -->
@@ -175,9 +175,6 @@
         <action
             android:id="@+id/action_splashFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
-        <action
-            android:id="@+id/action_splashFragment_to_welcomeFragment"
-            app:destination="@id/welcomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/calculatorFragmentOne"
@@ -220,9 +217,13 @@
     </fragment>
     <fragment
         android:id="@+id/recomendationFragment"
-        android:name="com.capstone.sweettrack.view.ui.recomendation.RecomendationFragment"
-        android:label="fragment_recomendation"
-        tools:layout="@layout/fragment_recomendation" />
+        android:name="com.capstone.sweettrack.view.ui.recomendation.RecommendationFragment"
+        android:label="Recommendations"
+        tools:layout="@layout/fragment_recomendation" >
+        <action
+            android:id="@+id/action_recomendationFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.capstone.sweettrack.view.ui.chatbot.ChatFragment"

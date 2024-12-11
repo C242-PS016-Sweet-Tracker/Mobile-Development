@@ -229,7 +229,4 @@ class Repository private constructor(
             }.also { instance = it }
     }
 
-    suspend fun getRecommendation(): RecommendationResponse {
-        return apiService.getRecommendation()
-    }
 }

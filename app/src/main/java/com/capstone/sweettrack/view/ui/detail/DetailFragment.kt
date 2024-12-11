@@ -1,17 +1,20 @@
 package com.capstone.sweettrack.view.ui.detail
 
 import DetailViewModel
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowInsets
-import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.capstone.sweettrack.data.local.entity.FavoriteFood
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentDetailBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -22,7 +25,6 @@ class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
-    // Inisialisasi ViewModel
     private val viewModel: DetailViewModel by viewModels()
 
     override fun onCreateView(
@@ -38,39 +40,50 @@ class DetailFragment : Fragment() {
 
         setupView()
 
-        // Observe status favorite untuk memperbarui ikon
         viewModel.isFavorite.observe(viewLifecycleOwner, Observer { isFavorite ->
             if (isFavorite) {
-                binding.favoriteIcon.setImageResource(R.drawable.baseline_favorite_24) // Ikon terisi
+                binding.favoriteIcon.setImageResource(R.drawable.baseline_favorite_24)
             } else {
-                binding.favoriteIcon.setImageResource(R.drawable.baseline_favorite_border_24) // Ikon border
+                binding.favoriteIcon.setImageResource(R.drawable.baseline_favorite_border_24)
             }
         })
 
-// Klik ikon favorite untuk toggle status
         binding.favoriteIcon.setOnClickListener {
             viewModel.toggleFavorite()
+        }
+
+        val favoriteFood = arguments?.getParcelable<FavoriteFood>("foodDetail")
+        favoriteFood?.let { food ->
+            binding.tvName.text = food.name
+            binding.tvKalori.text = "Kalori: ${food.kalori}"
+            binding.tvGula.text = "Gula: ${food.gula}"
+            binding.tvLemak.text = "Lemak: ${food.lemak}"
+            binding.tvProtein.text = "Protein: ${food.protein}"
         }
 
     }
 
     private fun setupView() {
-        val window = requireActivity().window
-        val decorView = window.decorView
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-            window.insetsController?.systemBarsBehavior =
-                WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        } else {
-            @Suppress("DEPRECATION")
-            decorView.systemUiVisibility = (
-                    View.SYSTEM_UI_FLAG_FULLSCREEN
-                            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    )
+        (activity as AppCompatActivity).supportActionBar?.apply {
+            setDisplayShowHomeEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+            setHomeButtonEnabled(true)
+            show()
         }
-        (requireActivity() as? AppCompatActivity)?.supportActionBar?.show()
+
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {}
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    android.R.id.home -> {
+                        findNavController().navigateUp()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner)
     }
 
     override fun onResume() {
@@ -82,7 +95,7 @@ class DetailFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
-        bottomNavigationView?.visibility = View.VISIBLE
+        bottomNavigationView?.visibility = View.GONE
     }
 
     override fun onDestroyView() {
