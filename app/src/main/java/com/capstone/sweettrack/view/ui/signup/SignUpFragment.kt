@@ -208,7 +208,7 @@ class SignUpFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
-        bottomNavigationView?.visibility = View.VISIBLE
+        bottomNavigationView?.visibility = View.GONE
     }
 
     override fun onDestroyView() {

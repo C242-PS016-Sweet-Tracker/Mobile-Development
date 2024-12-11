@@ -162,6 +162,7 @@ class LoginFragment : Fragment() {
         val resetText =
             ObjectAnimator.ofFloat(binding.resetPassTextView, View.ALPHA, 1f).setDuration(100)
         val loginBtn = ObjectAnimator.ofFloat(binding.loginButton, View.ALPHA, 1f).setDuration(100)
+        val signUpBtn = ObjectAnimator.ofFloat(binding.signUpButton, View.ALPHA, 1f).setDuration(100)
 
         AnimatorSet().apply {
             playSequentially(
@@ -172,7 +173,8 @@ class LoginFragment : Fragment() {
                 password,
                 passwordEdit,
                 resetText,
-                loginBtn
+                loginBtn,
+                signUpBtn
             )
             startDelay = 100
         }.start()
@@ -181,7 +183,7 @@ class LoginFragment : Fragment() {
     private fun setupAction() {
         binding.loginButton.isEnabled = false
 
-        binding.registerPromptTextView.setOnClickListener {
+        binding.signUpButton.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_fragmentSignUp)
         }
 

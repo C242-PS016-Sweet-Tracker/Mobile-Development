@@ -8,11 +8,12 @@ import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.capstone.sweettrack.view.ViewModelFactory
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentProfileBinding
@@ -57,9 +58,11 @@ class ProfileFragment : Fragment() {
                     binding.tvUsername.text = dataUser.username
                     binding.tvFullNameValue.text = dataUser.nama_lengkap_user
                     binding.tvEmailValue.text = dataUser.user_email
-                    binding.tvAge.text = "${dataUser.user_umur} tahun"
+                    binding.tvAge.text =
+                        getString(R.string.umur_user, dataUser.user_umur.toString())
                     binding.tvDiabetesLevel.text = dataUser.tipe_diabetes
                     binding.tvGenderValue.text = dataUser.jenis_kelamin
+                    showImageFromUrl(dataUser.foto)
                 } else {
                     Toast.makeText(
                         requireContext(),
@@ -113,7 +116,26 @@ class ProfileFragment : Fragment() {
             viewModel.logOut()
         }
 
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    requireActivity().moveTaskToBack(true)
+                }
+            }
+        )
+
     }
+
+    private fun showImageFromUrl(imageUrl: String) {
+        Glide.with(this)
+            .load(imageUrl)
+            .circleCrop()
+            .placeholder(R.drawable.baseline_person_24)
+            .error(R.drawable.ic_place_holder)
+            .into(binding.ivProfileImage)
+    }
+
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE

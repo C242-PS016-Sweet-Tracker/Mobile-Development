@@ -39,7 +39,11 @@ class ProfileViewModel(private val repository: Repository) : ViewModel() {
                 _dataResult.postValue(errorResponse)
             } catch (e: Exception) {
                 _dataResult.postValue(
-                    UserProfileResponse(statusCode = 500, error = true, message = "Kesalahan jaringan")
+                    UserProfileResponse(
+                        statusCode = 500,
+                        error = true,
+                        message = "Kesalahan jaringan"
+                    )
                 )
             } finally {
                 _isLoading.postValue(false)

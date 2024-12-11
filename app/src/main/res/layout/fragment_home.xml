@@ -7,15 +7,40 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
+<!--        android:padding="16dp">-->
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="167dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/yellow_rectangle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="177dp"
+            android:layout_marginBottom="396dp"
+            android:scaleType="fitXY"
+            android:paddingStart="10dp"
+            android:paddingEnd="13dp"
+            android:src="@drawable/green_rectangle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/text_home"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Hello,\nUsername"
+            android:text="@string/hello"
+            android:paddingStart="15dp"
+            android:paddingEnd="10dp"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -24,8 +49,8 @@
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="387dp"
+            android:layout_height="103dp"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="44dp"
             android:gravity="center_horizontal"
@@ -37,7 +62,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
+                android:layout_marginHorizontal="11dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -61,7 +86,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
+                android:layout_marginHorizontal="7dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -76,7 +101,7 @@
                     android:id="@+id/tv_camera"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kamera"
+                    android:text="Scan Food"
                     android:textAlignment="center"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -85,7 +110,7 @@
             <LinearLayout
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
+                android:layout_marginHorizontal="7dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -105,13 +130,39 @@
                     android:textSize="15sp"
                     android:textStyle="bold" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/btn_gemini"
+                    android:layout_width="69dp"
+                    android:layout_height="67dp"
+                    android:background="@drawable/circular_button_background"
+                    android:src="@drawable/google_gemini_icon" />
+
+                <TextView
+                    android:id="@+id/tv_gemini"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ChatBot"
+                    android:textAlignment="center"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
 
         <TextView
             android:id="@+id/tv_pointer_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="38dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:text="Cek Kalori Harian Anda!"
             android:textSize="22sp"
             android:textStyle="bold"
@@ -119,6 +170,61 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_home" />
+
+        <TextView
+            android:id="@+id/tv_pointer_text3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="28dp"
+            android:text="Kalori Harian anda"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/progressBarDeterminate"
+            app:layout_constraintTop_toBottomOf="@+id/tv_pointer_text" />
+
+        <TextView
+            android:id="@+id/tv_calorie"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/hasil_kalori"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/progressBarDeterminate"
+            app:layout_constraintTop_toBottomOf="@+id/tv_pointer_text3" />
+
+        <TextView
+            android:id="@+id/tv_pointer_text4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:text="Kalori anda sementara"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/progressBarDeterminate"
+            app:layout_constraintTop_toBottomOf="@+id/tv_calorie" />
+
+        <TextView
+            android:id="@+id/tv_calorie_now"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/kalori_now"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/progressBarDeterminate"
+            app:layout_constraintTop_toBottomOf="@+id/tv_pointer_text4" />
 
         <ProgressBar
             android:id="@+id/progressBarDeterminate"
@@ -142,6 +248,8 @@
             android:text="Rekomendasi"
             android:textSize="22sp"
             android:textStyle="bold"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -158,6 +266,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_pointer_text2"
             tools:listitem="@layout/item_food_view" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

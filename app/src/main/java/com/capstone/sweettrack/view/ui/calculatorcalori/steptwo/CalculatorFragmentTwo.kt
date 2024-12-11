@@ -8,10 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.sweettrack.adapter.ActivityLevelAdapter
+import com.capstone.sweettrack.view.ViewModelFactory
 import com.capstone.sweettrack.view.ui.calculatorcalori.CalculatorViewModel
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentCalculatorTwoBinding
@@ -22,7 +23,10 @@ class CalculatorFragmentTwo : Fragment() {
 
     private var _binding: FragmentCalculatorTwoBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: CalculatorViewModel
+    private val viewModel by activityViewModels<CalculatorViewModel> {
+        ViewModelFactory.getInstance(requireActivity())
+    }
+
 
     private val activityLevels = listOf(
         "Tidak aktif" to "Sedikit atau tidak ada aktivitas fisik.",
@@ -44,9 +48,6 @@ class CalculatorFragmentTwo : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Inisialisasi ViewModel
-        viewModel = ViewModelProvider(requireActivity())[CalculatorViewModel::class.java]
-
         setupRecyclerView()
         setupSendButton()
     }
@@ -55,7 +56,7 @@ class CalculatorFragmentTwo : Fragment() {
         binding.activityLevelRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = ActivityLevelAdapter(activityLevels) { selectedLevel ->
-                // Simpan aktivitas yang dipilih ke ViewModel
+
                 viewModel.setSelectedActivityLevel(selectedLevel)
                 Toast.makeText(context, "Dipilih: $selectedLevel", Toast.LENGTH_SHORT).show()
             }
@@ -69,7 +70,6 @@ class CalculatorFragmentTwo : Fragment() {
             Handler(Looper.getMainLooper()).postDelayed({
                 binding.progressBar.visibility = View.GONE
 
-                // Navigasi ke Fragment berikutnya
                 findNavController().navigate(R.id.action_calculatorFragmentTwo_to_calculatorFragmentResult)
             }, 1500) // Simulasi delay 1,5 detik
         }

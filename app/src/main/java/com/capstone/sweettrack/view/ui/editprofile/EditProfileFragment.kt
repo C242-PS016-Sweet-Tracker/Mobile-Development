@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.capstone.sweettrack.data.remote.response.EditProfileRequest
 import com.capstone.sweettrack.view.ViewModelFactory
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentEditProfileBinding
@@ -35,6 +34,8 @@ class EditProfileFragment : Fragment() {
     private val viewModel: EditProfileViewModel by viewModels {
         ViewModelFactory.getInstance(requireActivity())
     }
+
+    private var selectedPhotoUri: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,6 +65,7 @@ class EditProfileFragment : Fragment() {
                 if (dataUser != null) {
                     binding.etFullName.setText(dataUser.nama_lengkap_user)
                     binding.etUsername.setText(dataUser.username)
+                    showImageFromUrl(dataUser.foto)
 
                     val genderAdapter = binding.genderSpinner.adapter
                     val position = (0 until genderAdapter.count).firstOrNull {
@@ -139,14 +141,14 @@ class EditProfileFragment : Fragment() {
             return
         }
 
-        val request = EditProfileRequest(
-            namaLengkap = fullName,
-            username = username,
-            jenisKelamin = gender,
-            umur = age
+        viewModel.editProfileUsers(
+            fullName,
+            username,
+            gender,
+            age,
+            selectedPhotoUri,
+            requireActivity()
         )
-
-        viewModel.editProfileUser(request)
         observeEditProfileResult()
     }
 
@@ -174,6 +176,7 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun showImage(uri: Uri) {
+        selectedPhotoUri = uri
         Glide.with(this)
             .load(uri)
             .circleCrop()
@@ -182,6 +185,14 @@ class EditProfileFragment : Fragment() {
             .into(binding.profileImage)
     }
 
+    private fun showImageFromUrl(imageUrl: String) {
+        Glide.with(this)
+            .load(imageUrl)
+            .circleCrop()
+            .placeholder(R.drawable.baseline_person_24)
+            .error(R.drawable.ic_place_holder)
+            .into(binding.profileImage)
+    }
 
     private fun setupView() {
         (activity as AppCompatActivity).supportActionBar?.apply {

@@ -14,14 +14,8 @@ data class UserProfile(
     val user_umur: Int,
     val nama_lengkap_user: String,
     val user_email: String,
-    val jenis_kelamin: String
-)
-
-data class EditProfileRequest(
-    val namaLengkap: String,
-    val username: String,
-    val jenisKelamin: String,
-    val umur: Int
+    val jenis_kelamin: String,
+    val foto: String
 )
 
 data class ApiResponse(
@@ -42,18 +36,6 @@ data class DetailUser(
     val kadar_gula: Double,
     val kalori: Double,
     val user_id: Int
-)
-
-data class DetailUsers(
-    val nama_lengkap_user: String? = null,
-    val jenis_kelamin: String? = null,
-    val user_umur: Int? = null,
-    val tinggi_badan: Double? = null,
-    val berat_badan: Double? = null,
-    val tingkat_aktivitas: String? = null,
-    val tipe_diabetes: String? = null,
-    val kadar_gula: Double? = null,
-    val kalori: Double? = null,
 )
 
 data class DetailUserResponse(

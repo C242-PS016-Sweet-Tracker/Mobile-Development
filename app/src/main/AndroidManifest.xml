@@ -5,6 +5,7 @@
     <uses-feature android:name="android.hardware.camera" android:required="true" />
     <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
@@ -25,6 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SweetTrack"
         android:enableOnBackInvokedCallback="true"
+        android:name="com.capstone.sweettrack.view.ui.setting.MyApplication"
         android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="tiramisu">
         <activity

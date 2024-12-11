@@ -84,4 +84,10 @@ dependencies {
     // uCrop
     implementation(libs.ucrop)
 
+    // notification lib
+    implementation(libs.androidx.work.runtime.ktx)
+
+    // library gemini
+    implementation(libs.generativeai)
+
 }
