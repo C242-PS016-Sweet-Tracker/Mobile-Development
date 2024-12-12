@@ -26,7 +26,12 @@ class ActivityLevelAdapter(
             if (isSelected) {
                 itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.green))
             } else {
-                itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, android.R.color.white))
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        android.R.color.white
+                    )
+                )
             }
 
             itemView.setOnClickListener {

@@ -38,7 +38,7 @@
         android:layout_marginBottom="20dp"
         android:text="Kamera"
         android:backgroundTint="@color/cream"
-        app:layout_constraintBottom_toTopOf="@+id/uploadButton"
+        app:layout_constraintBottom_toTopOf="@+id/scanFoodButton"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
@@ -49,9 +49,8 @@
         android:layout_marginBottom="20dp"
         android:elevation="2dp"
         android:text="Galeri"
-
         android:backgroundTint="@color/cream"
-        app:layout_constraintBottom_toTopOf="@+id/uploadButton"
+        app:layout_constraintBottom_toTopOf="@+id/ocrScanBtn"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button

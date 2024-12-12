@@ -18,7 +18,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", "\"https://example.dev/v1/\"")
+        buildConfigField("String", "BASE_URL", "\"https://sweet-tracker.et.r.appspot.com/\"")
+        buildConfigField("String", "API_KEY", "\"AIzaSyCgwJ3eG9WM9KY3TwWCx8SToISTfOx1VSM\"")
 
     }
 

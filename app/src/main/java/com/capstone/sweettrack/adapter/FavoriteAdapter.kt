@@ -6,13 +6,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.capstone.sweettrack.data.remote.response.Favorite
 import com.coding.sweettrack.R
-import com.coding.sweettrack.databinding.ItemHistoryBinding
 
 class FavoriteAdapter(private val onItemClicked: (Favorite) -> Unit) :
     RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
@@ -28,7 +25,7 @@ class FavoriteAdapter(private val onItemClicked: (Favorite) -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_food_view, parent, false)  // Ganti dengan layout yang sesuai
+            .inflate(R.layout.item_food_view, parent, false)
         return FavoriteViewHolder(view)
     }
 

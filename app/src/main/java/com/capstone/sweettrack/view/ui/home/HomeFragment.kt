@@ -83,8 +83,10 @@ class HomeFragment : Fragment() {
                 val dataUser = result.data
                 if (dataUser != null) {
                     binding.textHome.text = getString(R.string.hello, dataUser.username)
-                    binding.tvCalorie.text = getString(R.string.hasil_kalori, dataUser.kalori.toString())
-                    binding.tvCalorieNow.text = getString(R.string.kalori_now, dataUser.kalori_harian.toString())
+                    binding.tvCalorie.text =
+                        getString(R.string.hasil_kalori, dataUser.kalori.toString())
+                    binding.tvCalorieNow.text =
+                        getString(R.string.kalori_now, dataUser.kalori_harian.toString())
 
                     tipe = dataUser.tipe_diabetes
                     viewModel.fetchRecommendations(dataUser.tipe_diabetes)
@@ -150,19 +152,18 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_home_to_favoriteFragment)
         }
 
-        binding.tvPointerText2.setOnClickListener {
+        binding.tvSeeAll.setOnClickListener {
             val bundle = Bundle().apply {
                 putString("type", tipe)
             }
-            findNavController().navigate(R.id.action_navigation_home_to_recomendationFragment, bundle)
+            findNavController().navigate(
+                R.id.action_navigation_home_to_recomendationFragment,
+                bundle
+            )
         }
 
         binding.btnGemini.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_home_to_chatFragment)
-        }
-
-        binding.tvSeeAll.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_home_to_recomendationFragment)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(
