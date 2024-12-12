@@ -122,7 +122,14 @@
         android:id="@+id/scanFoodFragment"
         android:name="com.capstone.sweettrack.view.ui.scanfood.ScanFoodFragment"
         android:label="Scan Food"
-        tools:layout="@layout/fragment_scan_food" />
+        tools:layout="@layout/fragment_scan_food" >
+        <action
+            android:id="@+id/action_scanFoodFragment_to_resultOcrFragment"
+            app:destination="@id/resultOcrFragment" />
+        <action
+            android:id="@+id/action_scanFoodFragment_to_resultScanFoodFragment"
+            app:destination="@id/resultScanFoodFragment" />
+    </fragment>
     <fragment
         android:id="@+id/userInformationFragment"
         android:name="com.capstone.sweettrack.view.ui.userinformation.UserInformationFragment"
@@ -234,4 +241,14 @@
         android:name="com.capstone.sweettrack.view.ui.history.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/resultOcrFragment"
+        android:name="com.capstone.sweettrack.view.ui.result.resultocr.ResultOcrFragment"
+        android:label="Hasil Scan"
+        tools:layout="@layout/fragment_result_ocr" />
+    <fragment
+        android:id="@+id/resultScanFoodFragment"
+        android:name="com.capstone.sweettrack.view.ui.result.resultscanfood.ResultScanFoodFragment"
+        android:label="Hasil Scan"
+        tools:layout="@layout/fragment_result_scan_food" />
 </navigation>

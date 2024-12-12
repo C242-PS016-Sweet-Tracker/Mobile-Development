@@ -66,7 +66,6 @@ class EditProfileViewModel(private val repository: Repository) : ViewModel() {
         fotoUri: Uri?,
         context: Context
     ) {
-        println("view model foto : $fotoUri")
         _isLoading.value = true
         viewModelScope.launch {
             try {

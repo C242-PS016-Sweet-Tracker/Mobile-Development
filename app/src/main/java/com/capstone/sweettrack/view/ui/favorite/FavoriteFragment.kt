@@ -43,9 +43,9 @@ class FavoriteFragment : Fragment() {
             adapter = favoriteAdapter
         }
 
-        viewModel.favoriteList.observe(viewLifecycleOwner) { favoriteList ->
-            favoriteAdapter.submitList(favoriteList)
-        }
+//        viewModel.favoriteList.observe(viewLifecycleOwner) { favoriteList ->
+//            favoriteAdapter.submitList(favoriteList)
+//        }
 
         binding.imgBack.setOnClickListener {
             findNavController().popBackStack()

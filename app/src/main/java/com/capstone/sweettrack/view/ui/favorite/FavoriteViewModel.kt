@@ -12,16 +12,16 @@ import kotlinx.coroutines.launch
 
 class FavoriteViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val database = SweetTrackDatabase.getInstance(application, viewModelScope)
-    private val dao = database.eventDao()
-
-    private val _favoriteList = MutableLiveData<List<FavoriteFood>>()
-    val favoriteList: LiveData<List<FavoriteFood>> get() = _favoriteList
-
-
-    init {
-        viewModelScope.launch {
-            _favoriteList.value = dao.getAllFavorites(101)
-        }
-    }
+//    private val database = SweetTrackDatabase.getInstance(application, viewModelScope)
+//    private val dao = database.eventDao()
+//
+//    private val _favoriteList = MutableLiveData<List<FavoriteFood>>()
+//    val favoriteList: LiveData<List<FavoriteFood>> get() = _favoriteList
+//
+//
+//    init {
+//        viewModelScope.launch {
+//            _favoriteList.value = dao.getAllFavorites(101)
+//        }
+//    }
 }

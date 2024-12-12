@@ -6,6 +6,8 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -23,7 +25,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuProvider
 import androidx.navigation.fragment.findNavController
+import com.capstone.sweettrack.data.remote.response.OcrResponse
+import com.capstone.sweettrack.data.remote.response.ResponseModel
 import com.capstone.sweettrack.util.getImageUri
+import com.capstone.sweettrack.view.ViewModelFactory
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentScanFoodBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -36,7 +41,9 @@ class ScanFoodFragment : Fragment() {
 
     private var imageUriLast: Uri? = null
 
-    private val viewModel: ScanFoodViewModel by viewModels()
+    private val viewModel by viewModels<ScanFoodViewModel> {
+        ViewModelFactory.getInstance(requireActivity())
+    }
 
     private fun allPermissionsGranted() =
         ContextCompat.checkSelfPermission(
@@ -65,7 +72,8 @@ class ScanFoodFragment : Fragment() {
 
         binding.galleryButton.setOnClickListener { startGallery() }
         binding.cameraButton.setOnClickListener { startCamera() }
-        binding.uploadButton.setOnClickListener { analysisImage() }
+        binding.scanFoodButton.setOnClickListener { analysisImageFood() }
+        binding.ocrScanBtn.setOnClickListener { analysisImageOcr() }
     }
 
     private fun setupView() {
@@ -102,13 +110,100 @@ class ScanFoodFragment : Fragment() {
         }
     }
 
-    private fun analysisImage() {
+    private fun analysisImageFood() {
         val currentUri = viewModel.currentImageUri.value
         if (currentUri != null) {
             Toast.makeText(requireContext(), "Analyzing image...", Toast.LENGTH_SHORT).show()
-            // Logic for analyzing image
+
+            viewModel.scanFoodNutrition(currentUri, requireActivity())
+            observeScanFoodResult()
         } else {
-            Toast.makeText(requireContext(), "No image to analyze", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Pilih gambar terlebih dahulu!", Toast.LENGTH_SHORT).show()
+        }
+    }
+    private fun analysisImageOcr() {
+        val currentUri = viewModel.currentImageUri.value
+        if (currentUri != null) {
+            Toast.makeText(requireContext(), "Analyzing image...", Toast.LENGTH_SHORT).show()
+
+            viewModel.scanOcrNutrition(currentUri, requireActivity())
+            observeOcrScanResult()
+        } else {
+            Toast.makeText(requireContext(), "Pilih gambar terlebih dahulu!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun observeOcrScanResult() {
+        viewModel.ocrScanResult.observe(viewLifecycleOwner) { result ->
+            if (!result.error) {
+                val alertDialog = AlertDialog.Builder(requireActivity()).apply {
+                    setTitle("Informasi")
+                    setMessage(result.message)
+                    setCancelable(false)
+                    create()
+                }.show()
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    alertDialog.dismiss()
+
+                val currentUri = viewModel.currentImageUri.value
+                    if (currentUri != null) {
+                        moveToResultOcr(currentUri, result)
+                    }
+                }, 1000)
+            } else {
+                val alertDialog = AlertDialog.Builder(requireActivity()).apply {
+                    setTitle("Infomasi")
+                    setMessage(result.message)
+                    setCancelable(false)
+                    create()
+                }.show()
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    alertDialog.dismiss()
+                }, 2000)
+            }
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+    }
+
+    private fun observeScanFoodResult() {
+        viewModel.scanFoodResult.observe(viewLifecycleOwner) { result ->
+            if (!result.error) {
+                val alertDialog = AlertDialog.Builder(requireActivity()).apply {
+                    setTitle("Informasi")
+                    setMessage(result.message)
+                    setCancelable(false)
+                    create()
+                }.show()
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    alertDialog.dismiss()
+
+                val currentUri = viewModel.currentImageUri.value
+                    if (currentUri != null) {
+                        moveToResultScanFood(currentUri, result)
+                    }
+                }, 1000)
+            } else {
+                val alertDialog = AlertDialog.Builder(requireActivity()).apply {
+                    setTitle("Infomasi")
+                    setMessage(result.message)
+                    setCancelable(false)
+                    create()
+                }.show()
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    alertDialog.dismiss()
+                }, 2000)
+            }
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
     }
 
@@ -209,6 +304,24 @@ class ScanFoodFragment : Fragment() {
             }
             .setNegativeButton("Cancel", null)
             .show()
+    }
+
+    private fun moveToResultOcr(uri: Uri, response: OcrResponse) {
+        val bundle = Bundle().apply {
+            putString("image_uri", uri.toString())
+            putParcelable("result", response)
+        }
+        findNavController().navigate(R.id.action_scanFoodFragment_to_resultOcrFragment, bundle)
+
+    }
+
+    private fun moveToResultScanFood(uri: Uri, response: ResponseModel) {
+        val bundle = Bundle().apply {
+            putString("image_uri", uri.toString())
+            putParcelable("result", response)
+        }
+        findNavController().navigate(R.id.action_scanFoodFragment_to_resultScanFoodFragment, bundle)
+
     }
 
     private fun showToast(message: String) {

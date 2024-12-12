@@ -20,19 +20,32 @@ abstract class SweetTrackDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: SweetTrackDatabase? = null
 
-        fun getInstance(context: Context, applicationScope: CoroutineScope): SweetTrackDatabase {
+        fun getInstance(context: Context): SweetTrackDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     SweetTrackDatabase::class.java, "SweetTrack.db"
                 )
                     .fallbackToDestructiveMigration()
-                    .addCallback(DatabaseCallback(applicationScope))
                     .build()
                 INSTANCE = instance
                 instance
             }
         }
+
+//        fun getInstance(context: Context, applicationScope: CoroutineScope): SweetTrackDatabase {
+//            return INSTANCE ?: synchronized(this) {
+//                val instance = Room.databaseBuilder(
+//                    context.applicationContext,
+//                    SweetTrackDatabase::class.java, "SweetTrack.db"
+//                )
+//                    .fallbackToDestructiveMigration()
+//                    .addCallback(DatabaseCallback(applicationScope))
+//                    .build()
+//                INSTANCE = instance
+//                instance
+//            }
+//        }
     }
 
     private class DatabaseCallback(private val applicationScope: CoroutineScope) : Callback() {
@@ -41,9 +54,9 @@ abstract class SweetTrackDatabase : RoomDatabase() {
             INSTANCE?.let { database ->
                 applicationScope.launch {
                     val sweetTrackDao = database.eventDao()
-                    sweetTrackDao.insertHistory(InitialDataSource.getDummyHistoryScans())
+//                    sweetTrackDao.insertHistory(InitialDataSource.getDummyHistoryScans())
 //                    sweetTrackDao.insertHistory(InitialDataSource.getDummyHistoryScan())
-                    sweetTrackDao.insertFavorite(InitialDataSource.getDummyFavoriteFoods())
+//                    sweetTrackDao.insertFavorite(InitialDataSource.getDummyFavoriteFoods())
                 }
             }
         }

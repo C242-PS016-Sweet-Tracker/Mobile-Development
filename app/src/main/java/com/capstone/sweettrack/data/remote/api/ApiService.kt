@@ -12,8 +12,10 @@ import com.capstone.sweettrack.data.remote.response.LoginResponse
 import com.capstone.sweettrack.data.remote.response.OTPRequest
 import com.capstone.sweettrack.data.remote.response.OTPResetPassRequest
 import com.capstone.sweettrack.data.remote.response.OTPResponse
+import com.capstone.sweettrack.data.remote.response.OcrResponse
 import com.capstone.sweettrack.data.remote.response.RecommendationResponse
 import com.capstone.sweettrack.data.remote.response.ResendingOTPRequest
+import com.capstone.sweettrack.data.remote.response.ResponseModel
 import com.capstone.sweettrack.data.remote.response.UserProfileResponse
 import com.capstone.sweettrack.data.remote.response.VerifyOtpRequest
 import com.capstone.sweettrack.data.remote.response.VerifyOtpResetPassword
@@ -78,6 +80,17 @@ interface ApiService {
         @Part("umur") umur: RequestBody
     ): ApiResponse
 
+    @Multipart
+    @POST("ocr/predict")
+    suspend fun ocrScan(
+        @Part image: MultipartBody.Part?
+    ): OcrResponse
+
+    @Multipart
+    @POST("scan/predict")
+    suspend fun scanFoodNutrition(
+        @Part image: MultipartBody.Part?
+    ): ResponseModel
 
     @GET("detail/detailUsers/{user_id}")
     suspend fun getDetailUser(

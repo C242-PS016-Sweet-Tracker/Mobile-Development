@@ -139,4 +139,10 @@
 
     <string name="input_text_hint">Masukkan pertanyaan anda</string>
     <string name="send_message_text">Kirim</string>
+    <string name="image_nutrition">image nutrition</string>
+    <string name="g">%1$s g</string>
+    <string name="kalori">Kalori\t: %1$s</string>
+    <string name="gula">Gula\t: %1$s</string>
+    <string name="lemak">Lemak\t: %1$s</string>
+    <string name="protein">Protein\t: %1$s</string>
 </resources>
