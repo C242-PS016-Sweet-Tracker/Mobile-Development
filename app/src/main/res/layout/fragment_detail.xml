@@ -95,22 +95,22 @@
         </LinearLayout>
 
         <!-- Ingredients Section -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:paddingBottom="8dp"
-            android:text="@string/bahan"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="24dp"-->
+<!--            android:paddingBottom="8dp"-->
+<!--            android:text="@string/bahan"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            android:textStyle="bold" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/detailBahan"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/detailBahan"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="16sp" />-->
 
         <ProgressBar
             android:id="@+id/progressBar"
