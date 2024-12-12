@@ -13,7 +13,7 @@ interface SweetTrackDao {
     // **HistoryScan Table**
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertHistory(history: List<HistoryScan>)
+    suspend fun insertHistory(history: HistoryScan)
 
     @Query("SELECT * FROM history_scan WHERE user_id = :userId ORDER BY timestamp DESC")
     suspend fun getAllHistories(userId: Int): List<HistoryScan>

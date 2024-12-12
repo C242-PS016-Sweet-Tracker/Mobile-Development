@@ -2,6 +2,8 @@ package com.capstone.sweettrack.data
 
 import android.content.Context
 import android.net.Uri
+import com.capstone.sweettrack.data.local.entity.HistoryScan
+import com.capstone.sweettrack.data.local.room.SweetTrackDatabase
 import com.capstone.sweettrack.data.pref.UserModel
 import com.capstone.sweettrack.data.pref.UserPreference
 import com.capstone.sweettrack.data.remote.api.ApiService
@@ -12,13 +14,20 @@ import com.capstone.sweettrack.data.remote.response.DetailUserResponse
 import com.capstone.sweettrack.data.remote.response.EditCalorieRequest
 import com.capstone.sweettrack.data.remote.response.EditCalorieResponse
 import com.capstone.sweettrack.data.remote.response.EditDetailUserRequest
+import com.capstone.sweettrack.data.remote.response.FavoriteAdd
+import com.capstone.sweettrack.data.remote.response.FavoriteResponse
+import com.capstone.sweettrack.data.remote.response.FavoriteResponses
 import com.capstone.sweettrack.data.remote.response.LoginRequest
 import com.capstone.sweettrack.data.remote.response.LoginResponse
 import com.capstone.sweettrack.data.remote.response.OTPRequest
 import com.capstone.sweettrack.data.remote.response.OTPResetPassRequest
 import com.capstone.sweettrack.data.remote.response.OTPResponse
+import com.capstone.sweettrack.data.remote.response.OcrResponse
+import com.capstone.sweettrack.data.remote.response.RecommendationRequest
 import com.capstone.sweettrack.data.remote.response.RecommendationResponse
 import com.capstone.sweettrack.data.remote.response.ResendingOTPRequest
+import com.capstone.sweettrack.data.remote.response.ResponseModel
+import com.capstone.sweettrack.data.remote.response.UpdateCalorieDayRequest
 import com.capstone.sweettrack.data.remote.response.UserProfileResponse
 import com.capstone.sweettrack.data.remote.response.VerifyOtpRequest
 import com.capstone.sweettrack.data.remote.response.VerifyOtpResetPassword
@@ -35,7 +44,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 class Repository private constructor(
     private val apiService: ApiService,
-    private val userPreference: UserPreference
+    private val userPreference: UserPreference,
+    private val sweetTrackDatabase: SweetTrackDatabase
 ) {
 
     suspend fun saveSession(user: UserModel) {
@@ -213,6 +223,128 @@ class Repository private constructor(
         return response
     }
 
+    suspend fun updateUserCalorieDay(calorie: Double?): EditCalorieResponse {
+        val session = userPreference.getSession().first()
+        val userId = session.userId.toInt()
+        val request = UpdateCalorieDayRequest(calorie)
+        val response = apiService.updateCalorieDay(userId, request)
+
+        return response
+    }
+
+    suspend fun scanNutritionOcr(
+        fotoUri: Uri?,
+        context: Context
+    ): OcrResponse {
+
+        val fotoPart = fotoUri?.let { prepareFilePart(it, context) }
+        val response = apiService.ocrScan(fotoPart)
+
+        return response
+    }
+
+    suspend fun scanFoodNutrition(
+        fotoUri: Uri?,
+        context: Context
+    ): ResponseModel {
+        val fotoPart = fotoUri?.let { prepareFilePart(it, context) }
+        val response = apiService.scanFoodNutrition(fotoPart)
+
+        return response
+    }
+
+
+    suspend fun addToHistoryScan(
+        uri: String,
+        data: ResponseModel
+    ) {
+        val session = userPreference.getSession().first()
+        val userId = session.userId.toInt()
+
+        val result = data.data
+        val history = HistoryScan(
+            userId = userId,
+            imageUri = uri,
+            name = result?.makanan ?: "",
+            kalori = result?.kalori ?: 0.0,
+            gula = result?.gula ?: 0.0,
+            lemak = result?.lemak ?: 0.0,
+            protein = result?.protein ?: 0.0,
+            timestamp = System.currentTimeMillis()
+        )
+
+        sweetTrackDatabase.eventDao().insertHistory(history)
+
+    }
+
+    suspend fun addResultOcrToHistoryScan(
+        uri: String,
+        data: OcrResponse
+    ) {
+        val session = userPreference.getSession().first()
+        val userId = session.userId.toInt()
+
+        val result = data.data
+        val history = HistoryScan(
+            userId = userId,
+            imageUri = uri,
+            name = "",
+            kalori = 0.0,
+            gula = result?.gula?:0.0,
+            lemak = 0.0,
+            protein = 0.0,
+            timestamp = System.currentTimeMillis()
+        )
+
+        sweetTrackDatabase.eventDao().insertHistory(history)
+
+    }
+
+    suspend fun getAllHistory(): List<HistoryScan> {
+        val session = userPreference.getSession().first()
+        val userId = session.userId.toInt()
+
+        val response = sweetTrackDatabase.eventDao().getAllHistories(userId)
+
+        return response
+    }
+
+    suspend fun getRecommendationFood(type: String): RecommendationResponse {
+        val request = RecommendationRequest(type)
+        val response = apiService.getRecommendationFood(request)
+
+        return response
+    }
+
+    suspend fun getFavoriteUser(): FavoriteResponse {
+        val session = userPreference.getSession().first()
+        val userId = session.userId.toInt()
+
+        val response = apiService.getFavoriteUser(userId)
+
+        return response
+    }
+
+    suspend fun addFavoriteUser(favoriteAdd: FavoriteAdd): FavoriteResponses {
+        val session = userPreference.getSession().first()
+        val userId = session.userId.toInt()
+
+        val request = FavoriteAdd(
+            user_id = userId,
+            namaMakanan = favoriteAdd.namaMakanan,
+            kalori = favoriteAdd.kalori,
+            karbohidrat = favoriteAdd.karbohidrat,
+            lemak = favoriteAdd.lemak,
+            protein = favoriteAdd.protein,
+            serat = favoriteAdd.serat,
+            img = favoriteAdd.img
+        )
+        val response = apiService.addFavoriteUser(request)
+
+        return response
+    }
+
+
     suspend fun logout() {
         userPreference.logout()
     }
@@ -222,10 +354,11 @@ class Repository private constructor(
         private var instance: Repository? = null
         fun getInstance(
             apiService: ApiService,
-            userPreference: UserPreference
+            userPreference: UserPreference,
+            sweetTrackDatabase: SweetTrackDatabase
         ): Repository =
             instance ?: synchronized(this) {
-                instance ?: Repository(apiService, userPreference)
+                instance ?: Repository(apiService, userPreference, sweetTrackDatabase)
             }.also { instance = it }
     }
 

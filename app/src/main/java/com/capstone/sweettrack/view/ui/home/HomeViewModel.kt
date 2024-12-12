@@ -10,6 +10,9 @@ import com.capstone.sweettrack.data.local.entity.FavoriteFood
 import com.capstone.sweettrack.data.local.helper.InitialDataSource
 import com.capstone.sweettrack.data.pref.UserModel
 import com.capstone.sweettrack.data.remote.response.CaloriesResponse
+import com.capstone.sweettrack.data.remote.response.Recommendation
+import com.capstone.sweettrack.data.remote.response.RecommendationRequest
+import com.capstone.sweettrack.data.remote.response.RecommendationResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -21,8 +24,8 @@ class HomeViewModel(
     private val _dataResult = MutableLiveData<CaloriesResponse>()
     val dataResult: LiveData<CaloriesResponse> get() = _dataResult
 
-    private val _recommendations = MutableLiveData<List<FavoriteFood>>()
-    val recommendations: LiveData<List<FavoriteFood>> get() = _recommendations
+    private val _recommendations = MutableLiveData<List<Recommendation>>()
+    val recommendations: LiveData<List<Recommendation>> get() = _recommendations
 
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
@@ -60,19 +63,26 @@ class HomeViewModel(
         }
     }
 
-    fun fetchRecommendations() {
+    fun fetchRecommendations(type: String) {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val recommendations = InitialDataSource.getDummyFavoriteFoods()
-                _recommendations.value = recommendations
+                val response = repository.getRecommendationFood(type)
+                if (!response.error) {
+                    // Ambil daftar rekomendasi dari respons
+                    _recommendations.postValue(response.rekomendasi)
+                } else {
+                    _errorMessage.postValue(response.message)
+                }
             } catch (e: Exception) {
-                _errorMessage.value = "Error fetching recommendations: ${e.message}"
+                _errorMessage.postValue("Error fetching recommendations: ${e.message}")
             } finally {
                 _isLoading.value = false
             }
         }
     }
+
+
 
     fun refreshData() {
         getData()

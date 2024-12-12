@@ -10,6 +10,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.sweettrack.adapter.FavoriteAdapter
 import com.capstone.sweettrack.adapter.HistoryAdapter
+import com.capstone.sweettrack.view.ViewModelFactory
+import com.capstone.sweettrack.view.ui.editprofile.EditProfileViewModel
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentDetailBinding
 import com.coding.sweettrack.databinding.FragmentFavoriteBinding
@@ -20,10 +22,10 @@ class FavoriteFragment : Fragment() {
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: FavoriteViewModel by viewModels()
-
+    private val viewModel: FavoriteViewModel by viewModels {
+        ViewModelFactory.getInstance(requireActivity())
+    }
     private lateinit var favoriteAdapter: FavoriteAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,18 +39,34 @@ class FavoriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        favoriteAdapter = FavoriteAdapter()
+        observerData()
+
+        binding.imgBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun observerData() {
+        viewModel.getFavorite()
+
+        favoriteAdapter = FavoriteAdapter { favorite ->
+            val bundle = Bundle().apply { putParcelable("foodDetail", favorite) }
+            findNavController().navigate(R.id.action_favoriteFragment_to_detailFragment2, bundle)
+        }
+
         binding.recyclerViewFavorite.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = favoriteAdapter
         }
 
+        // Observe favoriteList
         viewModel.favoriteList.observe(viewLifecycleOwner) { favoriteList ->
-            favoriteAdapter.submitList(favoriteList)
+            favoriteAdapter.setFavorites(favoriteList)
         }
 
-        binding.imgBack.setOnClickListener {
-            findNavController().popBackStack()
+        // Observe isLoading
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
     }
 
@@ -64,7 +82,4 @@ class FavoriteFragment : Fragment() {
         bottomNavigationView?.visibility = View.VISIBLE
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 }

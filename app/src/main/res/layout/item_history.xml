@@ -55,6 +55,12 @@
                 android:layout_height="wrap_content"
                 android:text="Protein: " />
 
+            <TextView
+                android:id="@+id/tvSerat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Serat: " />
+
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

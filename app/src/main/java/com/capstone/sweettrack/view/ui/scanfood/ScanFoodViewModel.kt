@@ -8,24 +8,83 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.capstone.sweettrack.data.Repository
+import com.capstone.sweettrack.data.remote.response.OcrResponse
+import com.capstone.sweettrack.data.remote.response.ResponseModel
 import com.capstone.sweettrack.data.remote.response.UploadResponse
 import com.yalantis.ucrop.UCrop
+import kotlinx.coroutines.launch
 import java.io.File
 
-class ScanFoodViewModel : ViewModel() {
+class ScanFoodViewModel (private val repository: Repository) : ViewModel() {
 
-    private val _uploadResult = MutableLiveData<UploadResponse>()
-    private var uploadResult: LiveData<UploadResponse> = _uploadResult
+    private val _ocrScanResult = MutableLiveData<OcrResponse>()
+    var ocrScanResult: LiveData<OcrResponse> = _ocrScanResult
+
+    private val _scanFoodResult = MutableLiveData<ResponseModel>()
+    var scanFoodResult: LiveData<ResponseModel> = _scanFoodResult
 
     private val _currentImageUri = MutableLiveData<Uri?>()
     val currentImageUri: LiveData<Uri?> get() = _currentImageUri
 
+    private val _lastSuccessfulImageUri = MutableLiveData<Uri?>()
+    val lastSuccessfulImageUri: LiveData<Uri?> get() = _lastSuccessfulImageUri
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
+    fun scanOcrNutrition (
+        fotoUri: Uri?,
+        context: Context
+    ) {
+        _isLoading.value = true
+        viewModelScope.launch {
+            try {
+                val response = repository.scanNutritionOcr(fotoUri, context)
+                _ocrScanResult.postValue(response)
+            } catch (e: Exception) {
+                _ocrScanResult.postValue(
+                    OcrResponse(
+                        statusCode = 500,
+                        error = true,
+                        message = "Kesalahan jaringan atau server",
+                        data = null
+                    )
+                )
+            } finally {
+                _isLoading.postValue(false)
+            }
+        }
+    }
+
+    fun scanFoodNutrition (
+        fotoUri: Uri?,
+        context: Context
+    ) {
+        _isLoading.value = true
+        viewModelScope.launch {
+            try {
+                val response = repository.scanFoodNutrition(fotoUri, context)
+                _scanFoodResult.postValue(response)
+            } catch (e: Exception) {
+                _scanFoodResult.postValue(
+                    ResponseModel(
+                        statusCode = 500,
+                        error = true,
+                        message = "Kesalahan jaringan atau server",
+                        data = null
+                    )
+                )
+            } finally {
+                _isLoading.postValue(false)
+            }
+        }
+    }
 
     fun setResultData(imageUri: Uri?) {
         _currentImageUri.value = imageUri
     }
-    private val _lastSuccessfulImageUri = MutableLiveData<Uri?>()
-    val lastSuccessfulImageUri: LiveData<Uri?> get() = _lastSuccessfulImageUri
 
     fun setCurrentImageUri(uri: Uri?) {
         _currentImageUri.value = uri

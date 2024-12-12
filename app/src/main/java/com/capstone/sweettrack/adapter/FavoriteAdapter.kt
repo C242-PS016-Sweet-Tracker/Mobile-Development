@@ -1,47 +1,63 @@
 package com.capstone.sweettrack.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.capstone.sweettrack.data.local.entity.FavoriteFood
-import com.capstone.sweettrack.data.local.entity.HistoryScan
+import com.bumptech.glide.Glide
+import com.capstone.sweettrack.data.remote.response.Favorite
+import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.ItemHistoryBinding
 
-class FavoriteAdapter : ListAdapter<FavoriteFood, FavoriteAdapter.HistoryViewHolder>(DiffCallback()) {
+class FavoriteAdapter(private val onItemClicked: (Favorite) -> Unit) :
+    RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
 
-    inner class HistoryViewHolder(private val binding: ItemHistoryBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(history: FavoriteFood) {
-            binding.apply {
-                tvName.text = history.name
-                tvKalori.text = "Kalori: ${history.kalori}"
-                tvGula.text = "Gula: ${history.gula}"
-                tvProtein.text = "Protein: ${history.protein}"
-                tvLemak.text = "Lemak: ${history.lemak}"
+    private val favoriteList = mutableListOf<Favorite>()
 
+    // Fungsi untuk memperbarui data favorit
+    fun setFavorites(favorites: List<Favorite>) {
+        favoriteList.clear()
+        favoriteList.addAll(favorites)
+        notifyDataSetChanged()
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_food_view, parent, false)  // Ganti dengan layout yang sesuai
+        return FavoriteViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
+        holder.bind(favoriteList[position])
+    }
+
+    override fun getItemCount(): Int = favoriteList.size
+
+    inner class FavoriteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val imgPhoto: ImageView = itemView.findViewById(R.id.img_item_photo)
+        private val tvTitle: TextView = itemView.findViewById(R.id.tv_title)
+        private val tvDescription: TextView = itemView.findViewById(R.id.tv_description)
+        private val btnDetail: Button = itemView.findViewById(R.id.btn_detail)
+
+        fun bind(favorite: Favorite) {
+            tvTitle.text = favorite.nama_makanan
+            tvDescription.text = "${favorite.kalori} kcal"
+
+            Glide.with(itemView.context)
+                .load(favorite.img)
+                .placeholder(R.drawable.ic_place_holder)
+                .into(imgPhoto)
+
+            // Handle the button click
+            btnDetail.setOnClickListener {
+                onItemClicked(favorite)
             }
         }
     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
-        val binding = ItemHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return HistoryViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        val history = getItem(position)
-        holder.bind(history)
-    }
-
-    class DiffCallback : DiffUtil.ItemCallback<FavoriteFood>() {
-        override fun areItemsTheSame(oldItem: FavoriteFood, newItem: FavoriteFood): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: FavoriteFood, newItem: FavoriteFood): Boolean {
-            return oldItem == newItem
-        }
-    }
 }
+

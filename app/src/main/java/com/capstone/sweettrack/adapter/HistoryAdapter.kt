@@ -2,6 +2,7 @@ package com.capstone.sweettrack.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,11 +15,20 @@ class HistoryAdapter : ListAdapter<HistoryScan, HistoryAdapter.HistoryViewHolder
         RecyclerView.ViewHolder(binding.root) {
         fun bind(history: HistoryScan) {
             binding.apply {
-                tvName.text = history.name
-                tvKalori.text = "Kalori: ${history.kalori}"
-                tvGula.text = "Gula: ${history.gula}"
-                tvProtein.text = "Protein: ${history.protein}"
-                tvLemak.text = "Lemak: ${history.lemak}"
+                imgFood.setImageURI(history.imageUri.toUri())
+                if (history.name.isNotEmpty()) {
+                    tvName.text = history.name
+                    tvKalori.text = "Kalori: ${history.kalori}"
+                    tvGula.text = "Gula: ${history.gula}"
+                    tvLemak.text = "Lemak: ${history.lemak}"
+                    tvProtein.text = "Protein: ${history.protein}"
+                } else {
+                    tvName.text = ""
+                    tvKalori.text = ""
+                    tvGula.text = "Gula: ${history.gula}"
+                    tvProtein.text = ""
+                    tvLemak.text = ""
+                }
             }
         }
     }

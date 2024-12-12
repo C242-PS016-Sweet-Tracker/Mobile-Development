@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.sweettrack.adapter.HistoryAdapter
+import com.capstone.sweettrack.view.ViewModelFactory
+import com.capstone.sweettrack.view.ui.editprofile.EditProfileViewModel
 import com.coding.sweettrack.databinding.FragmentHistoryBinding
 
 class HistoryFragment : Fragment() {
@@ -16,8 +18,9 @@ class HistoryFragment : Fragment() {
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
     private val viewModel: HistoryViewModel by viewModels {
-        object : ViewModelProvider.AndroidViewModelFactory(requireActivity().application) {}
+        ViewModelFactory.getInstance(requireActivity())
     }
+
 
     private lateinit var historyAdapter: HistoryAdapter
 
