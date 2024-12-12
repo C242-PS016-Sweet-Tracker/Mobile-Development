@@ -11,6 +11,9 @@ import com.capstone.sweettrack.data.remote.response.EditDetailUserRequest
 import com.capstone.sweettrack.data.remote.response.FavoriteAdd
 import com.capstone.sweettrack.data.remote.response.FavoriteResponse
 import com.capstone.sweettrack.data.remote.response.FavoriteResponses
+import com.capstone.sweettrack.data.remote.response.HistoryOcrRequest
+import com.capstone.sweettrack.data.remote.response.HistoryResponse
+import com.capstone.sweettrack.data.remote.response.HistoryScanFoodRequest
 import com.capstone.sweettrack.data.remote.response.LoginRequest
 import com.capstone.sweettrack.data.remote.response.LoginResponse
 import com.capstone.sweettrack.data.remote.response.OTPRequest
@@ -136,16 +139,32 @@ interface ApiService {
         @Body request: RecommendationRequest
     ): RecommendationResponse
 
-    @POST("scan/add/")
-    suspend fun addHistoryScan(
-        @Path("user_id") userId: Int,
-        @Body request: HistoryScan
+
+    @Multipart
+    @POST("scan/makan")
+    suspend fun addFoodScan(
+        @Part image: MultipartBody.Part,
+        @Part("user_id") userId: RequestBody,
+        @Part("namaMakanan") foodName: RequestBody,
+        @Part("kalori") calorie: RequestBody,
+        @Part("gula") sugar: RequestBody,
+        @Part("lemak") fat: RequestBody,
+        @Part("protein") protein: RequestBody
     ): ApiResponse
+
+    @Multipart
+    @POST("ocr/add")
+    suspend fun addOcrData(
+        @Part image: MultipartBody.Part,
+        @Part("user_id") userId: RequestBody,
+        @Part("gula") gula: RequestBody
+    ): ApiResponse
+
 
     @GET("scan/hasilAnalisa/{user_id}")
     suspend fun getHistoryScan(
         @Path("user_id") userId: Int,
-    ): ApiResponse
+    ): HistoryResponse
 
     @GET("rekomendasi/getFavorit/{user_id}")
     suspend fun getFavoriteUser(

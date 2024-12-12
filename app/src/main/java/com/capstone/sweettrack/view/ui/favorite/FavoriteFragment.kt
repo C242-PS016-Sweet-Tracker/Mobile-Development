@@ -9,11 +9,8 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.sweettrack.adapter.FavoriteAdapter
-import com.capstone.sweettrack.adapter.HistoryAdapter
 import com.capstone.sweettrack.view.ViewModelFactory
-import com.capstone.sweettrack.view.ui.editprofile.EditProfileViewModel
 import com.coding.sweettrack.R
-import com.coding.sweettrack.databinding.FragmentDetailBinding
 import com.coding.sweettrack.databinding.FragmentFavoriteBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 

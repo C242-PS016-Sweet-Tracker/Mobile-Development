@@ -7,17 +7,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capstone.sweettrack.data.Repository
 import com.capstone.sweettrack.data.local.entity.HistoryScan
+import com.capstone.sweettrack.data.remote.response.History
 import kotlinx.coroutines.launch
 
 class HistoryViewModel(private  val repository: Repository) : ViewModel() {
 
-    private val _historyList = MutableLiveData<List<HistoryScan>>()
-    val historyList: LiveData<List<HistoryScan>> get() = _historyList
+    private val _historyList = MutableLiveData<List<History>>()
+    val historyList: LiveData<List<History>> get() = _historyList
 
-    init {
+
+    fun getHistoryUser() {
         viewModelScope.launch {
-            _historyList.value = repository.getAllHistory()
-            println(_historyList.value)
+            val response = repository.getHistoryUser()
+            _historyList.postValue(response.data)
         }
     }
 }

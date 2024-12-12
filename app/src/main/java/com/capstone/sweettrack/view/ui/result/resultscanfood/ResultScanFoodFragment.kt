@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.view.MenuProvider
 import androidx.navigation.fragment.findNavController
+import com.capstone.sweettrack.data.remote.response.HistoryScanFoodRequest
 import com.capstone.sweettrack.data.remote.response.ResponseModel
 import com.capstone.sweettrack.view.ViewModelFactory
 import com.coding.sweettrack.R
@@ -67,9 +68,13 @@ class ResultScanFoodFragment : Fragment() {
             binding.tvProtein.text = getString(R.string.protein, data?.protein.toString())
         }
 
+        binding.resultImage.setOnClickListener {
+            showConfirmationDialog()
+        }
+
         Handler(Looper.getMainLooper()).postDelayed({
             showConfirmationDialog()
-        }, 5000)
+        }, 3000)
     }
 
     private fun setupView() {
@@ -88,6 +93,7 @@ class ResultScanFoodFragment : Fragment() {
                         findNavController().navigateUp()
                         true
                     }
+
                     else -> false
                 }
             }
@@ -104,20 +110,67 @@ class ResultScanFoodFragment : Fragment() {
             val calorie = response?.data?.kalori
             if (calorie != null) {
                 viewModel.updateUserCalorieDay(calorie)
-                observeEditProfileResult()
+                observeUpdateResult()
             }
-        }
-        builder.setNegativeButton("Tidak") { _, _ ->
 
+            val resultScan = response?.data
+
+            image?.let {
+                viewModel.addResultToHistory(
+                    it,
+                    resultScan?.makanan ?: "",
+                    calorie ?: 0.0,
+                    resultScan?.gula ?: 0.0,
+                    resultScan?.lemak ?: 0.0,
+                    resultScan?.protein ?: 0.0,
+                    requireContext()
+                )
+
+            }
+            observeAddResult()
         }
         builder.show()
     }
 
-    private fun observeEditProfileResult() {
+    private fun observeUpdateResult() {
         viewModel.updateResult.observe(viewLifecycleOwner) { result ->
             println(result)
             if (!result.error) {
 
+                val alertDialog = AlertDialog.Builder(requireActivity()).apply {
+                    setTitle("Informasi")
+                    setMessage(result.message)
+                    setCancelable(false)
+                    create()
+                }.show()
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    alertDialog.dismiss()
+//                    findNavController().popBackStack()
+                }, 1000)
+            } else {
+                val alertDialog = AlertDialog.Builder(requireActivity()).apply {
+                    setTitle(result.message)
+                    setMessage(result.describe)
+                    setCancelable(false)
+                    create()
+                }.show()
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    alertDialog.dismiss()
+                }, 2000)
+            }
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+    }
+
+    private fun observeAddResult() {
+        viewModel.addResult.observe(viewLifecycleOwner) { result ->
+            println(result)
+            if (!result.error) {
 
                 val alertDialog = AlertDialog.Builder(requireActivity()).apply {
                     setTitle("Informasi")
@@ -148,5 +201,4 @@ class ResultScanFoodFragment : Fragment() {
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
     }
-
 }

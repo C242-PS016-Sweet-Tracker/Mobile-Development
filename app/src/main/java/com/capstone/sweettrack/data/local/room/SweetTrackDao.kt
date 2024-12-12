@@ -15,10 +15,13 @@ interface SweetTrackDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHistory(history: HistoryScan)
 
-    @Query("SELECT * FROM history_scan WHERE user_id = :userId ORDER BY timestamp DESC")
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(histories: List<HistoryScan>)
+
+    @Query("SELECT * FROM history_scan WHERE user_id = :userId")
     suspend fun getAllHistories(userId: Int): List<HistoryScan>
 
-    @Query("DELETE FROM history_scan WHERE id = :id AND user_id = :userId")
+    @Query("DELETE FROM history_scan WHERE id_hasil = :id AND user_id = :userId")
     suspend fun deleteHistoryById(id: Int, userId: Int)
 
     @Query("DELETE FROM history_scan")
@@ -39,7 +42,7 @@ interface SweetTrackDao {
     suspend fun clearFavorites()
 
 
-    @Query("SELECT * FROM history_scan WHERE name LIKE '%' || :name || '%'")
+    @Query("SELECT * FROM history_scan WHERE nama_makanan LIKE '%' || :name || '%'")
     suspend fun searchHistoryByName(name: String): List<HistoryScan>
 
     @Query("SELECT COUNT(*) FROM favorite_food WHERE name = :name")

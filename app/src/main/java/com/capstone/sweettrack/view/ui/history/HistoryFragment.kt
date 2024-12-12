@@ -6,11 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.sweettrack.adapter.HistoryAdapter
 import com.capstone.sweettrack.view.ViewModelFactory
-import com.capstone.sweettrack.view.ui.editprofile.EditProfileViewModel
 import com.coding.sweettrack.databinding.FragmentHistoryBinding
 
 class HistoryFragment : Fragment() {
@@ -20,7 +19,6 @@ class HistoryFragment : Fragment() {
     private val viewModel: HistoryViewModel by viewModels {
         ViewModelFactory.getInstance(requireActivity())
     }
-
 
     private lateinit var historyAdapter: HistoryAdapter
 
@@ -42,9 +40,12 @@ class HistoryFragment : Fragment() {
             adapter = historyAdapter
         }
 
+        viewModel.getHistoryUser()
+
         viewModel.historyList.observe(viewLifecycleOwner) { historyList ->
             historyAdapter.submitList(historyList)
         }
+
     }
 
     override fun onDestroyView() {

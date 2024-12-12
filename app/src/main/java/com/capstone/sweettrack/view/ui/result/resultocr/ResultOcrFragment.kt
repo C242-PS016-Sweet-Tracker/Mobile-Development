@@ -122,12 +122,48 @@ class ResultOcrFragment : Fragment() {
             println(result)
             if (!result.error) {
 
-                viewModel.addResultToHistory(
-                    uri = image.toString(),
-                    data = response ?: OcrResponse(
-                        500, true, "error", null
-                    )
-                )
+                val sugar = response?.data?.gula
+                if (sugar != null) {
+                    image?.let { viewModel.addResultToHistory(it,sugar, requireActivity()) }
+                }
+
+                val alertDialog = AlertDialog.Builder(requireActivity()).apply {
+                    setTitle("Informasi")
+                    setMessage(result.message)
+                    setCancelable(false)
+                    create()
+                }.show()
+
+                observeAddResult()
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    alertDialog.dismiss()
+//                    findNavController().popBackStack()
+                }, 1000)
+            } else {
+                val alertDialog = AlertDialog.Builder(requireActivity()).apply {
+                    setTitle(result.message)
+                    setMessage(result.describe)
+                    setCancelable(false)
+                    create()
+                }.show()
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    alertDialog.dismiss()
+                }, 2000)
+            }
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
+    }
+
+    private fun observeAddResult() {
+        viewModel.addResult.observe(viewLifecycleOwner) { result ->
+            println(result)
+            if (!result.error) {
 
                 val alertDialog = AlertDialog.Builder(requireActivity()).apply {
                     setTitle("Informasi")

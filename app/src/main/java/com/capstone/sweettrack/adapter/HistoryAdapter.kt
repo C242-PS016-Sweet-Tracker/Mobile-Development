@@ -6,18 +6,25 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.capstone.sweettrack.data.local.entity.HistoryScan
+import com.bumptech.glide.Glide
+import com.capstone.sweettrack.data.remote.response.History
+import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.ItemHistoryBinding
 
-class HistoryAdapter : ListAdapter<HistoryScan, HistoryAdapter.HistoryViewHolder>(DiffCallback()) {
+class HistoryAdapter : ListAdapter<History, HistoryAdapter.HistoryViewHolder>(DiffCallback()) {
 
     inner class HistoryViewHolder(private val binding: ItemHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(history: HistoryScan) {
+        fun bind(history: History) {
             binding.apply {
-                imgFood.setImageURI(history.imageUri.toUri())
-                if (history.name.isNotEmpty()) {
-                    tvName.text = history.name
+
+                Glide.with(itemView.context)
+                    .load(history.gambar_analisa_makanan)
+                    .placeholder(R.drawable.ic_place_holder)
+                    .into(imgFood)
+
+                if (history.nama_makanan != "") {
+                    tvName.text = history.nama_makanan
                     tvKalori.text = "Kalori: ${history.kalori}"
                     tvGula.text = "Gula: ${history.gula}"
                     tvLemak.text = "Lemak: ${history.lemak}"
@@ -43,12 +50,12 @@ class HistoryAdapter : ListAdapter<HistoryScan, HistoryAdapter.HistoryViewHolder
         holder.bind(history)
     }
 
-    class DiffCallback : DiffUtil.ItemCallback<HistoryScan>() {
-        override fun areItemsTheSame(oldItem: HistoryScan, newItem: HistoryScan): Boolean {
-            return oldItem.id == newItem.id
+    class DiffCallback : DiffUtil.ItemCallback<History>() {
+        override fun areItemsTheSame(oldItem: History, newItem: History): Boolean {
+            return oldItem.id_hasil == newItem.id_hasil
         }
 
-        override fun areContentsTheSame(oldItem: HistoryScan, newItem: HistoryScan): Boolean {
+        override fun areContentsTheSame(oldItem: History, newItem: History): Boolean {
             return oldItem == newItem
         }
     }

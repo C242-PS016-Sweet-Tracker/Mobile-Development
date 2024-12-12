@@ -17,6 +17,8 @@ import com.capstone.sweettrack.data.remote.response.EditDetailUserRequest
 import com.capstone.sweettrack.data.remote.response.FavoriteAdd
 import com.capstone.sweettrack.data.remote.response.FavoriteResponse
 import com.capstone.sweettrack.data.remote.response.FavoriteResponses
+import com.capstone.sweettrack.data.remote.response.HistoryResponse
+import com.capstone.sweettrack.data.remote.response.HistoryScanFoodRequest
 import com.capstone.sweettrack.data.remote.response.LoginRequest
 import com.capstone.sweettrack.data.remote.response.LoginResponse
 import com.capstone.sweettrack.data.remote.response.OTPRequest
@@ -254,60 +256,51 @@ class Repository private constructor(
     }
 
 
-    suspend fun addToHistoryScan(
-        uri: String,
-        data: ResponseModel
-    ) {
+    suspend fun addFoodToHistory(fotoUri: Uri, foodName: String, calorie: Double, sugar: Double, fat: Double, protein: Double, context: Context): ApiResponse {
         val session = userPreference.getSession().first()
         val userId = session.userId.toInt()
 
-        val result = data.data
-        val history = HistoryScan(
-            userId = userId,
-            imageUri = uri,
-            name = result?.makanan ?: "",
-            kalori = result?.kalori ?: 0.0,
-            gula = result?.gula ?: 0.0,
-            lemak = result?.lemak ?: 0.0,
-            protein = result?.protein ?: 0.0,
-            timestamp = System.currentTimeMillis()
+        val fotoPart = fotoUri.let { prepareFilePart(it, context) }
+
+        val userIdBody = createPartFromString(userId.toString())
+        val foodNameBody = createPartFromString(foodName)
+        val calorieBody = createPartFromString(calorie.toString())
+        val sugarBody = createPartFromString(sugar.toString())
+        val fatBody = createPartFromString(fat.toString())
+        val proteinBody = createPartFromString(protein.toString())
+
+        val response = apiService.addFoodScan(
+            fotoPart,
+            userIdBody,
+            foodNameBody,
+            calorieBody,
+            sugarBody,
+            fatBody,
+            proteinBody
         )
-
-        sweetTrackDatabase.eventDao().insertHistory(history)
-
-    }
-
-    suspend fun addResultOcrToHistoryScan(
-        uri: String,
-        data: OcrResponse
-    ) {
-        val session = userPreference.getSession().first()
-        val userId = session.userId.toInt()
-
-        val result = data.data
-        val history = HistoryScan(
-            userId = userId,
-            imageUri = uri,
-            name = "",
-            kalori = 0.0,
-            gula = result?.gula?:0.0,
-            lemak = 0.0,
-            protein = 0.0,
-            timestamp = System.currentTimeMillis()
-        )
-
-        sweetTrackDatabase.eventDao().insertHistory(history)
-
-    }
-
-    suspend fun getAllHistory(): List<HistoryScan> {
-        val session = userPreference.getSession().first()
-        val userId = session.userId.toInt()
-
-        val response = sweetTrackDatabase.eventDao().getAllHistories(userId)
 
         return response
     }
+
+
+    suspend fun addResultOcrToHistoryScan(
+        fotoUri: Uri,
+        sugar: Double,
+        context: Context
+    ): ApiResponse {
+        val session = userPreference.getSession().first()
+        val userId = session.userId.toInt()
+
+        val fotoPart = fotoUri.let { prepareFilePart(it, context) }
+
+        val userIdBody = createPartFromString(userId.toString())
+        val sugarBody = createPartFromString(sugar.toString())
+
+        val response = apiService.addOcrData(fotoPart, userIdBody, sugarBody)
+
+        return response
+    }
+
 
     suspend fun getRecommendationFood(type: String): RecommendationResponse {
         val request = RecommendationRequest(type)
@@ -340,6 +333,24 @@ class Repository private constructor(
             img = favoriteAdd.img
         )
         val response = apiService.addFavoriteUser(request)
+
+        return response
+    }
+
+    suspend fun getAllHistory(): List<HistoryScan> {
+        val session = userPreference.getSession().first()
+        val userId = session.userId.toInt()
+
+        val response = sweetTrackDatabase.eventDao().getAllHistories(userId)
+
+        return response
+    }
+
+    suspend fun getHistoryUser(): HistoryResponse {
+        val session = userPreference.getSession().first()
+        val userId = session.userId.toInt()
+
+        val response = apiService.getHistoryScan(userId)
 
         return response
     }
