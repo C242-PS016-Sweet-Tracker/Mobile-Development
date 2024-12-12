@@ -7,7 +7,6 @@
     android:padding="16dp"
     tools:context="com.capstone.sweettrack.view.ui.setting.SettingFragment">
 
-
     <TextView
         android:id="@+id/tv_edit_user_info"
         android:layout_width="match_parent"

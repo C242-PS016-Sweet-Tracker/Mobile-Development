@@ -13,4 +13,5 @@
     <color name="lightBlue">#1FABED</color>
     <color name="greenActive">#4CAF50</color>
     <color name="greenInactive">#8BC34A</color>
+    <color name="cream">#CDC2A5</color>
 </resources>

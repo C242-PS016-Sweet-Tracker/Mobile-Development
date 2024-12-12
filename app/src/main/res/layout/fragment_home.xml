@@ -240,9 +240,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_pointer_text" />
 
+
+
+
+
         <TextView
             android:id="@+id/tv_pointer_text2"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="168dp"
             android:text="Rekomendasi"
@@ -254,6 +258,19 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/progressBarDeterminate" />
+
+        <TextView
+            android:id="@+id/tv_see_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="13dp"
+            android:text="See All"
+            android:textColor="@color/green"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_pointer_text2"
+            app:layout_constraintEnd_toEndOf="parent" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recommendRecyclerView"

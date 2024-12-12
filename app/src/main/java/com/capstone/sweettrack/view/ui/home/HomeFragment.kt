@@ -161,6 +161,10 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_home_to_chatFragment)
         }
 
+        binding.tvSeeAll.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_recomendationFragment)
+        }
+
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
