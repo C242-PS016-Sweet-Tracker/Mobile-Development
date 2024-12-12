@@ -256,11 +256,19 @@ class Repository private constructor(
     }
 
 
-    suspend fun addFoodToHistory(fotoUri: Uri, foodName: String, calorie: Double, sugar: Double, fat: Double, protein: Double, context: Context): ApiResponse {
+    suspend fun addFoodToHistory(
+        fotoUri: Uri,
+        foodName: String,
+        calorie: Double,
+        sugar: Double,
+        fat: Double,
+        protein: Double,
+        context: Context
+    ): ApiResponse {
         val session = userPreference.getSession().first()
         val userId = session.userId.toInt()
 
-        val fotoPart = fotoUri.let { prepareFilePart(it, context) }
+        val fotoPart = prepareFilePart(fotoUri, context)
 
         val userIdBody = createPartFromString(userId.toString())
         val foodNameBody = createPartFromString(foodName)

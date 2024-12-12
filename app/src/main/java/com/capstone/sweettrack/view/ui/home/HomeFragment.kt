@@ -181,14 +181,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        binding.recommendRecyclerView.layoutManager = LinearLayoutManager(context)
+        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.recommendRecyclerView.layoutManager = layoutManager
         binding.recommendRecyclerView.adapter = adapter
     }
+
 
     private fun observeViewModel() {
         viewModel.recommendations.observe(viewLifecycleOwner) { recommendations ->
             recommendations?.let {
-                adapter.setRecommendations(it)
+                val limitedRecommendations = it.take(3)
+                adapter.setRecommendations(limitedRecommendations)
             }
         }
 

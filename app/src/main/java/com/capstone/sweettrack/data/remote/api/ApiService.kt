@@ -141,7 +141,7 @@ interface ApiService {
 
 
     @Multipart
-    @POST("scan/makan")
+    @POST("scan/add")
     suspend fun addFoodScan(
         @Part image: MultipartBody.Part,
         @Part("user_id") userId: RequestBody,
