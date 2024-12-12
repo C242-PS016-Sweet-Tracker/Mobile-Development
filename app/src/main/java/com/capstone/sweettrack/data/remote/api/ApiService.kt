@@ -1,5 +1,6 @@
 package com.capstone.sweettrack.data.remote.api
 
+import com.capstone.sweettrack.data.local.entity.HistoryScan
 import com.capstone.sweettrack.data.remote.response.AddDetailUserRequest
 import com.capstone.sweettrack.data.remote.response.ApiResponse
 import com.capstone.sweettrack.data.remote.response.CaloriesResponse
@@ -7,12 +8,16 @@ import com.capstone.sweettrack.data.remote.response.DetailUserResponse
 import com.capstone.sweettrack.data.remote.response.EditCalorieRequest
 import com.capstone.sweettrack.data.remote.response.EditCalorieResponse
 import com.capstone.sweettrack.data.remote.response.EditDetailUserRequest
+import com.capstone.sweettrack.data.remote.response.FavoriteAdd
+import com.capstone.sweettrack.data.remote.response.FavoriteResponse
+import com.capstone.sweettrack.data.remote.response.FavoriteResponses
 import com.capstone.sweettrack.data.remote.response.LoginRequest
 import com.capstone.sweettrack.data.remote.response.LoginResponse
 import com.capstone.sweettrack.data.remote.response.OTPRequest
 import com.capstone.sweettrack.data.remote.response.OTPResetPassRequest
 import com.capstone.sweettrack.data.remote.response.OTPResponse
 import com.capstone.sweettrack.data.remote.response.OcrResponse
+import com.capstone.sweettrack.data.remote.response.RecommendationRequest
 import com.capstone.sweettrack.data.remote.response.RecommendationResponse
 import com.capstone.sweettrack.data.remote.response.ResendingOTPRequest
 import com.capstone.sweettrack.data.remote.response.ResponseModel
@@ -126,4 +131,24 @@ interface ApiService {
         @Body request: UpdateCalorieDayRequest
     ): EditCalorieResponse
 
+    @POST("rekomendasi")
+    suspend fun getRecommendationFood(
+        @Body request: RecommendationRequest
+    ): RecommendationResponse
+
+    @POST("scan/add/")
+    suspend fun addHistoryScan(
+        @Path("user_id") userId: Int,
+        @Body request: HistoryScan
+    ): ApiResponse
+
+    @GET("rekomendasi/getFavorit/{user_id}")
+    suspend fun getFavoriteUser(
+        @Path("user_id") userId: Int
+    ): FavoriteResponse
+
+    @POST("rekomendasi/addfavorit")
+    suspend fun addFavoriteUser(
+        @Body request: FavoriteAdd
+    ): FavoriteResponses
 }

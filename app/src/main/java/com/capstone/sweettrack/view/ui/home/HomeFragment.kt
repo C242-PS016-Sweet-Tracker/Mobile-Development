@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.capstone.sweettrack.adapter.FavoriteAdapter
 import com.capstone.sweettrack.adapter.RecommendationAdapter
 import com.capstone.sweettrack.view.ViewModelFactory
 import com.coding.sweettrack.R
@@ -30,8 +29,8 @@ class HomeFragment : Fragment() {
         ViewModelFactory.getInstance(requireActivity())
     }
 
+    private lateinit var tipe: String
     private lateinit var adapter: RecommendationAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,8 +48,6 @@ class HomeFragment : Fragment() {
             val bundle = Bundle().apply { putParcelable("foodDetail", item) }
             findNavController().navigate(R.id.action_navigation_home_to_detailFragment, bundle)
         }
-
-        viewModel.fetchRecommendations()
 
         setupView()
         setupObservers()
@@ -89,6 +86,10 @@ class HomeFragment : Fragment() {
                     binding.tvCalorie.text = getString(R.string.hasil_kalori, dataUser.kalori.toString())
                     binding.tvCalorieNow.text = getString(R.string.kalori_now, dataUser.kalori_harian.toString())
 
+                    tipe = dataUser.tipe_diabetes
+                    viewModel.fetchRecommendations(dataUser.tipe_diabetes)
+
+
                     val totalKalori = dataUser.kalori  // Total kalori ideal/hari
                     val kaloriHarian = dataUser.kalori_harian  // Kalori yang sudah tercapai
 
@@ -98,6 +99,7 @@ class HomeFragment : Fragment() {
                         0
                     }
                     binding.progressBarDeterminate.progress = progress
+
 
                 } else {
                     Toast.makeText(
@@ -149,7 +151,10 @@ class HomeFragment : Fragment() {
         }
 
         binding.tvPointerText2.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_home_to_recomendationFragment)
+            val bundle = Bundle().apply {
+                putString("type", tipe)
+            }
+            findNavController().navigate(R.id.action_navigation_home_to_recomendationFragment, bundle)
         }
 
         binding.btnGemini.setOnClickListener {
@@ -177,7 +182,9 @@ class HomeFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.recommendations.observe(viewLifecycleOwner) { recommendations ->
-            adapter.setRecommendations(recommendations)
+            recommendations?.let {
+                adapter.setRecommendations(it)
+            }
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->

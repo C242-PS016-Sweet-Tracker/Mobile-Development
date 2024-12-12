@@ -8,15 +8,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.capstone.sweettrack.data.local.entity.FavoriteFood
+import com.capstone.sweettrack.data.remote.response.Recommendation
 import com.coding.sweettrack.R
 
-class RecommendationAdapter(private val onItemClicked: (FavoriteFood) -> Unit) :
+class RecommendationAdapter(private val onItemClicked: (Recommendation) -> Unit) :
     RecyclerView.Adapter<RecommendationAdapter.RecommendationViewHolder>() {
 
-    private val recommendationList = mutableListOf<FavoriteFood>()
+    private val recommendationList = mutableListOf<Recommendation>()
 
-    fun setRecommendations(recommendations: List<FavoriteFood>) {
+    fun setRecommendations(recommendations: List<Recommendation>) {
         recommendationList.clear()
         recommendationList.addAll(recommendations)
         notifyDataSetChanged()
@@ -40,15 +40,14 @@ class RecommendationAdapter(private val onItemClicked: (FavoriteFood) -> Unit) :
         private val tvDescription: TextView = itemView.findViewById(R.id.tv_description)
         private val btnDetail: Button = itemView.findViewById(R.id.btn_detail)
 
-        fun bind(recommendation: FavoriteFood) {
-            tvTitle.text = recommendation.name
-            tvDescription.text = recommendation.kalori.toString()
+        fun bind(recommendation: Recommendation) {
+            tvTitle.text = recommendation.nama_makanan
+            tvDescription.text = "${recommendation.kalori} kcal"
 
-//            // Load media cover image using Glide
-//            Glide.with(itemView.context)
-//                .load(recommendation)
-//                .placeholder(R.drawable.ic_place_holder)
-//                .into(imgPhoto)
+            Glide.with(itemView.context)
+                .load(recommendation.img)
+                .placeholder(R.drawable.ic_place_holder)
+                .into(imgPhoto)
 
             // Handle the button click
             btnDetail.setOnClickListener {

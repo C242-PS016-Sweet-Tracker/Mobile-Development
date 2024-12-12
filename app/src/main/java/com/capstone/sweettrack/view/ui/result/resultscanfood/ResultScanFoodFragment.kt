@@ -100,15 +100,11 @@ class ResultScanFoodFragment : Fragment() {
         builder.setPositiveButton("Ya") { _, _ ->
 
             Toast.makeText(requireContext(), "Anda memilih ya", Toast.LENGTH_SHORT).show()
-            viewModel.addResultToHistory(
-                uri = image.toString(),
-                data = response?: ResponseModel(
-                    500, true, "error", null
-                )
-            )
+
             val calorie = response?.data?.kalori
             if (calorie != null) {
                 viewModel.updateUserCalorieDay(calorie)
+                observeEditProfileResult()
             }
         }
         builder.setNegativeButton("Tidak") { _, _ ->
@@ -116,4 +112,41 @@ class ResultScanFoodFragment : Fragment() {
         }
         builder.show()
     }
+
+    private fun observeEditProfileResult() {
+        viewModel.updateResult.observe(viewLifecycleOwner) { result ->
+            println(result)
+            if (!result.error) {
+
+
+                val alertDialog = AlertDialog.Builder(requireActivity()).apply {
+                    setTitle("Informasi")
+                    setMessage(result.message)
+                    setCancelable(false)
+                    create()
+                }.show()
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    alertDialog.dismiss()
+                    findNavController().popBackStack()
+                }, 1000)
+            } else {
+                val alertDialog = AlertDialog.Builder(requireActivity()).apply {
+                    setTitle(result.message)
+                    setMessage(result.describe)
+                    setCancelable(false)
+                    create()
+                }.show()
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    alertDialog.dismiss()
+                }, 2000)
+            }
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+    }
+
 }

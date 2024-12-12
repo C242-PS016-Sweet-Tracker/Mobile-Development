@@ -29,6 +29,7 @@ class RecommendationFragment : Fragment() {
     }
 
     private lateinit var adapter: RecommendationAdapter
+    private var tipe: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +42,11 @@ class RecommendationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        tipe = arguments?.getString("type")
+        tipe?.let {
+            viewModel.fetchRecommendations(tipe?:"")
+        }
+
         adapter = RecommendationAdapter { item ->
             val bundle = Bundle().apply { putParcelable("foodDetail", item) }
             findNavController().navigate(R.id.action_recomendationFragment_to_detailFragment, bundle)
@@ -50,7 +56,6 @@ class RecommendationFragment : Fragment() {
         setupRecyclerView()
         observeViewModel()
 
-        viewModel.fetchRecommendations()
     }
 
     private fun setupRecyclerView() {

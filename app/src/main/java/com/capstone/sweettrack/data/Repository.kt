@@ -14,12 +14,17 @@ import com.capstone.sweettrack.data.remote.response.DetailUserResponse
 import com.capstone.sweettrack.data.remote.response.EditCalorieRequest
 import com.capstone.sweettrack.data.remote.response.EditCalorieResponse
 import com.capstone.sweettrack.data.remote.response.EditDetailUserRequest
+import com.capstone.sweettrack.data.remote.response.FavoriteAdd
+import com.capstone.sweettrack.data.remote.response.FavoriteResponse
+import com.capstone.sweettrack.data.remote.response.FavoriteResponses
 import com.capstone.sweettrack.data.remote.response.LoginRequest
 import com.capstone.sweettrack.data.remote.response.LoginResponse
 import com.capstone.sweettrack.data.remote.response.OTPRequest
 import com.capstone.sweettrack.data.remote.response.OTPResetPassRequest
 import com.capstone.sweettrack.data.remote.response.OTPResponse
 import com.capstone.sweettrack.data.remote.response.OcrResponse
+import com.capstone.sweettrack.data.remote.response.RecommendationRequest
+import com.capstone.sweettrack.data.remote.response.RecommendationResponse
 import com.capstone.sweettrack.data.remote.response.ResendingOTPRequest
 import com.capstone.sweettrack.data.remote.response.ResponseModel
 import com.capstone.sweettrack.data.remote.response.UpdateCalorieDayRequest
@@ -300,6 +305,41 @@ class Repository private constructor(
         val userId = session.userId.toInt()
 
         val response = sweetTrackDatabase.eventDao().getAllHistories(userId)
+
+        return response
+    }
+
+    suspend fun getRecommendationFood(type: String): RecommendationResponse {
+        val request = RecommendationRequest(type)
+        val response = apiService.getRecommendationFood(request)
+
+        return response
+    }
+
+    suspend fun getFavoriteUser(): FavoriteResponse {
+        val session = userPreference.getSession().first()
+        val userId = session.userId.toInt()
+
+        val response = apiService.getFavoriteUser(userId)
+
+        return response
+    }
+
+    suspend fun addFavoriteUser(favoriteAdd: FavoriteAdd): FavoriteResponses {
+        val session = userPreference.getSession().first()
+        val userId = session.userId.toInt()
+
+        val request = FavoriteAdd(
+            user_id = userId,
+            namaMakanan = favoriteAdd.namaMakanan,
+            kalori = favoriteAdd.kalori,
+            karbohidrat = favoriteAdd.karbohidrat,
+            lemak = favoriteAdd.lemak,
+            protein = favoriteAdd.protein,
+            serat = favoriteAdd.serat,
+            img = favoriteAdd.img
+        )
+        val response = apiService.addFavoriteUser(request)
 
         return response
     }
