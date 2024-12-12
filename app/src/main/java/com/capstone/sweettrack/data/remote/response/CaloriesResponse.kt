@@ -16,6 +16,9 @@ data class DataCalories(
 data class EditCalorieRequest(
     val kalori: Double? = null
 )
+data class UpdateCalorieDayRequest(
+    val kaloriAdd: Double? = null
+)
 
 data class EditCalorieResponse(
     val statusCode: Int,

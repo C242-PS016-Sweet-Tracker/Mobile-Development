@@ -120,10 +120,8 @@
 
     <!-- Diabetes Types -->
     <string-array name="diabetes_types">
-        <item>Diabetes Tipe 1</item>
-        <item>Diabetes Tipe 2</item>
-        <item>Diabetes Gestasional</item>
-        <item>Normal</item>
+        <item>diabetes tipe 1</item>
+        <item>diabetes tipe 2</item>
     </string-array>
 
     <!-- Miscellaneous -->

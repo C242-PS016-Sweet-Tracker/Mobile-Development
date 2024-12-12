@@ -16,5 +16,10 @@ class ResultScanFoodViewModel(private val repository: Repository) : ViewModel() 
         }
     }
 
+    fun updateUserCalorieDay(calorie: Double) {
+        viewModelScope.launch {
+            repository.updateUserCalorieDay(calorie)
+        }
+    }
 
 }

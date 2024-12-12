@@ -22,6 +22,7 @@ import com.capstone.sweettrack.data.remote.response.OTPResponse
 import com.capstone.sweettrack.data.remote.response.OcrResponse
 import com.capstone.sweettrack.data.remote.response.ResendingOTPRequest
 import com.capstone.sweettrack.data.remote.response.ResponseModel
+import com.capstone.sweettrack.data.remote.response.UpdateCalorieDayRequest
 import com.capstone.sweettrack.data.remote.response.UserProfileResponse
 import com.capstone.sweettrack.data.remote.response.VerifyOtpRequest
 import com.capstone.sweettrack.data.remote.response.VerifyOtpResetPassword
@@ -213,6 +214,15 @@ class Repository private constructor(
         val userId = session.userId.toInt()
         val request = EditCalorieRequest(calorie)
         val response = apiService.setCalorie(userId, request)
+
+        return response
+    }
+
+    suspend fun updateUserCalorieDay(calorie: Double?): EditCalorieResponse {
+        val session = userPreference.getSession().first()
+        val userId = session.userId.toInt()
+        val request = UpdateCalorieDayRequest(calorie)
+        val response = apiService.updateCalorieDay(userId, request)
 
         return response
     }

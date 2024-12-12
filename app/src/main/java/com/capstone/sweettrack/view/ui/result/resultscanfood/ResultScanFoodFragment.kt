@@ -106,6 +106,10 @@ class ResultScanFoodFragment : Fragment() {
                     500, true, "error", null
                 )
             )
+            val calorie = response?.data?.kalori
+            if (calorie != null) {
+                viewModel.updateUserCalorieDay(calorie)
+            }
         }
         builder.setNegativeButton("Tidak") { _, _ ->
 

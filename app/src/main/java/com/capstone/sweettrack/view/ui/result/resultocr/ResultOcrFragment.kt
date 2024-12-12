@@ -110,6 +110,11 @@ class ResultOcrFragment : Fragment() {
                     500, true, "error", null
                 )
             )
+            val sugar = response?.data?.gula
+            val calorie = sugar?.times(4)
+            if (calorie != null) {
+                viewModel.updateUserCalorieDay(calorie)
+            }
         }
         builder.setNegativeButton("Tidak") { _, _ ->
 

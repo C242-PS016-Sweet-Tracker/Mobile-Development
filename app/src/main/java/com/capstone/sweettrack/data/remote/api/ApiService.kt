@@ -16,6 +16,7 @@ import com.capstone.sweettrack.data.remote.response.OcrResponse
 import com.capstone.sweettrack.data.remote.response.RecommendationResponse
 import com.capstone.sweettrack.data.remote.response.ResendingOTPRequest
 import com.capstone.sweettrack.data.remote.response.ResponseModel
+import com.capstone.sweettrack.data.remote.response.UpdateCalorieDayRequest
 import com.capstone.sweettrack.data.remote.response.UserProfileResponse
 import com.capstone.sweettrack.data.remote.response.VerifyOtpRequest
 import com.capstone.sweettrack.data.remote.response.VerifyOtpResetPassword
@@ -117,6 +118,12 @@ interface ApiService {
     suspend fun setCalorie(
         @Path("user_id") userId: Int,
         @Body request: EditCalorieRequest
+    ): EditCalorieResponse
+
+    @PUT("kalori/updateKaloriHarian/{user_id}")
+    suspend fun updateCalorieDay(
+        @Path("user_id") userId: Int,
+        @Body request: UpdateCalorieDayRequest
     ): EditCalorieResponse
 
 }
