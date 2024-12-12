@@ -16,7 +16,6 @@ class FavoriteAdapter(private val onItemClicked: (Favorite) -> Unit) :
 
     private val favoriteList = mutableListOf<Favorite>()
 
-    // Fungsi untuk memperbarui data favorit
     fun setFavorites(favorites: List<Favorite>) {
         favoriteList.clear()
         favoriteList.addAll(favorites)

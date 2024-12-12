@@ -142,6 +142,11 @@ interface ApiService {
         @Body request: HistoryScan
     ): ApiResponse
 
+    @GET("scan/hasilAnalisa/{user_id}")
+    suspend fun getHistoryScan(
+        @Path("user_id") userId: Int,
+    ): ApiResponse
+
     @GET("rekomendasi/getFavorit/{user_id}")
     suspend fun getFavoriteUser(
         @Path("user_id") userId: Int
