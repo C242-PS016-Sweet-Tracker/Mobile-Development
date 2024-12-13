@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.capstone.sweettrack.data.remote.response.Favorite
@@ -38,7 +39,7 @@ class FavoriteAdapter(private val onItemClicked: (Favorite) -> Unit) :
         private val imgPhoto: ImageView = itemView.findViewById(R.id.img_item_photo)
         private val tvTitle: TextView = itemView.findViewById(R.id.tv_title)
         private val tvDescription: TextView = itemView.findViewById(R.id.tv_description)
-        private val btnDetail: Button = itemView.findViewById(R.id.btn_detail)
+        private val cardView: CardView = itemView.findViewById(R.id.card_view)
 
         fun bind(favorite: Favorite) {
             tvTitle.text = favorite.nama_makanan
@@ -50,7 +51,7 @@ class FavoriteAdapter(private val onItemClicked: (Favorite) -> Unit) :
                 .into(imgPhoto)
 
             // Handle the button click
-            btnDetail.setOnClickListener {
+            cardView.setOnClickListener {
                 onItemClicked(favorite)
             }
         }
