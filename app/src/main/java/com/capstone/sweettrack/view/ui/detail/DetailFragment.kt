@@ -47,6 +47,20 @@ class DetailFragment : Fragment() {
 
         setupView()
 
+        val foodDetail = arguments?.getParcelable<Parcelable>("foodDetail")
+        foodDetail?.let {
+            when (it) {
+                is Favorite -> {
+                    viewModel.checkIfFavorite(it.nama_makanan)
+                    displayFavoriteDetails(it)
+                }
+                is Recommendation -> {
+                    displayRecommendationDetails(it)
+                }
+            }
+        }
+
+
         viewModel.isFavorite.observe(viewLifecycleOwner, Observer { isFavorite ->
             if (isFavorite) {
                 binding.favoriteIcon.setImageResource(R.drawable.baseline_favorite_24)
@@ -56,21 +70,35 @@ class DetailFragment : Fragment() {
         })
 
         binding.favoriteIcon.setOnClickListener {
-            val foodDetail = arguments?.getParcelable<Parcelable>("foodDetail")
+//            val foodDetail = arguments?.getParcelable<Parcelable>("foodDetail")
 
             when (foodDetail) {
                 is Favorite -> {
-                    val favoriteAdd = FavoriteAdd(
-                        user_id = 0,
-                        namaMakanan = foodDetail.nama_makanan,
-                        kalori = foodDetail.kalori,
-                        karbohidrat = foodDetail.karbohidrat,
-                        lemak = foodDetail.lemak,
-                        protein = foodDetail.protein,
-                        serat = foodDetail.serat,
-                        img = foodDetail.img
-                    )
-                    viewModel.addFavorite(favoriteAdd)
+                    if (viewModel.isFavorite.value == true) {
+                            val favoriteAdd = FavoriteAdd(
+                                user_id = 0,
+                                namaMakanan = foodDetail.nama_makanan,
+                                kalori = foodDetail.kalori,
+                                karbohidrat = foodDetail.karbohidrat,
+                                lemak = foodDetail.lemak,
+                                protein = foodDetail.protein,
+                                serat = foodDetail.serat,
+                                img = foodDetail.img
+                            )
+                            viewModel.removeFavorite(favoriteAdd)
+                    } else {
+                        val favoriteAdd = FavoriteAdd(
+                            user_id = 0,
+                            namaMakanan = foodDetail.nama_makanan,
+                            kalori = foodDetail.kalori,
+                            karbohidrat = foodDetail.karbohidrat,
+                            lemak = foodDetail.lemak,
+                            protein = foodDetail.protein,
+                            serat = foodDetail.serat,
+                            img = foodDetail.img
+                        )
+                        viewModel.addFavorite(favoriteAdd)
+                    }
                 }
 
                 is Recommendation -> {
@@ -89,17 +117,17 @@ class DetailFragment : Fragment() {
             }
         }
 
-        val foodDetail = arguments?.getParcelable<Parcelable>("foodDetail")
-
-        when (foodDetail) {
-            is Favorite -> {
-                displayFavoriteDetails(foodDetail)
-            }
-
-            is Recommendation -> {
-                displayRecommendationDetails(foodDetail)
-            }
-        }
+//        val foodDetail = arguments?.getParcelable<Parcelable>("foodDetail")
+//
+//        when (foodDetail) {
+//            is Favorite -> {
+//                displayFavoriteDetails(foodDetail)
+//            }
+//
+//            is Recommendation -> {
+//                displayRecommendationDetails(foodDetail)
+//            }
+//        }
     }
 
     private fun displayFavoriteDetails(favorite: Favorite) {

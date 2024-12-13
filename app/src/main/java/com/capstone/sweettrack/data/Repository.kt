@@ -3,6 +3,7 @@ package com.capstone.sweettrack.data
 import android.content.Context
 import android.net.Uri
 import com.capstone.sweettrack.data.local.entity.HistoryScan
+import com.capstone.sweettrack.data.local.room.SweetTrackDao
 import com.capstone.sweettrack.data.local.room.SweetTrackDatabase
 import com.capstone.sweettrack.data.pref.UserModel
 import com.capstone.sweettrack.data.pref.UserPreference
@@ -47,7 +48,9 @@ import okhttp3.RequestBody.Companion.toRequestBody
 class Repository private constructor(
     private val apiService: ApiService,
     private val userPreference: UserPreference,
-    private val sweetTrackDatabase: SweetTrackDatabase
+    private val sweetTrackDatabase: SweetTrackDatabase,
+    private val sweetTrackDao: SweetTrackDao
+
 ) {
 
     suspend fun saveSession(user: UserModel) {
@@ -363,6 +366,18 @@ class Repository private constructor(
         return response
     }
 
+    suspend fun removeFavorite(foodName: String) {
+        val session = userPreference.getSession().first()
+        val userId = session.userId.toInt()
+        sweetTrackDao.deleteFavoriteByName(foodName, userId)
+    }
+
+    suspend fun isFoodFavorite(foodName: String): Int {
+        val session = userPreference.getSession().first()
+        val userId = session.userId.toInt()
+        return sweetTrackDao.getFavoriteCountByName(foodName, userId)
+    }
+
 
     suspend fun logout() {
         userPreference.logout()
@@ -377,7 +392,7 @@ class Repository private constructor(
             sweetTrackDatabase: SweetTrackDatabase
         ): Repository =
             instance ?: synchronized(this) {
-                instance ?: Repository(apiService, userPreference, sweetTrackDatabase)
+                instance ?: Repository(apiService, userPreference, sweetTrackDatabase, sweetTrackDatabase.eventDao())
             }.also { instance = it }
     }
 

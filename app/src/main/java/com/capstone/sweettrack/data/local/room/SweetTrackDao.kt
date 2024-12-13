@@ -41,6 +41,11 @@ interface SweetTrackDao {
     @Query("DELETE FROM favorite_food")
     suspend fun clearFavorites()
 
+    @Query("DELETE FROM favorite_food WHERE name = :foodName AND user_id = :userId")
+    suspend fun deleteFavoriteByName(foodName: String, userId: Int)
+
+    @Query("SELECT COUNT(*) FROM favorite_food WHERE name = :foodName AND user_id = :userId")
+    suspend fun getFavoriteCountByName(foodName: String, userId: Int): Int
 
     @Query("SELECT * FROM history_scan WHERE nama_makanan LIKE '%' || :name || '%'")
     suspend fun searchHistoryByName(name: String): List<HistoryScan>

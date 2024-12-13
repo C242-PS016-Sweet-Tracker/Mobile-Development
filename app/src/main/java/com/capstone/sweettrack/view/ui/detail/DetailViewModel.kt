@@ -10,13 +10,35 @@ import kotlinx.coroutines.launch
 class DetailViewModel(private var repository: Repository) : ViewModel() {
 
     // Status favorite (default false)
-    private val _isFavorite = MutableLiveData(false)
-    val isFavorite: LiveData<Boolean> = _isFavorite
+//    private val _isFavorite = MutableLiveData(false)
+    private val _isFavorite = MutableLiveData<Boolean>()
+//    val isFavorite: LiveData<Boolean> = _isFavorite
+    val isFavorite : LiveData<Boolean> get() = _isFavorite
 
     // Fungsi untuk toggle status favorite
     fun toggleFavorite() {
         _isFavorite.value = _isFavorite.value != true
     }
+
+    fun removeFavorite(favoriteAdd: FavoriteAdd) {
+        viewModelScope.launch {
+            try {
+                repository.removeFavorite(favoriteAdd.namaMakanan) // Assuming you want to remove by food name
+                _isFavorite.value = false // Update the favorite status
+            } catch (e: Exception) {
+                Log.e("DetailViewModel", "Error removing favorite: ${e.message}")
+                // Handle error if needed
+            }
+        }
+    }
+
+    fun checkIfFavorite(foodName: String) {
+        viewModelScope.launch {
+            val count = repository.isFoodFavorite(foodName)
+            _isFavorite.value = count > 0
+        }
+    }
+
 
 
     fun addFavorite(favoriteAdd: FavoriteAdd) {
