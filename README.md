@@ -52,16 +52,9 @@ Sweet Track is built with a mission to:
 
 ---
 
-## 🛠️ **Technology Stack**
-- **Machine Learning**: Predictive models for nutritional analysis and food detection.
-- **Mobile Development**: Android-based application for seamless user experience.
-- **Cloud Computing**: Scalable backend to store and process user data securely.
-
----
-
 ## 📱 **Get Started**
-Stay tuned for updates! Sweet Track will soon be available for download on your favorite app store.
-
+Stay tuned for updates! Sweet Trackerss
+https://bit.ly/sweet-track-apk-download
 ---
 
 ## 📩 **Contact Us**
