@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("androidx.navigation.safeargs.kotlin")
+    id("com.google.devtools.ksp")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -15,6 +18,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "BASE_URL", "\"https://sweet-tracker.et.r.appspot.com/\"")
+        buildConfigField("String", "API_KEY", "\"AIzaSyCgwJ3eG9WM9KY3TwWCx8SToISTfOx1VSM\"")
+
     }
 
     buildTypes {
@@ -27,15 +33,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
+
 }
 
 dependencies {
@@ -56,10 +64,16 @@ dependencies {
     // data store preference
     implementation(libs.androidx.datastore.preferences)
 
+    // room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
     // live data - view model
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.activity.ktx)
+
 
     // camera X
     implementation(libs.androidx.camera.camera2)
@@ -74,4 +88,14 @@ dependencies {
 
     // glide
     implementation(libs.glide)
+
+    // uCrop
+    implementation(libs.ucrop)
+
+    // notification lib
+    implementation(libs.androidx.work.runtime.ktx)
+
+    // library gemini
+    implementation(libs.generativeai)
+
 }

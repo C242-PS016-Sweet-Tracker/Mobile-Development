@@ -3,18 +3,256 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@id/splashFragment">
 
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.capstone.sweettrack.view.ui.login.LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_loginFragment_to_fragmentSignUp"
+            app:destination="@id/fragmentSignUp" />
+        <action
+            android:id="@+id/action_loginFragment_to_fragmentResetPassword"
+            app:destination="@id/fragmentResetPassword" />
+    </fragment>
+
+    <!-- Home Fragment -->
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.capstone.sweettrack.view.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
 
+        <action
+            android:id="@+id/action_navigation_home_to_scanFoodFragment"
+            app:destination="@id/scanFoodFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_calculatorFragmentOne"
+            app:destination="@id/calculatorFragmentOne" />
+        <action
+            android:id="@+id/action_navigation_home_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_recomendationFragment"
+            app:destination="@id/recomendationFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_chatFragment"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+
+    <!-- Profile Fragment -->
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.capstone.sweettrack.view.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+  
+    <fragment
+        android:id="@+id/fragmentSignUp"
+        android:name="com.capstone.sweettrack.view.ui.signup.SignUpFragment"
+        android:label="Sign Up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_fragmentSignUp_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_fragmentSignUp_to_authenticationFragment"
+            app:destination="@id/authenticationFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/fragmentResetPassword"
+        android:name="com.capstone.sweettrack.view.ui.resetpassword.ResetPasswordFragment"
+        android:label="Reset Password"
+        tools:layout="@layout/fragment_reset_password" >
+        <action
+            android:id="@+id/action_fragmentResetPassword_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_fragmentResetPassword_to_newPasswordFragment"
+            app:destination="@id/newPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.capstone.sweettrack.view.ui.welcome.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_fragmentSignUp"
+            app:destination="@id/fragmentSignUp" />
+    </fragment>
+    <fragment
+        android:id="@+id/newPasswordFragment"
+        android:name="com.capstone.sweettrack.view.ui.newpassword.NewPasswordFragment"
+        android:label="New Password" >
+        <action
+            android:id="@+id/action_newPasswordFragment_to_fragmentResetPassword"
+            app:destination="@id/fragmentResetPassword" />
+        <action
+            android:id="@+id/action_newPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scanFoodFragment"
+        android:name="com.capstone.sweettrack.view.ui.scanfood.ScanFoodFragment"
+        android:label="Scan Food"
+        tools:layout="@layout/fragment_scan_food" >
+        <action
+            android:id="@+id/action_scanFoodFragment_to_resultOcrFragment"
+            app:destination="@id/resultOcrFragment" />
+        <action
+            android:id="@+id/action_scanFoodFragment_to_resultScanFoodFragment"
+            app:destination="@id/resultScanFoodFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userInformationFragment"
+        android:name="com.capstone.sweettrack.view.ui.userinformation.UserInformationFragment"
+        android:label="Informasi User"
+        tools:layout="@layout/fragment_user_information" >
+        <action
+            android:id="@+id/action_userInformationFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.capstone.sweettrack.view.ui.editprofile.EditProfileFragment"
+        android:label="Edit Profile"
+        tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/authenticationFragment"
+        android:name="com.capstone.sweettrack.view.ui.authentication.AuthenticationFragment"
+        android:label="Authentication"
+        tools:layout="@layout/fragment_authentication" >
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <argument
+            android:name="password"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_authenticationFragment_to_userInformationFragment"
+            app:destination="@id/userInformationFragment" />
+        <action
+            android:id="@+id/action_authenticationFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.capstone.sweettrack.view.ui.favorite.FavoriteFragment"
+        android:label="Favorite"
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_detailFragment2"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.capstone.sweettrack.view.ui.detail.DetailFragment"
+        android:label="Detail" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.capstone.sweettrack.view.ui.splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/calculatorFragmentOne"
+        android:name="com.capstone.sweettrack.view.ui.calculatorcalori.stepone.CalculatorFragmentOne"
+        android:label="Kalkulator Kalori"
+        tools:layout="@layout/fragment_calculator_one" >
+        <action
+            android:id="@+id/action_calculatorFragmentOne_to_calculatorFragmentTwo"
+            app:destination="@id/calculatorFragmentTwo" />
+    </fragment>
+    <fragment
+        android:id="@+id/calculatorFragmentTwo"
+        android:name="com.capstone.sweettrack.view.ui.calculatorcalori.steptwo.CalculatorFragmentTwo"
+        android:label="Kalkulator Kalori"
+        tools:layout="@layout/fragment_calculator_two" >
+        <action
+            android:id="@+id/action_calculatorFragmentTwo_to_calculatorFragmentResult"
+            app:destination="@id/calculatorFragmentResult" />
+    </fragment>
+    <fragment
+        android:id="@+id/calculatorFragmentResult"
+        android:name="com.capstone.sweettrack.view.ui.calculatorcalori.result.CalculatorFragmentResult"
+        android:label="Kalkulator Kalori"
+        tools:layout="@layout/fragment_calculator_result" >
+        <action
+            android:id="@+id/action_calculatorFragmentResult_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.capstone.sweettrack.view.ui.setting.SettingFragment"
+        android:label="Setting"
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingFragment_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_settingFragment_to_userInformationFragment"
+            app:destination="@id/userInformationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recomendationFragment"
+        android:name="com.capstone.sweettrack.view.ui.recomendation.RecommendationFragment"
+        android:label="Recommendations"
+        tools:layout="@layout/fragment_recomendation" >
+        <action
+            android:id="@+id/action_recomendationFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.capstone.sweettrack.view.ui.chatbot.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/navigation_history"
+        android:name="com.capstone.sweettrack.view.ui.history.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/resultOcrFragment"
+        android:name="com.capstone.sweettrack.view.ui.result.resultocr.ResultOcrFragment"
+        android:label="Hasil Scan"
+        tools:layout="@layout/fragment_result_ocr" />
+    <fragment
+        android:id="@+id/resultScanFoodFragment"
+        android:name="com.capstone.sweettrack.view.ui.result.resultscanfood.ResultScanFoodFragment"
+        android:label="Hasil Scan"
+        tools:layout="@layout/fragment_result_scan_food" />
 </navigation>
