@@ -1,3 +1,5 @@
+# Capstone Project
+
 # Sweet Track
 
 Sweet Track is a **Meal Planner Application** designed to assist people with diabetes in managing their daily meals and calorie intake effectively. By combining advanced features and user-friendly design, Sweet Track aims to improve the quality of life for diabetes patients through personalized meal planning, calorie tracking, and nutritional insights.
@@ -45,11 +47,6 @@ Sweet Track is built with a mission to:
 ## 👨‍💻 **Team Members**
 | Role                  | Name                                  | University                                      | Status   |
 |-----------------------|---------------------------------------|------------------------------------------------|----------|
-| **Machine Learning** | Kevin Glory Prasetyo                | Universitas Kristen Duta Wacana                | Active   |
-| **Machine Learning** | Priesma Putra Reditama              | Universitas Kristen Duta Wacana                | Active   |
-| **Machine Learning** | Vincen Imanuel                      | Universitas Kristen Duta Wacana                | Active   |
-| **Cloud Computing**  | Giovanka Steviano Harry Premono     | Universitas Kristen Duta Wacana                | Active   |
-| **Cloud Computing**  | Vicky Yohanes Putra Setiawan         | Universitas Kristen Duta Wacana                | Active   |
 | **Mobile Development**| Imanuel Putra Anugerah Faot          | Universitas Kristen Duta Wacana                | Active   |
 | **Mobile Development**| Maria Ni Nyoman Amelia Etsa          | Universitas Kristen Duta Wacana                | Active   |
 
