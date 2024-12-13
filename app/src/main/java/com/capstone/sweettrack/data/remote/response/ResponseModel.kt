@@ -4,18 +4,18 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ResponseModel (
+data class ResponseModel(
     val statusCode: Int,
     val error: Boolean,
     val message: String,
     val data: Result? = null
-): Parcelable
+) : Parcelable
 
 @Parcelize
-data class Result (
+data class Result(
     val makanan: String,
     val kalori: Double,
     var gula: Double,
     val lemak: Double,
     val protein: Double
-): Parcelable
+) : Parcelable

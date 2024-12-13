@@ -54,6 +54,7 @@ class DetailFragment : Fragment() {
                     viewModel.checkIfFavorite(it.nama_makanan)
                     displayFavoriteDetails(it)
                 }
+
                 is Recommendation -> {
                     displayRecommendationDetails(it)
                 }
@@ -75,17 +76,17 @@ class DetailFragment : Fragment() {
             when (foodDetail) {
                 is Favorite -> {
                     if (viewModel.isFavorite.value == true) {
-                            val favoriteAdd = FavoriteAdd(
-                                user_id = 0,
-                                namaMakanan = foodDetail.nama_makanan,
-                                kalori = foodDetail.kalori,
-                                karbohidrat = foodDetail.karbohidrat,
-                                lemak = foodDetail.lemak,
-                                protein = foodDetail.protein,
-                                serat = foodDetail.serat,
-                                img = foodDetail.img
-                            )
-                            viewModel.removeFavorite(favoriteAdd)
+                        val favoriteAdd = FavoriteAdd(
+                            user_id = 0,
+                            namaMakanan = foodDetail.nama_makanan,
+                            kalori = foodDetail.kalori,
+                            karbohidrat = foodDetail.karbohidrat,
+                            lemak = foodDetail.lemak,
+                            protein = foodDetail.protein,
+                            serat = foodDetail.serat,
+                            img = foodDetail.img
+                        )
+                        viewModel.removeFavorite(favoriteAdd)
                     } else {
                         val favoriteAdd = FavoriteAdd(
                             user_id = 0,

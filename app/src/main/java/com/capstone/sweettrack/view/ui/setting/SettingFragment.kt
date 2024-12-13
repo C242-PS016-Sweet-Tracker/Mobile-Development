@@ -39,7 +39,8 @@ class SettingFragment : Fragment() {
     private val requestNotificationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
-                Toast.makeText(requireContext(), "Izin notifikasi diberikan.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Izin notifikasi diberikan.", Toast.LENGTH_SHORT)
+                    .show()
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -105,6 +106,7 @@ class SettingFragment : Fragment() {
                         findNavController().navigateUp()
                         true
                     }
+
                     else -> false
                 }
             }

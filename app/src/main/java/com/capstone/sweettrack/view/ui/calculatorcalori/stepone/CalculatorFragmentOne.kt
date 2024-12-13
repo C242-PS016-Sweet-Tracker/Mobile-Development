@@ -1,6 +1,5 @@
 package com.capstone.sweettrack.view.ui.calculatorcalori.stepone
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,7 +13,6 @@ import com.capstone.sweettrack.view.ViewModelFactory
 import com.capstone.sweettrack.view.ui.calculatorcalori.CalculatorViewModel
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentCalculatorOneBinding
-import com.coding.sweettrack.databinding.FragmentWelcomeBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class CalculatorFragmentOne : Fragment() {

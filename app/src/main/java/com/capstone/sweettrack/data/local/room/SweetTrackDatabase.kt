@@ -7,7 +7,6 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.capstone.sweettrack.data.local.entity.FavoriteFood
 import com.capstone.sweettrack.data.local.entity.HistoryScan
-import com.capstone.sweettrack.data.local.helper.InitialDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

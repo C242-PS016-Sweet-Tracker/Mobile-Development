@@ -83,7 +83,7 @@ class UserInformationViewModel(private val repository: Repository) : ViewModel()
                     diabetesType,
                     lastBloodSugar
                 )
-                if (message.error != true) {
+                if (!message.error) {
                     _addDetailUserResult.value = message
                 } else {
                     _addDetailUserResult.value = message
@@ -128,8 +128,7 @@ class UserInformationViewModel(private val repository: Repository) : ViewModel()
                     diabetesType,
                     lastBloodSugar
                 )
-                println(message)
-                if (message.error != true) {
+                if (!message.error) {
                     _editDetailUserResult.value = message
                 } else {
                     _editDetailUserResult.value = message

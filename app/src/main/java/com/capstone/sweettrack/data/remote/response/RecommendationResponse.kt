@@ -9,7 +9,7 @@ data class RecommendationResponse(
     val error: Boolean,
     val message: String,
     val rekomendasi: List<Recommendation>
-): Parcelable
+) : Parcelable
 
 @Parcelize
 data class Recommendation(
@@ -20,8 +20,8 @@ data class Recommendation(
     val protein: Double,
     val serat: Double,
     val img: String,
-): Parcelable
+) : Parcelable
 
 data class RecommendationRequest(
-    val tipe:String
+    val tipe: String
 )

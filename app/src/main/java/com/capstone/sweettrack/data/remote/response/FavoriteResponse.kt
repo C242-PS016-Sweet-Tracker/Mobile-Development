@@ -4,20 +4,20 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class FavoriteResponses (
+data class FavoriteResponses(
     val statusCode: Int,
     val error: Boolean,
     val message: String,
     val describe: String
-): Parcelable
+) : Parcelable
 
 @Parcelize
-data class FavoriteResponse (
+data class FavoriteResponse(
     val statusCode: Int,
     val error: Boolean,
     val message: String,
     val data: List<Favorite>
-): Parcelable
+) : Parcelable
 
 @Parcelize
 data class Favorite(
@@ -30,7 +30,7 @@ data class Favorite(
     val protein: Double,
     val serat: Double,
     val img: String,
-): Parcelable
+) : Parcelable
 
 data class FavoriteAdd(
     val user_id: Int,

@@ -1,6 +1,6 @@
 package com.capstone.sweettrack.data.remote.response
 
-data class HistoryResponse (
+data class HistoryResponse(
     val statusCode: Int,
     val error: Boolean,
     val message: String,
@@ -16,18 +16,4 @@ data class History(
     val lemak: Double,
     val gambar_analisa_makanan: String,
     val kalori: Double,
-)
-
-data class HistoryScanFoodRequest(
-    val user_id: Int,
-    val namaMakanan: String,
-    val kalori: Double,
-    val gula: Double,
-    val lemak: Double,
-    val protein: Double,
-)
-
-data class HistoryOcrRequest(
-    val user_id: Int,
-    val gula: Double,
 )

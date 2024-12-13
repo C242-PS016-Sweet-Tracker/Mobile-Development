@@ -24,7 +24,7 @@ class NewPasswordViewModel(private val repository: Repository) : ViewModel() {
         viewModelScope.launch {
             try {
                 val request = VerifyOtpResetPassword(otp, password)
-                val response = repository.verifyOtpResetPassRequest (request)
+                val response = repository.verifyOtpResetPassRequest(request)
                 _verifyResult.value = response
             } catch (e: Exception) {
                 _verifyResult.value = VerifyOtpResponse(

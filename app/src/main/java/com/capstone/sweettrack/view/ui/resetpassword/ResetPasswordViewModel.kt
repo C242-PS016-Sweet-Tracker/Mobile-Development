@@ -28,7 +28,7 @@ class ResetPasswordViewModel(private val repository: Repository) : ViewModel() {
         viewModelScope.launch {
             try {
                 val message = repository.otpResetPassRequest(otpRequest)
-                if (message.error != true) {
+                if (!message.error) {
                     _requestResult.value = message
                 } else {
                     _requestResult.value = message

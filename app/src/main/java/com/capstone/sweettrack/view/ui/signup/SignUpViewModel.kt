@@ -27,7 +27,7 @@ class SignUpViewModel(private val repository: Repository) : ViewModel() {
         viewModelScope.launch {
             try {
                 val message = repository.requestOtp(otpRequest)
-                if (message.error != true) {
+                if (!message.error) {
                     _registerResult.value = message
                 } else {
                     _registerResult.value = message
@@ -36,12 +36,6 @@ class SignUpViewModel(private val repository: Repository) : ViewModel() {
                 val errorBody = e.response()?.errorBody()?.string()
                 val errorResponse = Gson().fromJson(errorBody, OTPResponse::class.java)
                 _registerResult.value = errorResponse
-//                    OTPResponse(
-//                    500,
-//                    true,
-//                    "Gagal Mengirim OTP",
-//                    "Error"
-//                )
             } catch (e: Exception) {
                 _registerResult.value = OTPResponse(
                     500,

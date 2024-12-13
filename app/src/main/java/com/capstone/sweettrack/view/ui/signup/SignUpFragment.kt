@@ -63,7 +63,14 @@ class SignUpFragment : Fragment() {
         username.addTextChangedListener { checkFormValidity(username, email, password, rePassword) }
         email.addTextChangedListener { checkFormValidity(username, email, password, rePassword) }
         password.addTextChangedListener { checkFormValidity(username, email, password, rePassword) }
-        rePassword.addTextChangedListener { checkFormValidity(username, email, password, rePassword) }
+        rePassword.addTextChangedListener {
+            checkFormValidity(
+                username,
+                email,
+                password,
+                rePassword
+            )
+        }
 
     }
 
@@ -86,7 +93,8 @@ class SignUpFragment : Fragment() {
             rePassword.error = null
         }
 
-        binding.signUpButton.isEnabled = isUsernameValid && isEmailValid && isPasswordValid && isRePasswordValid && isPasswordsMatch
+        binding.signUpButton.isEnabled =
+            isUsernameValid && isEmailValid && isPasswordValid && isRePasswordValid && isPasswordsMatch
     }
 
     private fun register() {
@@ -102,7 +110,7 @@ class SignUpFragment : Fragment() {
         viewModel.registerResult.observe(requireActivity()) { result ->
             if (result != null) {
                 println("Result $result")
-                if (result.error != true) {
+                if (!result.error) {
                     showLoading(false)
                     val alertDialog = AlertDialog.Builder(requireActivity()).apply {
                         setTitle("Verifikasi Akun!")
@@ -113,10 +121,11 @@ class SignUpFragment : Fragment() {
 
                     Handler(Looper.getMainLooper()).postDelayed({
                         alertDialog.dismiss()
-                        val action = SignUpFragmentDirections.actionFragmentSignUpToAuthenticationFragment(
-                            email = emailText,
-                            password = passText
-                        )
+                        val action =
+                            SignUpFragmentDirections.actionFragmentSignUpToAuthenticationFragment(
+                                email = emailText,
+                                password = passText
+                            )
                         findNavController().navigate(action)
                     }, 3000)
                 } else {

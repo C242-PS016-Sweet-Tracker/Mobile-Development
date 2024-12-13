@@ -16,7 +16,8 @@ class CustomPasswordEditText @JvmOverloads constructor(
 
 
     init {
-        showButtonImage = ContextCompat.getDrawable(context, R.drawable.baseline_remove_red_eye_24) as Drawable
+        showButtonImage =
+            ContextCompat.getDrawable(context, R.drawable.baseline_remove_red_eye_24) as Drawable
 
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

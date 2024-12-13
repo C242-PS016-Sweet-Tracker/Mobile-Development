@@ -22,7 +22,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class SplashFragment : Fragment() {
 
     private var _binding: FragmentSplashBinding? = null
-//    private val binding get() = _binding!!
 
     private val viewModel by viewModels<SplashViewModel> {
         ViewModelFactory.getInstance(requireActivity())
@@ -42,8 +41,6 @@ class SplashFragment : Fragment() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             setupObservers()
-//        findNavController().navigate(R.id.action_splashFragment_to_navigation_home)
-
         }, 2000)
     }
 

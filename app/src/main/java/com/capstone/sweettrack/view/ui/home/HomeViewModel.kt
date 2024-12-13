@@ -6,13 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.capstone.sweettrack.data.Repository
-import com.capstone.sweettrack.data.local.entity.FavoriteFood
-import com.capstone.sweettrack.data.local.helper.InitialDataSource
 import com.capstone.sweettrack.data.pref.UserModel
 import com.capstone.sweettrack.data.remote.response.CaloriesResponse
 import com.capstone.sweettrack.data.remote.response.Recommendation
-import com.capstone.sweettrack.data.remote.response.RecommendationRequest
-import com.capstone.sweettrack.data.remote.response.RecommendationResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import retrofit2.HttpException

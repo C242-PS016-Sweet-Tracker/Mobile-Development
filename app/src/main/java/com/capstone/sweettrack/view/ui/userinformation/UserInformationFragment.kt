@@ -96,12 +96,12 @@ class UserInformationFragment : Fragment() {
                     viewModel.addUserDetailInformation(
                         name,
                         gender,
-                        age?:0,
-                        height?: 0.0,
+                        age ?: 0,
+                        height ?: 0.0,
                         weight,
                         activityLevel,
                         diabetesType,
-                        lastBloodSugar?: 0.0
+                        lastBloodSugar ?: 0.0
                     )
 
                     observeAddProfileResult()
@@ -196,7 +196,8 @@ class UserInformationFragment : Fragment() {
             if (!result.error) {
                 Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
 
-                val action = UserInformationFragmentDirections.actionUserInformationFragmentToNavigationHome()
+                val action =
+                    UserInformationFragmentDirections.actionUserInformationFragmentToNavigationHome()
                 findNavController().navigate(action)
 
             } else {

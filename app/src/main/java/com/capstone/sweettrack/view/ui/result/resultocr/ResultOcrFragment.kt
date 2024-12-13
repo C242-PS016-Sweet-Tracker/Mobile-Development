@@ -19,12 +19,9 @@ import androidx.core.net.toUri
 import androidx.core.view.MenuProvider
 import androidx.navigation.fragment.findNavController
 import com.capstone.sweettrack.data.remote.response.OcrResponse
-import com.capstone.sweettrack.data.remote.response.ResponseModel
 import com.capstone.sweettrack.view.ViewModelFactory
-import com.capstone.sweettrack.view.ui.result.resultscanfood.ResultScanFoodViewModel
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentResultOcrBinding
-import com.coding.sweettrack.databinding.FragmentScanFoodBinding
 
 class ResultOcrFragment : Fragment() {
 
@@ -55,7 +52,7 @@ class ResultOcrFragment : Fragment() {
         setupView()
 
         uri = arguments?.getString("image_uri")
-        response = arguments?.getParcelable<OcrResponse>("result")
+        response = arguments?.getParcelable("result")
 
         uri?.let {
             binding.resultImage.setImageURI(uri?.toUri())
@@ -124,7 +121,7 @@ class ResultOcrFragment : Fragment() {
 
                 val sugar = response?.data?.gula
                 if (sugar != null) {
-                    image?.let { viewModel.addResultToHistory(it,sugar, requireActivity()) }
+                    image?.let { viewModel.addResultToHistory(it, sugar, requireActivity()) }
                 }
 
                 val alertDialog = AlertDialog.Builder(requireActivity()).apply {

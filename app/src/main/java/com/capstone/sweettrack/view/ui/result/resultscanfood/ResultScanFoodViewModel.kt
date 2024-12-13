@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.capstone.sweettrack.data.Repository
 import com.capstone.sweettrack.data.remote.response.ApiResponse
 import com.capstone.sweettrack.data.remote.response.EditCalorieResponse
-import com.capstone.sweettrack.data.remote.response.HistoryScanFoodRequest
 import kotlinx.coroutines.launch
 
 class ResultScanFoodViewModel(private val repository: Repository) : ViewModel() {

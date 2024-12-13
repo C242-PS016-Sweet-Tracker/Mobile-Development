@@ -1,6 +1,6 @@
 package com.capstone.sweettrack.data.remote.response
 
-data class CaloriesResponse (
+data class CaloriesResponse(
     val statusCode: Int? = null,
     val error: Boolean? = null,
     val message: String? = null,
@@ -17,6 +17,7 @@ data class DataCalories(
 data class EditCalorieRequest(
     val kalori: Double? = null
 )
+
 data class UpdateCalorieDayRequest(
     val kaloriAdd: Double? = null
 )

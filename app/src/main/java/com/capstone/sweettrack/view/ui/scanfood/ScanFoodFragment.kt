@@ -118,9 +118,11 @@ class ScanFoodFragment : Fragment() {
             viewModel.scanFoodNutrition(currentUri, requireActivity())
             observeScanFoodResult()
         } else {
-            Toast.makeText(requireContext(), "Pilih gambar terlebih dahulu!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Pilih gambar terlebih dahulu!", Toast.LENGTH_SHORT)
+                .show()
         }
     }
+
     private fun analysisImageOcr() {
         val currentUri = viewModel.currentImageUri.value
         if (currentUri != null) {
@@ -129,7 +131,8 @@ class ScanFoodFragment : Fragment() {
             viewModel.scanOcrNutrition(currentUri, requireActivity())
             observeOcrScanResult()
         } else {
-            Toast.makeText(requireContext(), "Pilih gambar terlebih dahulu!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Pilih gambar terlebih dahulu!", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -146,7 +149,7 @@ class ScanFoodFragment : Fragment() {
                 Handler(Looper.getMainLooper()).postDelayed({
                     alertDialog.dismiss()
 
-                val currentUri = viewModel.currentImageUri.value
+                    val currentUri = viewModel.currentImageUri.value
                     if (currentUri != null) {
                         moveToResultOcr(currentUri, result)
                     }
@@ -183,7 +186,7 @@ class ScanFoodFragment : Fragment() {
                 Handler(Looper.getMainLooper()).postDelayed({
                     alertDialog.dismiss()
 
-                val currentUri = viewModel.currentImageUri.value
+                    val currentUri = viewModel.currentImageUri.value
                     if (currentUri != null) {
                         moveToResultScanFood(currentUri, result)
                     }
@@ -306,23 +309,57 @@ class ScanFoodFragment : Fragment() {
             .show()
     }
 
-    private fun moveToResultOcr(uri: Uri, response: OcrResponse) {
-        val bundle = Bundle().apply {
-            putString("image_uri", uri.toString())
-            putParcelable("result", response)
+    private fun moveToResultOcr(uri: Uri?, response: OcrResponse?) {
+        if (uri == null || response == null) {
+            Toast.makeText(requireContext(), "Data tidak valid untuk OCR", Toast.LENGTH_SHORT)
+                .show()
+            return
         }
-        findNavController().navigate(R.id.action_scanFoodFragment_to_resultOcrFragment, bundle)
 
+        try {
+            val bundle = Bundle().apply {
+                putString("image_uri", uri.toString())
+                putParcelable("result", response)
+            }
+            if (isAdded) {
+                findNavController().navigate(
+                    R.id.action_scanFoodFragment_to_resultOcrFragment,
+                    bundle
+                )
+            }
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "Terjadi kesalahan saat navigasi", Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
-    private fun moveToResultScanFood(uri: Uri, response: ResponseModel) {
-        val bundle = Bundle().apply {
-            putString("image_uri", uri.toString())
-            putParcelable("result", response)
+    private fun moveToResultScanFood(uri: Uri?, response: ResponseModel?) {
+        if (uri == null || response == null) {
+            Toast.makeText(
+                requireContext(),
+                "Data tidak valid untuk hasil scan makanan",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
         }
-        findNavController().navigate(R.id.action_scanFoodFragment_to_resultScanFoodFragment, bundle)
 
+        try {
+            val bundle = Bundle().apply {
+                putString("image_uri", uri.toString())
+                putParcelable("result", response)
+            }
+            if (isAdded) {
+                findNavController().navigate(
+                    R.id.action_scanFoodFragment_to_resultScanFoodFragment,
+                    bundle
+                )
+            }
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "Terjadi kesalahan saat navigasi", Toast.LENGTH_SHORT)
+                .show()
+        }
     }
+
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()

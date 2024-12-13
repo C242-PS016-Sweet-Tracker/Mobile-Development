@@ -153,7 +153,7 @@ class AuthenticationFragment : Fragment() {
 
         viewModel.verifyResult.observe(viewLifecycleOwner) { result ->
             if (result != null) {
-                if (result.error != true) {
+                if (!result.error) {
                     val alertDialog = AlertDialog.Builder(requireActivity()).apply {
                         setTitle(result.message)
                         setMessage(result.describe)

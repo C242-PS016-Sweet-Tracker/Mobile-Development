@@ -34,27 +34,35 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(repository) as T
             }
+
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(repository) as T
             }
+
             modelClass.isAssignableFrom(SignUpViewModel::class.java) -> {
                 SignUpViewModel(repository) as T
             }
+
             modelClass.isAssignableFrom(AuthenticationViewModel::class.java) -> {
                 AuthenticationViewModel(repository) as T
             }
+
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
                 ProfileViewModel(repository) as T
             }
+
             modelClass.isAssignableFrom(ResetPasswordViewModel::class.java) -> {
                 ResetPasswordViewModel(repository) as T
             }
+
             modelClass.isAssignableFrom(NewPasswordViewModel::class.java) -> {
                 NewPasswordViewModel(repository) as T
             }
+
             modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> {
                 EditProfileViewModel(repository) as T
             }
+
             modelClass.isAssignableFrom(UserInformationViewModel::class.java) -> {
                 UserInformationViewModel(repository) as T
             }
@@ -62,30 +70,39 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(RecommendationViewModel::class.java) -> {
                 RecommendationViewModel(repository) as T
             }
+
             modelClass.isAssignableFrom(CalculatorViewModel::class.java) -> {
                 CalculatorViewModel(repository) as T
             }
+
             modelClass.isAssignableFrom(ScanFoodViewModel::class.java) -> {
                 ScanFoodViewModel(repository) as T
             }
+
             modelClass.isAssignableFrom(ResultScanFoodViewModel::class.java) -> {
                 ResultScanFoodViewModel(repository) as T
             }
+
             modelClass.isAssignableFrom(ResultOcrViewModel::class.java) -> {
                 ResultOcrViewModel(repository) as T
             }
+
             modelClass.isAssignableFrom(SplashViewModel::class.java) -> {
                 SplashViewModel(repository) as T
             }
+
             modelClass.isAssignableFrom(HistoryViewModel::class.java) -> {
                 HistoryViewModel(repository) as T
             }
+
             modelClass.isAssignableFrom(FavoriteViewModel::class.java) -> {
                 FavoriteViewModel(repository) as T
             }
+
             modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
                 DetailViewModel(repository) as T
             }
+
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

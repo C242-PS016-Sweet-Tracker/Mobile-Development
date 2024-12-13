@@ -102,7 +102,8 @@ class LoginFragment : Fragment() {
                         Handler(Looper.getMainLooper()).postDelayed({
                             alertDialog.dismiss()
                             if (findNavController().currentDestination?.id == R.id.loginFragment) {
-                                val action = LoginFragmentDirections.actionLoginFragmentToNavigationHome()
+                                val action =
+                                    LoginFragmentDirections.actionLoginFragmentToNavigationHome()
                                 findNavController().navigate(action)
                             }
                         }, 2000)
@@ -145,7 +146,6 @@ class LoginFragment : Fragment() {
     }
 
 
-
     private fun playAnimation() {
 
         val message =
@@ -162,7 +162,8 @@ class LoginFragment : Fragment() {
         val resetText =
             ObjectAnimator.ofFloat(binding.resetPassTextView, View.ALPHA, 1f).setDuration(100)
         val loginBtn = ObjectAnimator.ofFloat(binding.loginButton, View.ALPHA, 1f).setDuration(100)
-        val signUpBtn = ObjectAnimator.ofFloat(binding.signUpButton, View.ALPHA, 1f).setDuration(100)
+        val signUpBtn =
+            ObjectAnimator.ofFloat(binding.signUpButton, View.ALPHA, 1f).setDuration(100)
 
         AnimatorSet().apply {
             playSequentially(

@@ -26,7 +26,6 @@ class ReminderWorker(
         val channelId = "eat_reminder_channel"
         val notificationId = 1
 
-        // Buat Notification Channel (diperlukan untuk Android 8.0+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
@@ -40,7 +39,6 @@ class ReminderWorker(
             notificationManager.createNotificationChannel(channel)
         }
 
-        // Buat dan tampilkan notifikasi
         val notification = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle("Pengingat Makan")

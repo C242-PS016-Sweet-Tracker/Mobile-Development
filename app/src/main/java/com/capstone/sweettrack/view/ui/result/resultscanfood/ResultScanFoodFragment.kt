@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.view.MenuProvider
 import androidx.navigation.fragment.findNavController
-import com.capstone.sweettrack.data.remote.response.HistoryScanFoodRequest
 import com.capstone.sweettrack.data.remote.response.ResponseModel
 import com.capstone.sweettrack.view.ViewModelFactory
 import com.coding.sweettrack.R

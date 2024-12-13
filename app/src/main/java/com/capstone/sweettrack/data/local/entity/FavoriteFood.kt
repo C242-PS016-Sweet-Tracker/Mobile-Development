@@ -17,4 +17,4 @@ data class FavoriteFood(
     @ColumnInfo(name = "gula") val gula: Double,
     @ColumnInfo(name = "lemak") val lemak: Double,
     @ColumnInfo(name = "protein") val protein: Double,
-): Parcelable
+) : Parcelable

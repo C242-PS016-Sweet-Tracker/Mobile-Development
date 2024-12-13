@@ -94,7 +94,7 @@ class NewPasswordFragment : Fragment() {
         viewModel.verifyResult.observe(viewLifecycleOwner) { result ->
 
             if (result != null) {
-                if (result.error != true) {
+                if (!result.error) {
                     showLoading(false)
                     val alertDialog = AlertDialog.Builder(requireActivity()).apply {
                         setTitle(result.message)

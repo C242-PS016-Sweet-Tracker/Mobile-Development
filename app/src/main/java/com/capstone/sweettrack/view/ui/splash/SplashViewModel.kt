@@ -7,7 +7,7 @@ import androidx.lifecycle.asLiveData
 import com.capstone.sweettrack.data.Repository
 import com.capstone.sweettrack.data.pref.UserModel
 
-class SplashViewModel(private val repository: Repository): ViewModel() {
+class SplashViewModel(private val repository: Repository) : ViewModel() {
 
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage

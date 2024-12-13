@@ -49,7 +49,6 @@ class RecommendationAdapter(private val onItemClicked: (Recommendation) -> Unit)
                 .placeholder(R.drawable.ic_place_holder)
                 .into(imgPhoto)
 
-            // Handle the button click
             btnDetail.setOnClickListener {
                 onItemClicked(recommendation)
             }

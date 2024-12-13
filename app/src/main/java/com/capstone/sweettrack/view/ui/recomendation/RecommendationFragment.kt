@@ -44,12 +44,15 @@ class RecommendationFragment : Fragment() {
 
         tipe = arguments?.getString("type")
         tipe?.let {
-            viewModel.fetchRecommendations(tipe?:"")
+            viewModel.fetchRecommendations(tipe ?: "")
         }
 
         adapter = RecommendationAdapter { item ->
             val bundle = Bundle().apply { putParcelable("foodDetail", item) }
-            findNavController().navigate(R.id.action_recomendationFragment_to_detailFragment, bundle)
+            findNavController().navigate(
+                R.id.action_recomendationFragment_to_detailFragment,
+                bundle
+            )
         }
 
         setupView()
@@ -69,7 +72,8 @@ class RecommendationFragment : Fragment() {
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressBarRecommendation.visibility = if (isLoading) View.VISIBLE else View.GONE
+            binding.progressBarRecommendation.visibility =
+                if (isLoading) View.VISIBLE else View.GONE
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
@@ -93,6 +97,7 @@ class RecommendationFragment : Fragment() {
                         findNavController().navigateUp()
                         true
                     }
+
                     else -> false
                 }
             }

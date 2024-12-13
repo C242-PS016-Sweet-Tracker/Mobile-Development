@@ -19,7 +19,6 @@ import com.capstone.sweettrack.data.remote.response.FavoriteAdd
 import com.capstone.sweettrack.data.remote.response.FavoriteResponse
 import com.capstone.sweettrack.data.remote.response.FavoriteResponses
 import com.capstone.sweettrack.data.remote.response.HistoryResponse
-import com.capstone.sweettrack.data.remote.response.HistoryScanFoodRequest
 import com.capstone.sweettrack.data.remote.response.LoginRequest
 import com.capstone.sweettrack.data.remote.response.LoginResponse
 import com.capstone.sweettrack.data.remote.response.OTPRequest
@@ -348,15 +347,6 @@ class Repository private constructor(
         return response
     }
 
-    suspend fun getAllHistory(): List<HistoryScan> {
-        val session = userPreference.getSession().first()
-        val userId = session.userId.toInt()
-
-        val response = sweetTrackDatabase.eventDao().getAllHistories(userId)
-
-        return response
-    }
-
     suspend fun getHistoryUser(): HistoryResponse {
         val session = userPreference.getSession().first()
         val userId = session.userId.toInt()
@@ -392,7 +382,12 @@ class Repository private constructor(
             sweetTrackDatabase: SweetTrackDatabase
         ): Repository =
             instance ?: synchronized(this) {
-                instance ?: Repository(apiService, userPreference, sweetTrackDatabase, sweetTrackDatabase.eventDao())
+                instance ?: Repository(
+                    apiService,
+                    userPreference,
+                    sweetTrackDatabase,
+                    sweetTrackDatabase.eventDao()
+                )
             }.also { instance = it }
     }
 

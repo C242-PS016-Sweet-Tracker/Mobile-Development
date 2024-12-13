@@ -1,6 +1,5 @@
 package com.capstone.sweettrack.view.ui.scanfood
 
-import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -12,12 +11,11 @@ import androidx.lifecycle.viewModelScope
 import com.capstone.sweettrack.data.Repository
 import com.capstone.sweettrack.data.remote.response.OcrResponse
 import com.capstone.sweettrack.data.remote.response.ResponseModel
-import com.capstone.sweettrack.data.remote.response.UploadResponse
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.launch
 import java.io.File
 
-class ScanFoodViewModel (private val repository: Repository) : ViewModel() {
+class ScanFoodViewModel(private val repository: Repository) : ViewModel() {
 
     private val _ocrScanResult = MutableLiveData<OcrResponse>()
     var ocrScanResult: LiveData<OcrResponse> = _ocrScanResult
@@ -34,7 +32,7 @@ class ScanFoodViewModel (private val repository: Repository) : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    fun scanOcrNutrition (
+    fun scanOcrNutrition(
         fotoUri: Uri?,
         context: Context
     ) {
@@ -58,7 +56,7 @@ class ScanFoodViewModel (private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun scanFoodNutrition (
+    fun scanFoodNutrition(
         fotoUri: Uri?,
         context: Context
     ) {

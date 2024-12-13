@@ -1,6 +1,5 @@
 package com.capstone.sweettrack.data.remote.api
 
-import com.capstone.sweettrack.data.local.entity.HistoryScan
 import com.capstone.sweettrack.data.remote.response.AddDetailUserRequest
 import com.capstone.sweettrack.data.remote.response.ApiResponse
 import com.capstone.sweettrack.data.remote.response.CaloriesResponse
@@ -11,9 +10,7 @@ import com.capstone.sweettrack.data.remote.response.EditDetailUserRequest
 import com.capstone.sweettrack.data.remote.response.FavoriteAdd
 import com.capstone.sweettrack.data.remote.response.FavoriteResponse
 import com.capstone.sweettrack.data.remote.response.FavoriteResponses
-import com.capstone.sweettrack.data.remote.response.HistoryOcrRequest
 import com.capstone.sweettrack.data.remote.response.HistoryResponse
-import com.capstone.sweettrack.data.remote.response.HistoryScanFoodRequest
 import com.capstone.sweettrack.data.remote.response.LoginRequest
 import com.capstone.sweettrack.data.remote.response.LoginResponse
 import com.capstone.sweettrack.data.remote.response.OTPRequest
@@ -29,8 +26,6 @@ import com.capstone.sweettrack.data.remote.response.UserProfileResponse
 import com.capstone.sweettrack.data.remote.response.VerifyOtpRequest
 import com.capstone.sweettrack.data.remote.response.VerifyOtpResetPassword
 import com.capstone.sweettrack.data.remote.response.VerifyOtpResponse
-
-import retrofit2.Call
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body

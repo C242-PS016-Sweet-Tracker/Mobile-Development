@@ -34,7 +34,11 @@ class ChatViewModel : ViewModel() {
 
                 val response = generativeModel.generateContent(inputContent)
 
-                val botMessage = Message(response.text, isLocalUser = false, timestamp = System.currentTimeMillis())
+                val botMessage = Message(
+                    response.text,
+                    isLocalUser = false,
+                    timestamp = System.currentTimeMillis()
+                )
                 addMessage(botMessage)
 
             } catch (e: Exception) {

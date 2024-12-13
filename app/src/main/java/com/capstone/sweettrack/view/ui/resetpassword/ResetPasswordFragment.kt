@@ -13,17 +13,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowInsetsController
-import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
-import com.capstone.sweettrack.data.Repository
 import com.capstone.sweettrack.util.CustomEmailEditText
-import com.capstone.sweettrack.util.CustomPasswordEditText
 import com.capstone.sweettrack.view.ViewModelFactory
-import com.capstone.sweettrack.view.ui.signup.SignUpFragmentDirections
-import com.capstone.sweettrack.view.ui.signup.SignUpViewModel
 import com.coding.sweettrack.R
 import com.coding.sweettrack.databinding.FragmentResetPasswordBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -70,8 +65,8 @@ class ResetPasswordFragment : Fragment() {
 
         viewModel.requestResult.observe(viewLifecycleOwner) { result ->
 
-            if (result != null){
-                if (result.error != true) {
+            if (result != null) {
+                if (!result.error) {
                     showLoading(false)
                     val alertDialog = AlertDialog.Builder(requireActivity()).apply {
                         setTitle("Informasi!")
@@ -82,7 +77,8 @@ class ResetPasswordFragment : Fragment() {
 
                     Handler(Looper.getMainLooper()).postDelayed({
                         alertDialog.dismiss()
-                        val action = ResetPasswordFragmentDirections.actionFragmentResetPasswordToNewPasswordFragment()
+                        val action =
+                            ResetPasswordFragmentDirections.actionFragmentResetPasswordToNewPasswordFragment()
                         findNavController().navigate(action)
                     }, 4000)
                 }

@@ -43,10 +43,20 @@ class HistoryFragment : Fragment() {
         viewModel.getHistoryUser()
 
         viewModel.historyList.observe(viewLifecycleOwner) { historyList ->
-            historyAdapter.submitList(historyList)
+            if (historyList.isEmpty()) {
+                binding.tvEmptyHistory.visibility = View.VISIBLE // Tampilkan teks "No History"
+            } else {
+                binding.tvEmptyHistory.visibility = View.GONE
+                historyAdapter.submitList(historyList)
+            }
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

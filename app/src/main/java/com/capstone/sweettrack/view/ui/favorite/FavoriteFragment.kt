@@ -1,11 +1,15 @@
 package com.capstone.sweettrack.view.ui.favorite
 
+import android.os.Build
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowInsets
+import android.view.WindowInsetsController
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.sweettrack.adapter.FavoriteAdapter
@@ -36,6 +40,7 @@ class FavoriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupView()
         observerData()
 
         binding.imgBack.setOnClickListener {
@@ -56,15 +61,32 @@ class FavoriteFragment : Fragment() {
             adapter = favoriteAdapter
         }
 
-        // Observe favoriteList
         viewModel.favoriteList.observe(viewLifecycleOwner) { favoriteList ->
             favoriteAdapter.setFavorites(favoriteList)
         }
 
-        // Observe isLoading
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
+    }
+
+    private fun setupView() {
+        val window = requireActivity().window
+        val decorView = window.decorView
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+            window.insetsController?.systemBarsBehavior =
+                WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        } else {
+            @Suppress("DEPRECATION")
+            decorView.systemUiVisibility = (
+                    View.SYSTEM_UI_FLAG_FULLSCREEN
+                            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    )
+        }
+        (requireActivity() as? AppCompatActivity)?.supportActionBar?.hide()
     }
 
     override fun onResume() {
@@ -76,7 +98,7 @@ class FavoriteFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
-        bottomNavigationView?.visibility = View.VISIBLE
+        bottomNavigationView?.visibility = View.GONE
     }
 
 }
